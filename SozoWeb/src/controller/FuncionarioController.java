@@ -11,6 +11,7 @@ public class FuncionarioController {
 	
 	public FuncionarioController(SimpleEntityManager simpleEntityManager) {
 		this.simpleEntityManager = simpleEntityManager;
+		//dao = new FuncionarioDAO(entityManager)
 	}
 	
 	public void save(Funcionario f) {

@@ -1,5 +1,13 @@
 package dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+
+import org.hibernate.Session;
+import org.hibernate.jpa.internal.EntityManagerFactoryImpl;
+
 import controller.FuncionarioController;
 import controller.ViaturaController;
 import model.Funcionario;
@@ -20,8 +28,8 @@ public class Generate {
         /**
          * THE SERVICE LAYER ENCAPSULATES EVERY BEGIN/COMMIT/ROLLBACK
          */
-		//FuncionarioDaoImp d = new FuncionarioDaoImp();
-		//d.save(f);
+		FuncionarioDaoImp fc = new FuncionarioDaoImp();
+		fc.save(f);
 		
 		//f = d.getFuncionario(1);
 		
@@ -32,9 +40,17 @@ public class Generate {
 		//	System.out.println(fu.getNome());
 		//}
         
-        
-        //ViaturaController daoViatura = new ViaturaController(simpleEntityManager);
-        //daoViatura.save(v);
+		
+	//Session s = HibernateUtil.getSessionFactory();
+       ViaturaDaoImp daoViatura = new ViaturaDaoImp();
+       daoViatura.save(v);
+       
+       List<Viatura> tuaMae = new ArrayList<Viatura>();
+       tuaMae = daoViatura.list();
+       
+       for (Viatura v2 : tuaMae){
+    	   System.out.println(v2.getPlaca());
+       }
 
 	}
 

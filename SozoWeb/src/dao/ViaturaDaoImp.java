@@ -16,15 +16,16 @@ public class ViaturaDaoImp  {
 		session.save(v);
 		t.commit();
 	}
-	public Viatura getFuncionario(int id) {
+	public Viatura getViatura(int id) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		return (Viatura) session.load(Viatura.class, id);
 	}
 	
-	public List<Funcionario> list() {
+	public List<Viatura> list() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
-		List<Funcionario> lista = session.createQuery("from viatura").list();
+		@SuppressWarnings("unchecked")
+		List<Viatura> lista = session.createQuery("from viatura").list();
 		t.commit();
 		return lista;
 	}

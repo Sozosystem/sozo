@@ -1,6 +1,7 @@
 package dao;
 
 import model.Funcionario;
+import model.Viatura;
 
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.SessionFactory;
@@ -23,7 +24,7 @@ public class HibernateUtil {
 			// Create the SessionFactory from standard (hibernate.cfg.xml)
 			// config file.
 			AnnotationConfiguration ac = new AnnotationConfiguration();
-			ac.addAnnotatedClass(Funcionario.class);
+			ac.addAnnotatedClass(Viatura.class).addAnnotatedClass(Funcionario.class);
 			sessionFactory = ac.configure().buildSessionFactory();
 		} catch (Throwable ex) {
 			// Log the exception.
