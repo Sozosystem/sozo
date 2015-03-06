@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Sozo - Área do Funcionário</title>
+	<h:outputStylesheet library="css" name="style.css" />
+	<script>
+	$(document).ready(function() {
+		var a = 0;
+		var element = $(".five");
+		console.log(element)
+		setInterval(function() {
+		    element.css({transform: "rotate(" + a + "deg)"});
+		    a+=4;
+		}, 1000 / 20);
+	});
+	</script>
+</h:head>
+<h:body>
+	<h:panelGrid columns="1" cellpadding="10" style="position: absolute; margin-left: -470px;left: 50%; width: 940px;">
+	<div class="logo-head">
+			<div class="logo">
+				<div class="one"></div>
+				<div class="two"></div>
+				<div class="three"></div>
+				<div class="four"></div>
+				<div class="five"></div>
+				<div class="six"></div>
+				<div class="seven"></div>
+				<div class="eight"></div>
+				<div class="nine"></div>
+			</div>
+			<div class="logo-text"> Área Administrativa</div>
+	</div>
+	    <p:layoutUnit position="west" resizable="true" size="200" minSize="40" maxSize="350" style="background-color: rgba(255,255,255,0) !important;">
+	    	<ui:insert name="header" >
+				<ui:include src="menu.xhtml" />
+			</ui:insert> 
+	    </p:layoutUnit>
+	 
+	    <p:layoutUnit position="center">
+	        <ui:insert name="content" >
+		      <ui:include src="conteudo/funcionarios.xhtml" />
+		   	</ui:insert> 
+	    </p:layoutUnit>
+	</h:panelGrid>
+</h:body>
+</html>

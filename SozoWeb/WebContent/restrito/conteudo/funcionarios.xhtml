@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Projeto Teste</title>
+</h:head>
+<h:body>
+<p:panel header="Funcionários">
+
+<h:form id="form">
+	<p:panel header="Lista de Funcionários">
+		<p:dataTable selectionMode="single" id="tbl" var="f" value="#{funcionario.listaFuncionarios}" selection="#{funcionario.funcionarioSelecionado}" rowKey="#{f.id}"  rows="10"  paginator="true" emptyMessage="Nenhum registro encontrado.">
+			<p:column headerText="Id">
+		        <h:outputText value="#{f.id}" />       
+		    </p:column>
+			<p:column headerText="Nome">
+		        <h:outputText value="#{f.nome}" />       
+		    </p:column>
+			<p:column headerText="Usuário">
+					<f:facet name="header">
+		                <h:outputText value="Usuário" />
+		            </f:facet>
+			        <h:outputText value="#{f.usuario}" /> 
+			</p:column>
+			<p:column headerText="Tipo do funcionário">
+					<f:facet name="header">
+		                <h:outputText value="Tipo do funcionário" />
+		            </f:facet>
+			        <h:outputText value="Tipo" /> 
+			    </p:column>
+			    <f:facet name="footer">
+		            <p:commandButton process="tbl" icon="ui-icon-search" update=":form" value="Alterar" />
+		            <p:commandButton process="tbl" icon="ui-icon-trash" value="Remover" actionListener="#{funcionario.removerFuncionario}"/>
+		        </f:facet>
+		</p:dataTable>
+	</p:panel>
+	<p:panel id="panel" header="Form" style="margin-bottom:10px;">
+        <p:messages id="messages" />
+        <h:panelGrid columns="3" cellpadding="5">
+        	<!-- h:inputHidden value="#{funcionario.funcionario.id}"/-->
+            <p:outputLabel for="text1" value="Nome:" />
+            <p:inputText id="text1" value="#{funcionario.funcionario.nome}" required="true" label="Nome">
+                <f:validateLength minimum="2" />
+            </p:inputText>
+            <p:message for="text1" />
+ 
+            <p:outputLabel for="text2" value="Usuário:" />
+            <p:inputText id="text2" value="#{funcionario.funcionario.usuario}" required="true" label="Surname"/>
+            <p:message for="text2" />
+            
+            <p:outputLabel for="text3" value="Senha:" />
+            <p:inputText id="text3" value="#{funcionario.funcionario.senha}" required="true" label="Surname"/>
+            <p:message for="text3" />
+
+            <p:commandButton process="tbl" icon="ui-icon-trash" value="Salvar" actionListener="#{funcionario.salvarFuncionario}" ajax="false"/>
+			<p:commandButton process="tbl" icon="ui-icon-trash" value="Alterar" actionListener="#{funcionario.alterarFuncionario}" ajax="false"/>
+        </h:panelGrid>
+    </p:panel>
+	
+
+	
+	
+</h:form>
+</p:panel>	
+</h:body>
+
+</html>

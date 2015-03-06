@@ -19,12 +19,15 @@ public class Viatura {
 	private String placa;
 	private String descricao;
 	
+	public Viatura() {
+		
+	}
+	
 	public Viatura(String tipo,String placa,String descricao){
 		super();
 		this.tipo = tipo;
 		this.placa = placa;
 		this.descricao = descricao;
-		
 	}
 	
 	
@@ -52,5 +55,5 @@ public class Viatura {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	
 }
+	

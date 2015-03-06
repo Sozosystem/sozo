@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Projeto Teste</title>
+</h:head>
+<h:body>
+<p:panel header="Funcionários">
+
+<h:form id="form">
+	<p:panel header="Lista de Funcionários">
+		<p:dataTable id="tbl" var="v" value="#{viatura.listaViaturas}" emptyMessage="Nenhum registro encontrado.">
+			<p:column headerText="Id">
+		        <h:outputText value="#{v.id}" />       
+		    </p:column>
+			<p:column headerText="Descrição">
+		        <h:outputText value="#{v.descricao}" />       
+		    </p:column>
+			<p:column headerText="Plca">
+					<f:facet name="header">
+		                <h:outputText value="Placa" />
+		            </f:facet>
+			        <h:outputText value="#{v.placa}" /> 
+			</p:column>
+			<p:column headerText="Tipo">
+					<f:facet name="header">
+		                <h:outputText value="Tipo" />
+		            </f:facet>
+			        <h:outputText value="#{v.tipo}" /> 
+			    </p:column>
+		</p:dataTable>
+	</p:panel>
+</h:form>
+</p:panel>	
+</h:body>
+
+</html>

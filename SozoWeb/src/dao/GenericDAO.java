@@ -4,11 +4,13 @@ package dao;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
  
+
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
  
 @SuppressWarnings("unchecked")
 public class GenericDAO<PK, T> {
-    private EntityManager entityManager;
+    protected EntityManager entityManager;
  
     public GenericDAO(EntityManager entityManager) {
         this.entityManager = entityManager;
@@ -19,15 +21,45 @@ public class GenericDAO<PK, T> {
     }
  
     public void save(T entity) {
-        entityManager.persist(entity);
+    	EntityTransaction transaction = entityManager.getTransaction();
+    	try {
+	    	transaction.begin();
+	        entityManager.persist(entity);
+	        transaction.commit();
+    	} catch (Exception e) {
+    		if(transaction.isActive()) {
+    			transaction.rollback();
+    		}
+    	}
+        
+        //entityManager.
     }
  
     public void update(T entity) {
-        entityManager.merge(entity);
+        EntityTransaction transaction = entityManager.getTransaction();
+    	try {
+	    	transaction.begin();
+	    	 entityManager.merge(entity);
+	        transaction.commit();
+    	} catch (Exception e) {
+    		if(transaction.isActive()) {
+    			transaction.rollback();
+    		}
+    	}
     }
  
     public void delete(T entity) {
-        entityManager.remove(entity);
+        EntityTransaction transaction = entityManager.getTransaction();
+    	try {
+	    	transaction.begin();
+	    	entityManager.remove(entity);
+	        transaction.commit();
+    	} catch (Exception e) {
+    		if(transaction.isActive()) {
+    			transaction.rollback();
+    		}
+    	}
+        
     }
  
     public List<T> findAll() {
