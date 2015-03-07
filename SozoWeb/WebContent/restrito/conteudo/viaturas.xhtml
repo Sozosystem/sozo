@@ -15,7 +15,7 @@
 
 <h:form id="form">
 	<p:panel header="Lista de Viaturas">
-		<p:dataTable id="tbl" var="v" value="#{viatura.listaViaturas}" emptyMessage="Nenhum registro encontrado.">
+		<p:dataTable id="tbl" var="v" value="#{viatura.listaViaturas}" selection="#{viatura.viaturaSelecionada}" rowKey="#{v.id}" emptyMessage="Nenhum registro encontrado.">
 			<p:column headerText="Id">
 		        <h:outputText value="#{v.id}" />       
 		    </p:column>
@@ -45,9 +45,7 @@
         <h:panelGrid columns="3" cellpadding="5">
         	<!-- h:inputHidden value="#{viatura.viatura.id}"/-->
             <p:outputLabel for="text1" value="Tipo:" />
-            <p:inputText id="text1" value="#{viatura.viatura.tipo}" required="true" label="Nome">
-                <f:validateLength minimum="2" />
-            </p:inputText>
+            <p:inputText id="text1" value="#{viatura.viatura.tipo}" required="true" label="Tipo"/>
             <p:message for="text1" />
  
             <p:outputLabel for="text2" value="Placa:" />

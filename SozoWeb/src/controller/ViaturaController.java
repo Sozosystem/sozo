@@ -6,6 +6,7 @@ import javax.faces.bean.ManagedBean;
 
 import dao.EntityManagerHelper;
 import dao.ViaturaDAO;
+import model.Funcionario;
 import model.Viatura;
 
 @ManagedBean(name="viatura")
@@ -13,10 +14,12 @@ public class ViaturaController {
 	
 	private ViaturaDAO dao;
 	private Viatura viatura;
+	private Viatura viaturaSelecionada;
 	
 	public ViaturaController() {
 		EntityManagerHelper emh = new EntityManagerHelper();            
         dao = new ViaturaDAO(emh.getEntityManager());
+        viatura = new Viatura();
 	}
 	
 	public List<Viatura> getListaViaturas() {
@@ -38,7 +41,7 @@ public class ViaturaController {
 	}
 	
 	public String removerViatura() {
-		dao.delete(viatura);
+		dao.delete(viaturaSelecionada);
 		//viatura = new viatura();
 		return "index.xhtml";
 	}
@@ -50,5 +53,13 @@ public class ViaturaController {
 	public void setViatura(Viatura viatura) {
 		this.viatura = viatura;
 	}
+	
+	public Viatura getViaturaSelecionada() {
+        return viaturaSelecionada;
+    }
+ 
+    public void setViaturaSelecionada(Viatura v) {
+        this.viaturaSelecionada = v;
+    }
 	
 }
