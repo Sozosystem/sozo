@@ -11,10 +11,10 @@
 	<title>Projeto Teste</title>
 </h:head>
 <h:body>
-<p:panel header="Funcionários">
+<p:panel header="Viaturas">
 
 <h:form id="form">
-	<p:panel header="Lista de Funcionários">
+	<p:panel header="Lista de Viaturas">
 		<p:dataTable id="tbl" var="v" value="#{viatura.listaViaturas}" emptyMessage="Nenhum registro encontrado.">
 			<p:column headerText="Id">
 		        <h:outputText value="#{v.id}" />       
@@ -22,7 +22,7 @@
 			<p:column headerText="Descrição">
 		        <h:outputText value="#{v.descricao}" />       
 		    </p:column>
-			<p:column headerText="Plca">
+			<p:column headerText="Placa">
 					<f:facet name="header">
 		                <h:outputText value="Placa" />
 		            </f:facet>
@@ -34,8 +34,34 @@
 		            </f:facet>
 			        <h:outputText value="#{v.tipo}" /> 
 			    </p:column>
+			    <f:facet name="footer">
+		            <p:commandButton process="tbl" icon="ui-icon-search" update=":form" value="Alterar" />
+		            <p:commandButton process="tbl" icon="ui-icon-trash" value="Remover" actionListener="#{viatura.removerViatura}"/>
+		        </f:facet>
 		</p:dataTable>
 	</p:panel>
+	<p:panel id="panel" header="Form" style="margin-bottom:10px;">
+        <p:messages id="messages" />
+        <h:panelGrid columns="3" cellpadding="5">
+        	<!-- h:inputHidden value="#{viatura.viatura.id}"/-->
+            <p:outputLabel for="text1" value="Tipo:" />
+            <p:inputText id="text1" value="#{viatura.viatura.tipo}" required="true" label="Nome">
+                <f:validateLength minimum="2" />
+            </p:inputText>
+            <p:message for="text1" />
+ 
+            <p:outputLabel for="text2" value="Placa:" />
+            <p:inputText id="text2" value="#{viatura.viatura.placa}" required="true" label="Surname"/>
+            <p:message for="text2" />
+            
+            <p:outputLabel for="text3" value="Descricao" />
+            <p:inputText id="text3" value="#{viatura.viatura.descricao}" required="true" label="Surname"/>
+            <p:message for="text3" />
+
+            <p:commandButton process="tbl" icon="ui-icon-trash" value="Salvar" actionListener="#{viatura.salvarViatura}" ajax="false"/>
+			<p:commandButton process="tbl" icon="ui-icon-trash" value="Alterar" actionListener="#{viatura.alterarViatura}" ajax="false"/>
+        </h:panelGrid>
+    </p:panel>
 </h:form>
 </p:panel>	
 </h:body>
