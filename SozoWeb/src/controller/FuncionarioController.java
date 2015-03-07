@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -10,10 +11,15 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.swing.text.html.ListView;
 
 import model.Funcionario;
+import model.Situacao;
+import model.TipoFunc;
 import dao.EntityManagerHelper;
 import dao.FuncionarioDAO;
+import dao.TipoFuncDAO;
+
 
 @ManagedBean(name="funcionario")
 @SessionScoped
@@ -22,8 +28,29 @@ public class FuncionarioController {
 	private Funcionario funcionario;
 	private Funcionario funcionarioSelecionado;
 	private FuncionarioDAO dao;
+	private Situacao[] situacoes = Situacao.values();
+	private List<TipoFunc> tipoFunc;
+	private TipoFuncDAO daoTipoFunc;
+	
+	public void init(){
+		listarTiposFunc();		
+	}
+	
+	public List<TipoFunc> listarTiposFunc(){
+		return daoTipoFunc.findAll();
+	}
 
 	
+	public List<TipoFunc> getTipoFunc() {
+		return tipoFunc;
+	}
+
+
+	public void setTipoFunc(List<TipoFunc> tipoFunc) {
+		this.tipoFunc = tipoFunc;
+	}
+
+
 	public FuncionarioController() {
 		EntityManagerHelper emh = new EntityManagerHelper();            
         dao = new FuncionarioDAO(emh.getEntityManager());
@@ -36,12 +63,29 @@ public class FuncionarioController {
 		return dao.findAll();
 	}
 	
+	public Situacao[] getSituacoes() {
+		return situacoes;
+	}
+
+
+	public void setSituacoes(Situacao[] situacoes) {
+		this.situacoes = situacoes;
+	}
+
+
+	public void setFuncionarioLogado(Funcionario funcionarioLogado) {
+		this.funcionarioLogado = funcionarioLogado;
+	}
+
+
 	public void salvarFuncionario() {
 		System.out.println(funcionario);
 		Funcionario f = new Funcionario();
 		f.setNome(funcionario.getNome());
 		f.setUsuario(funcionario.getUsuario());
 		f.setSenha(funcionario.getSenha());
+		f.setDataUltimaAtualizacao(Calendar.getInstance());
+		f.setSituacao(funcionario.getSituacao());
 		dao.save(f);
 	}
 	

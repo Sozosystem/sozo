@@ -1,23 +1,39 @@
 package model;
 
+import java.util.Calendar;
+
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class Funcionario {
+public class Funcionario extends ObjetoGeral{
 	
-	@Id
-	@GeneratedValue
-	private int id;
 	private String nome;
 	private String usuario;
 	private String senha;
+	@ManyToOne(fetch = FetchType.EAGER)
+	private TipoFunc tipoFunc;
 	
-	public Funcionario() {
+	/*public Funcionario() {
+		super();
+		tipoFunc = new TipoFunc();
+		
+	}*/
+	
+	public Funcionario(){
 		
 	}
 
+	public Funcionario(String nome, String usuario, String senha,
+			TipoFunc tipoFunc) {
+		super();
+		this.nome = nome;
+		this.usuario = usuario;
+		this.senha = senha;
+		this.tipoFunc = tipoFunc;
+	}
+	
 	public Funcionario(String nome, String usuario, String senha) {
 		super();
 		this.nome = nome;
@@ -25,12 +41,18 @@ public class Funcionario {
 		this.senha = senha;
 	}
 
-	public int getId() {
-		return id;
+	public Funcionario(Integer codigo, Calendar dataUltimaAtualizacao,
+			Situacao situacao) {
+		super(codigo, dataUltimaAtualizacao, situacao);
+		tipoFunc = new TipoFunc();
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public TipoFunc getTipoFunc() {
+		return tipoFunc;
+	}
+
+	public void setTipoFunc(TipoFunc tipoFunc) {
+		this.tipoFunc = tipoFunc;
 	}
 
 	public String getNome() {

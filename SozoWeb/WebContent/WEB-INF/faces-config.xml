@@ -5,4 +5,9 @@
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
     version="2.2">
 
+<converter>
+		<converter-id>TipoFuncConverter</converter-id>
+		<converter-class>converters.TipoFuncConverter</converter-class>
+	</converter>
+
 </faces-config>

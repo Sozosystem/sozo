@@ -32,7 +32,14 @@
 					<f:facet name="header">
 		                <h:outputText value="Tipo do funcionário" />
 		            </f:facet>
-			        <h:outputText value="Tipo" /> 
+			        <h:outputText value="#{f.tipoFunc}" /> 
+			    </p:column>
+			    
+			   <p:column headerText="Situaçãoo">
+					<f:facet name="header">
+		                <h:outputText value="Situação" />
+		            </f:facet>
+			        <h:outputText value="#{f.situacao}" /> 
 			    </p:column>
 			    <f:facet name="footer">
 		            <p:commandButton process="tbl" icon="ui-icon-search" update=":form" value="Alterar" />
@@ -57,14 +64,27 @@
             <p:outputLabel for="text3" value="Senha:" />
             <p:inputText id="text3" value="#{funcionario.funcionario.senha}" required="true" label="Surname"/>
             <p:message for="text3" />
-
+           
+            	<h:outputLabel for="tipofunc" value="Tipo de Funcionário *"/>
+  					<p:selectOneMenu id="tipofunc" converter="TipoFuncConverter"
+  							value="#{funcionario.funcionario.tipoFunc}">
+  						<f:selectItem noSelectionOption="true" 
+  								itemLabel="Selecione tipo de funcionário" itemValue="-1"/>
+  						<f:selectItems value="#{funcionario.tipoFunc}" var="tipoFunc"
+  								itemLabel="#{tipoFunc.descricao}" />
+  					</p:selectOneMenu>
+            
+            	<h:outputLabel for="text4" value="Situação: "/>
+  					<p:selectOneMenu id="text4" value="#{funcionario.funcionario.situacao}" required="true"
+  					requiredMessage="Situação Obrigatória*" >
+  						<f:selectItem itemLabel="Selecione uma opção" itemValue="" />
+  						<f:selectItems value="#{funcionario.situacoes}" />
+  					</p:selectOneMenu>
+  										
             <p:commandButton process="tbl" icon="ui-icon-trash" value="Salvar" actionListener="#{funcionario.salvarFuncionario}" ajax="false"/>
 			<p:commandButton process="tbl" icon="ui-icon-trash" value="Alterar" actionListener="#{funcionario.alterarFuncionario}" ajax="false"/>
         </h:panelGrid>
     </p:panel>
-	
-
-	
 	
 </h:form>
 </p:panel>	
