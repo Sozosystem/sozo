@@ -3,14 +3,15 @@ package dao;
 import model.Funcionario;
 import model.Viatura;
 
-import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.SessionFactory;
+import org.hibernate.cfg.AnnotationConfiguration;
  
 /**
 * Hibernate Utility class with a convenient method to get Session Factory object.
 *
-* @author José Alexandre
+* -
 */
+@SuppressWarnings("deprecation")
 public class HibernateUtil {
  
 	private static SessionFactory sessionFactory;

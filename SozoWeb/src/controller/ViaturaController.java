@@ -6,7 +6,6 @@ import javax.faces.bean.ManagedBean;
 
 import dao.EntityManagerHelper;
 import dao.ViaturaDAO;
-import model.Funcionario;
 import model.Viatura;
 
 @ManagedBean(name="viatura")

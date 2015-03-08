@@ -2,15 +2,10 @@ package dao;
 
 import java.util.List;
 
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.RollbackException;
-import javax.transaction.SystemException;
+import model.Funcionario;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
-import model.Funcionario;
 
 public class FuncionarioDaoImp {
 	

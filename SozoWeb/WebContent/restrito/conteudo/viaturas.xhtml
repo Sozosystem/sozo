@@ -15,7 +15,7 @@
 
 <h:form id="form">
 	<p:panel header="Lista de Viaturas">
-		<p:dataTable id="tbl" var="v" value="#{viatura.listaViaturas}" selection="#{viatura.viaturaSelecionada}" rowKey="#{v.id}" emptyMessage="Nenhum registro encontrado.">
+		<p:dataTable selectionMode="single" id="tbl" var="v" value="#{viatura.listaViaturas}" selection="#{viatura.viaturaSelecionada}" rowKey="#{v.id}" emptyMessage="Nenhum registro encontrado.">
 			<p:column headerText="Id">
 		        <h:outputText value="#{v.id}" />       
 		    </p:column>
