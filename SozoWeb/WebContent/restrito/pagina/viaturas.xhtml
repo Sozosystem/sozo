@@ -69,13 +69,18 @@
         <h:panelGrid columns="2" cellpadding="5">
  
             <p:outputLabel for="text2" value="Placa:" />
-            <p:inputText id="text2" value="#{viatura.viatura.placa}" required="true" />
+            <p:inputMask id="text2" value="#{viatura.viatura.placa}" required="true"  mask="aaa-9999" style="text-transform: uppercase;">
+            </p:inputMask>
             
             <p:outputLabel for="text1" value="Tipo:" />
-            <p:inputText id="text1" value="#{viatura.viatura.tipo}" required="true" />
+            <p:inputText id="text1" value="#{viatura.viatura.tipo}" required="true">
+            	<f:validateLength  minimum="5" maximum="50"/>
+            </p:inputText>
             
             <p:outputLabel for="text3" value="Descricao" />
-            <p:inputText id="text3" value="#{viatura.viatura.descricao}" required="true" />
+            <p:inputTextarea id="text3" value="#{viatura.viatura.descricao}" required="true" rows="10" cols="50">
+            	<f:validateLength  minimum="3" maximum="250"/>
+            </p:inputTextarea>
 		</h:panelGrid>
 		<h:panelGrid columns="3" cellpadding="5">
             <p:commandButton process="tbl" icon="ui-icon-pin-w" value="Salvar" actionListener="#{viatura.salvarViatura}" ajax="false"/>

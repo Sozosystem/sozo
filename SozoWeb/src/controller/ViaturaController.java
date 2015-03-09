@@ -3,39 +3,35 @@ package controller;
 
 import java.util.List;
 
+import javax.faces.application.ProtectedViewException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+
 import model.Viatura;
 import dao.EntityManagerHelper;
 import dao.ViaturaDAO;
 
 @ManagedBean(name="viatura")
 @RequestScoped
-public class ViaturaController {
+public class ViaturaController extends BaseBeanController<Viatura> {
 	private Viatura viatura;
 	private Viatura viaturaSelecionada;
 	private Viatura viaturaConsulta;
 	private ViaturaDAO dao;
 	private List<Viatura> listaViaturas;
-	//private Situacao[] situacoes = Situacao.values();
-	//private List<TipoFuncionario> tipoFuncionario;
-	//private TipoFuncionarioDAO tipoFuncionarioDao;
+
 	
 	public ViaturaController() {
+		super();
 		EntityManagerHelper emh = new EntityManagerHelper();            
         dao = new ViaturaDAO(emh.getEntityManager());
-        //tipoFuncionarioDao = new TipoFuncionarioDAO(emh.getEntityManager());
+        this.baseDao = dao;
         
         viatura = new Viatura();
         viaturaConsulta = new Viatura();
-        //listarTiposFunc();
         mostrarTodasViaturas();
 	}
 
-	
-	/*public void listarTiposFunc(){
-		tipoFuncionario = tipoFuncionarioDao.findAll();
-	}*/
 	
 	public void salvarViatura() {
 		Viatura v = new Viatura();

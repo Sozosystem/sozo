@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Projeto Teste</title>
+</h:head>
+<h:body>
+<ui:composition template="../template/layout.xhtml">
+		<ui:define name="content">
+<p:panel header="Tipos de Funcionários">
+	<h:form id="form">
+	<p:panel header="Lista de Tipos de Funcionários" style="margin-top: 20px;">
+		<p:dataTable selectionMode="single" id="tbl" var="t" value="#{tipoFuncionario.listaTiposFunc}" selection="#{tipoFuncionario.tipoFuncSelecionado}" rowKey="#{t.id}" emptyMessage="Nenhum registro encontrado.">
+			<p:column headerText="Id">
+		        <h:outputText value="#{t.id}" />       
+		    </p:column>
+			<p:column headerText="Nome">
+		        <h:outputText value="#{t.nome}" />       
+		    </p:column>
+			<p:column headerText="Descrição">
+					<f:facet name="header">
+		                <h:outputText value="Descrição" />
+		            </f:facet>
+			        <h:outputText value="#{t.descricao}" /> 
+			</p:column>
+			    <f:facet name="footer">
+		            <p:commandButton process="tbl" icon="ui-icon-pencil" actionListener="#{tipoFuncionario.alterarTipoFuncSelecionado}" ajax="false" value="Alterar" />
+		            <p:commandButton process="tbl" icon="ui-icon-trash" value="Remover" action="#{tipoFuncionario.removerTipo}" update=":form" />
+		        </f:facet>
+		</p:dataTable>
+	</p:panel>
+</h:form>
+
+<h:form id="form2">	
+	<p:panel id="panel" header="Opções" style="margin-top: 20px;">
+        <h:inputHidden value="#{tipoFuncionario.tipoFunc.id}" />
+        <h:panelGrid columns="2" cellpadding="5">
+ 
+            <p:outputLabel for="text2" value="Nome:" />
+            <p:inputText id="text2" value="#{tipoFuncionario.tipoFunc.nome}" required="true">
+            <f:validateLength  minimum="3" maximum="50"  />
+            </p:inputText>
+            
+            <p:outputLabel for="text3" value="Descricao" />
+            <p:inputTextarea id="text3" value="#{tipoFuncionario.tipoFunc.descricao}" required="true" rows="10" cols="50">
+            	<f:validateLength  minimum="3" maximum="250"/>
+            </p:inputTextarea>
+		</h:panelGrid>
+		<h:panelGrid columns="3" cellpadding="5">
+            <p:commandButton process="tbl" icon="ui-icon-pin-w" value="Salvar" actionListener="#{tipoFuncionario.salvarTipo}" ajax="false"/>
+			<p:commandButton process="tbl" icon="ui-icon-pencil" value="Alterar" actionListener="#{tipoFuncionario.alterarTipo}" ajax="false"/>
+			<p:commandButton value="Limpar Campos"  icon="ui-icon-refresh" ajax="true" immediate="true" type="reset"/>  
+        </h:panelGrid>
+    </p:panel>
+    
+</h:form>
+</p:panel>	
+</ui:define>
+	</ui:composition>
+</h:body>
+
+</html>

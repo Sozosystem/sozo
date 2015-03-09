@@ -3,22 +3,26 @@ package controller;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 
 import model.TipoFuncionario;
 import dao.EntityManagerHelper;
 import dao.TipoFuncionarioDAO;
 
-@ManagedBean(name="tipo_funcionario")
+@ManagedBean(name="tipoFuncionario")
+@RequestScoped
 public class TipoFuncionarioController {
 	
 	private TipoFuncionarioDAO dao;
 	private TipoFuncionario tipoFunc;
 	private TipoFuncionario tipoFuncSelecionado;
+	private List<TipoFuncionario> listaTiposFunc;
 	
 	public TipoFuncionarioController() {
 		EntityManagerHelper emh = new EntityManagerHelper();            
         dao = new TipoFuncionarioDAO(emh.getEntityManager());
         tipoFunc = new TipoFuncionario();
+        mostrarTodosTipos();
 	}
 	
 	public List<TipoFuncionario> getTipos() {
@@ -30,33 +34,54 @@ public class TipoFuncionarioController {
 		tipo.setNome(tipoFunc.getNome());
 		tipo.setDescricao(tipoFunc.getDescricao());
 		dao.save(tipo);
+		mostrarTodosTipos();
+		tipoFunc = new TipoFuncionario();
 	}
 	
-	public String alterarTipo() {
+	public void mostrarTodosTipos() {
+		this.setListaTiposFunc(dao.findAll());
+	}
+	
+	public void alterarTipo() {
 		dao.update(tipoFunc);
-		return "index.xhtml";
+		mostrarTodosTipos();
+		tipoFunc = new TipoFuncionario();
 	}
 	
-	public String removerTipo() {
+	public void removerTipo() {
 		dao.delete(tipoFuncSelecionado);
-		//viatura = new viatura();
-		return "index.xhtml";
+		mostrarTodosTipos();
 	}
 	
-	public TipoFuncionario getViatura() {
+	public void alterarTipoFuncSelecionado() {
+		if(tipoFunc == null) return;
+		tipoFunc = tipoFuncSelecionado;
+	}
+	
+	public TipoFuncionario getTipoFunc() {
 		return tipoFunc;
 	}
 
-	public void setViatura(TipoFuncionario tipo) {
+	public void setTipoFunc(TipoFuncionario tipo) {
 		this.tipoFunc = tipo;
 	}
 	
-	public TipoFuncionario getViaturaSelecionada() {
+	public TipoFuncionario getTipoFuncSelecionado() {
         return tipoFuncSelecionado;
     }
  
-    public void setViaturaSelecionada(TipoFuncionario tipo) {
+    public void setTipoFuncSelecionado(TipoFuncionario tipo) {
         this.tipoFuncSelecionado = tipo;
     }
+
+	
+    public List<TipoFuncionario> getListaTiposFunc() {
+		return listaTiposFunc;
+	}
+    
+
+	public void setListaTiposFunc(List<TipoFuncionario> listaTiposFunc) {
+		this.listaTiposFunc = listaTiposFunc;
+	}
 
 }
