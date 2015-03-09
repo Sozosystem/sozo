@@ -56,7 +56,7 @@ public class FuncionarioController {
 			mostrarTodosFuncionarios();
 			funcionario = new Funcionario();
 		} else {
-			Mensagem.alerta(Mensagem.ERRO, "Atenção : Usuário já existente", "");
+			Mensagem.alerta(Mensagem.ERRO, "Usuário já existente", "");
 		}
 
 	}

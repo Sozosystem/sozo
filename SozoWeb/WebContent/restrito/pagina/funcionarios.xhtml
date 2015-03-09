@@ -95,7 +95,7 @@
         	<h:panelGrid columns="2" cellpadding="5">
             <p:outputLabel for="text1" value="Nome:" />
             <p:inputText id="text1" value="#{funcionario.funcionario.nome}" required="true">
-                <f:validateLength minimum="2" />
+                <f:validateLength minimum="6"  maximum="100" />
             </p:inputText>
  
             <p:outputLabel for="text2" value="Usuário:"  />
@@ -103,12 +103,17 @@
             <f:validateLength minimum="4" maximum="20" />
             </p:inputText>
             <p:outputLabel for="text3" value="Senha:" />
-            <p:password id="text3" value="#{funcionario.funcionario.senha}" feedback="true" />
+            <p:password id="text3" value="#{funcionario.funcionario.senha}" match="psw2" validatorMessage="Os campos 'Senha' não são iguais" required="true" />
+            	 
+            <p:outputLabel for="psw2" value="Confirmar Senha:" />
+            <p:password id="psw2" value="#{funcionario.funcionario.senha}">
+            	<f:validateLength minimum="6" maximum="20"  validatorMessage="asdasdasdasd" />
+            </p:password>
             </h:panelGrid>
             <h:panelGrid columns="2" cellpadding="5" styleClass="topAligned">
             <h:outputLabel for="Tipo Funcionário" value="Tipo de Funcionário: *"/>
   					<p:selectOneMenu id="Tipo" converter="TipoFuncConverter"
-  							value="#{funcionario.funcionario.tipoFuncionario}"  required="true" label="Tipo Funcionário" >
+  							value="#{funcionario.funcionario.tipoFuncionario}"  required="true" label="Tipo Funcionário">
   						<f:selectItem noSelectionOption="true" 
   								itemLabel="Selecione tipo de funcionário" itemValue="-1"/>
   						<f:selectItems value="#{funcionario.tipoFuncionario}" var="tipoFunc"
