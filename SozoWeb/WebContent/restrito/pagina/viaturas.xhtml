@@ -65,11 +65,8 @@
 </h:form>
 <h:form id="form2">	
 	<p:panel id="panel" header="Opções" style="margin-top: 20px;">
-        <p:messages id="messages" />
         <h:inputHidden value="#{viatura.viatura.id}" />
         <h:panelGrid columns="2" cellpadding="5">
-        	
-            
  
             <p:outputLabel for="text2" value="Placa:" />
             <p:inputText id="text2" value="#{viatura.viatura.placa}" required="true" />
@@ -79,9 +76,11 @@
             
             <p:outputLabel for="text3" value="Descricao" />
             <p:inputText id="text3" value="#{viatura.viatura.descricao}" required="true" />
-
-            <p:commandButton process="tbl" icon="ui-icon-trash" value="Salvar" actionListener="#{viatura.salvarViatura}" ajax="false"/>
-			<p:commandButton process="tbl" icon="ui-icon-trash" value="Alterar" actionListener="#{viatura.alterarViatura}" ajax="false"/>
+		</h:panelGrid>
+		<h:panelGrid columns="3" cellpadding="5">
+            <p:commandButton process="tbl" icon="ui-icon-pin-w" value="Salvar" actionListener="#{viatura.salvarViatura}" ajax="false"/>
+			<p:commandButton process="tbl" icon="ui-icon-pencil" value="Alterar" actionListener="#{viatura.alterarViatura}" ajax="false"/>
+			<p:commandButton value="Limpar Campos"  icon="ui-icon-refresh" ajax="true" immediate="true" type="reset"/>  
         </h:panelGrid>
     </p:panel>
     

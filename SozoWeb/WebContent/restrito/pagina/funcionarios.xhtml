@@ -124,7 +124,7 @@
         	</h:panelGrid>
         </h:panelGrid>
         <h:panelGrid  columns="4" cellpadding="5">
-        <p:commandButton process="tbl" icon="ui-icon-pin-w" value="Adicionar Funcionário" actionListener="#{funcionario.salvarFuncionario}" ajax="false" update=":form"/>
+        	<p:commandButton process="tbl" icon="ui-icon-pin-w" value="Adicionar Funcionário" actionListener="#{funcionario.salvarFuncionario}" ajax="false" update=":form"/>
 			<p:commandButton process="tbl" icon="ui-icon-pencil" value="Salvar Alterarações" actionListener="#{funcionario.alterarFuncionario}" ajax="false"/>
 			<p:commandButton value="Limpar Campos"  icon="ui-icon-refresh" ajax="true" immediate="true" type="reset"/>  
     	</h:panelGrid>
