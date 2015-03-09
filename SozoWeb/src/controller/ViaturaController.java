@@ -13,7 +13,7 @@ import dao.ViaturaDAO;
 
 @ManagedBean(name="viatura")
 @RequestScoped
-public class ViaturaController extends BaseBeanController<Viatura> {
+public class ViaturaController {
 	private Viatura viatura;
 	private Viatura viaturaSelecionada;
 	private Viatura viaturaConsulta;
@@ -22,10 +22,8 @@ public class ViaturaController extends BaseBeanController<Viatura> {
 
 	
 	public ViaturaController() {
-		super();
 		EntityManagerHelper emh = new EntityManagerHelper();            
         dao = new ViaturaDAO(emh.getEntityManager());
-        this.baseDao = dao;
         
         viatura = new Viatura();
         viaturaConsulta = new Viatura();
