@@ -98,11 +98,12 @@
                 <f:validateLength minimum="2" />
             </p:inputText>
  
-            <p:outputLabel for="text2" value="Usuário:" />
-            <p:inputText id="text2" value="#{funcionario.funcionario.usuario}" required="true"/>
-            
+            <p:outputLabel for="text2" value="Usuário:"  />
+            <p:inputText id="text2" value="#{funcionario.funcionario.usuario}" required="true" maxlength="15">
+            <f:validateLength minimum="4" maximum="20" />
+            </p:inputText>
             <p:outputLabel for="text3" value="Senha:" />
-            <p:inputText id="text3" value="#{funcionario.funcionario.senha}" required="true"/>
+            <p:password id="text3" value="#{funcionario.funcionario.senha}" feedback="true" />
             </h:panelGrid>
             <h:panelGrid columns="2" cellpadding="5" styleClass="topAligned">
             <h:outputLabel for="Tipo Funcionário" value="Tipo de Funcionário: *"/>
