@@ -5,8 +5,17 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
  
 
+
+
+
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Example;
+import org.hibernate.criterion.MatchMode;
  
 @SuppressWarnings("unchecked")
 public class GenericDAO<PK, T> {
@@ -66,7 +75,17 @@ public class GenericDAO<PK, T> {
         return entityManager.createQuery(("FROM " + getTypeClass().getName()))
                 .getResultList();
     }
- 
+    
+    public List<T> findByObject(T entity) {
+	
+		Example example = Example.create(entity).enableLike(MatchMode.ANYWHERE).excludeZeroes().ignoreCase();
+		Session s = (Session) entityManager.getDelegate();
+		Criteria result = s.createCriteria(entity.getClass()).add(example);
+		
+		return result.list();
+
+	}
+    
     private Class<?> getTypeClass() {
         Class<?> clazz = (Class<?>) ((ParameterizedType) this.getClass()
                 .getGenericSuperclass()).getActualTypeArguments()[1];

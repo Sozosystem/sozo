@@ -1,37 +1,42 @@
 package controller;
 
-import java.io.IOException;
+
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 
+import util.Mensagem;
 import model.Funcionario;
 import dao.EntityManagerHelper;
 import dao.FuncionarioDAO;
 
 @ManagedBean(name="funcionario")
-@SessionScoped
+@RequestScoped
 public class FuncionarioController {
-	private Funcionario funcionarioLogado;
 	private Funcionario funcionario;
 	private Funcionario funcionarioSelecionado;
+	private Funcionario funcionarioConsulta;
 	private FuncionarioDAO dao;
-
+	private List<Funcionario> listaFuncionarios;
 	
 	public FuncionarioController() {
 		EntityManagerHelper emh = new EntityManagerHelper();            
         dao = new FuncionarioDAO(emh.getEntityManager());
         
         funcionario = new Funcionario();
+        funcionarioConsulta = new Funcionario();
+        mostrarTodosFuncionarios();
 	}
 
 	
 	public List<Funcionario> getListaFuncionarios() {
-		return dao.findAll();
+		return listaFuncionarios;
 	}
 	
 	public void salvarFuncionario() {
@@ -41,58 +46,45 @@ public class FuncionarioController {
 		f.setUsuario(funcionario.getUsuario());
 		f.setSenha(funcionario.getSenha());
 		dao.save(f);
+		mostrarTodosFuncionarios();
+		funcionario = new Funcionario();
+		Mensagem.alerta(Mensagem.INFO, "titulo", "Funcionário adicionado com sucesso");
+		FacesContext.getCurrentInstance().addMessage("teste", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ocorreu um problema", "Funcionário adicionado com sucesso"));
 	}
 	
-	public String alterarFuncionario() {
+	public void alterarFuncionario() {
+		System.out.println(funcionario.getId() + " " + funcionario.getNome());
 		dao.update(funcionario);
-		return "index.xhtml";
+		mostrarTodosFuncionarios();
+		funcionario = new Funcionario();
 	}
 	
-	public String removerFuncionario() {
+	public void removerFuncionario() {
 		dao.delete(funcionarioSelecionado);
-		//funcionario = new Funcionario();
-		return "index.xhtml";
+		mostrarTodosFuncionarios();
+	}
+	
+	public void consultarFuncionario() {
+		listaFuncionarios = dao.findByObject(funcionarioConsulta);
+	}
+	
+	public void funcionarioAlterarSelecionado() {
+		if(funcionarioSelecionado == null) return;
+		funcionario = funcionarioSelecionado;
+	}
+	
+	public void mostrarTodosFuncionarios() {
+		listaFuncionarios = dao.findAll();
 	}
 	
 	public Funcionario getFuncionario() {
 		return funcionario;
 	}
-
+	
 	public void setFuncionario(Funcionario funcionario) {
 		this.funcionario = funcionario;
 	}
 	
-	public Funcionario getFuncionarioLogado() {
-		return this.funcionarioLogado;
-	}
-	
-	public void logar(ActionEvent actionEvent) throws Exception {
-        Funcionario f = new Funcionario();
-        f.setUsuario(funcionario.getUsuario());
-        f.setSenha(funcionario.getSenha());
-        try {
-        	this.funcionarioLogado = dao.verificarLogin(f);
-        	System.out.println("Funcionário logado com sucesso");
-        	FacesContext.getCurrentInstance().getExternalContext().redirect("restrito/index.xhtml");
-        	funcionario = new Funcionario();
-        }catch(Exception e) {
-        	FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ocorreu um problema", e.getMessage()));
-        }
-    }
-	public void deslogar() {
-		System.out.println("Usuário deslogado");
-		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-		//this.logado = false;
-		//this.cliente = null;
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info!", "Logoff efetuado com sucesso"));
-		try {
-			FacesContext.getCurrentInstance().getExternalContext().redirect("login-funcionario.xhtml");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
 	public Funcionario getFuncionarioSelecionado() {
         return funcionarioSelecionado;
     }
@@ -100,6 +92,16 @@ public class FuncionarioController {
     public void setFuncionarioSelecionado(Funcionario f) {
         this.funcionarioSelecionado = f;
     }
+
+
+	public Funcionario getFuncionarioConsulta() {
+		return funcionarioConsulta;
+	}
+
+
+	public void setFuncionarioConsulta(Funcionario funcionarioConsulta) {
+		this.funcionarioConsulta = funcionarioConsulta;
+	}
     
  
 }

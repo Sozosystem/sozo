@@ -1,7 +1,6 @@
 package filter;
 
 import java.io.IOException;
-
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -10,8 +9,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import controller.FuncionarioController;
+import controller.LoginController;
 
  
 public class LoginFilter implements Filter {
@@ -23,11 +21,10 @@ public class LoginFilter implements Filter {
          public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         	 	String contextPath = ((HttpServletRequest) request).getContextPath();
         	 	String area = ((HttpServletRequest) request).getRequestURI().split("/")[2];
-        	 	System.out.println(area);
         	 	if(area.equals("restrito")) {
-	                FuncionarioController funcionario = (FuncionarioController) ((HttpServletRequest) request).getSession().getAttribute("funcionario");
-	                if (funcionario == null || funcionario.getFuncionarioLogado() == null) {
-	                	((HttpServletResponse) response).sendRedirect(contextPath + "/login-cliente.xhtml");
+	                LoginController login = (LoginController) ((HttpServletRequest) request).getSession().getAttribute("login");
+	                if (login == null || login.getFuncionarioLogado() == null) {
+	                	((HttpServletResponse) response).sendRedirect(contextPath + "/login-funcionario.xhtml");
 	                } else {
 	                	chain.doFilter(request, response);
 	                }
@@ -35,8 +32,7 @@ public class LoginFilter implements Filter {
          }
  
          public void init(FilterConfig arg0) throws ServletException {
-           // TODO Auto-generated method stub
- 
+
          }
  
 }

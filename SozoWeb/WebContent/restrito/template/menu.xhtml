@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+		
+	<ui:composition>
+	   <h:form>  
+		    <p:growl id="messages" />
+			<p:menubar>
+				<p:menuitem value="Funcionários &nbsp;" url="funcionarios.xhtml" ajax="false" icon="ui-icon-triangle-1-e" />
+				<p:menuitem value="Veículos &nbsp;" url="viaturas.xhtml" ajax="false" icon="ui-icon-triangle-1-e" />
+		 		<p:menuitem value="Sair &nbsp;" actionListener="#{login.deslogar}"  icon="ui-icon-close" />
+		    </p:menubar>
+		</h:form>
+	</ui:composition>
+</html>

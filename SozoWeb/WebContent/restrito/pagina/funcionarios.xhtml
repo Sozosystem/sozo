@@ -11,9 +11,29 @@
 	<title>Projeto Teste</title>
 </h:head>
 <h:body>
+	<ui:composition template="../template/layout.xhtml">
+		<ui:define name="content">
+ 
+    	
 <p:panel header="Funcionários">
 
-<h:form id="form">
+<h:form id="fordsm">
+	<p:panel id="basic" header="Buscar funcionários" style="margin-bottom:20px">
+			        <h:panelGrid columns="10" cellpadding="10">
+			       		<p:outputLabel for="nome" value="Nome:" />
+			            <p:inputMask id="nome" value="#{funcionario.funcionarioConsulta.nome}"></p:inputMask>
+			            
+			            <p:outputLabel for="tipo" value="Tipo:" />
+			            <p:inputMask id="tipo" mask="999.999.999-99"></p:inputMask>
+			            
+			            <p:outputLabel for="usuario" value="Usuário:" />
+			            <p:inputMask id="usuario" value="#{funcionario.funcionarioConsulta.usuario}"></p:inputMask>
+			            
+			            <p:commandButton value="Consultar" icon="ui-icon-search" actionListener="#{funcionario.consultarFuncionario}" ajax="false" />
+			        </h:panelGrid>
+		    </p:panel>
+		    </h:form>
+		    <h:form id="form">
 	<p:panel header="Lista de Funcionários">
 		<p:dataTable selectionMode="single" id="tbl" var="f" value="#{funcionario.listaFuncionarios}" selection="#{funcionario.funcionarioSelecionado}" rowKey="#{f.id}"  rows="10"  paginator="true" emptyMessage="Nenhum registro encontrado.">
 			<p:column headerText="Id">
@@ -35,15 +55,16 @@
 			        <h:outputText value="Tipo" /> 
 			    </p:column>
 			    <f:facet name="footer">
-		            <p:commandButton process="tbl" icon="ui-icon-search" update=":form" value="Alterar" />
-		            <p:commandButton process="tbl" icon="ui-icon-trash" value="Remover" actionListener="#{funcionario.removerFuncionario}"/>
+		            <p:commandButton process="tbl" icon="ui-icon-search" actionListener="#{funcionario.funcionarioAlterarSelecionado}" ajax="false" value="Alterar" />
+		            <p:commandButton process="tbl" icon="ui-icon-trash" value="Remover" action="#{funcionario.removerFuncionario}" update=":form" />
 		        </f:facet>
 		</p:dataTable>
 	</p:panel>
+	</h:form>
+	<h:form id="form2">
 	<p:panel id="panel" header="Form" style="margin-bottom:10px;">
-        <p:messages id="messages" />
         <h:panelGrid columns="3" cellpadding="5">
-        	<!-- h:inputHidden value="#{funcionario.funcionario.id}"/-->
+        	<h:inputHidden value="#{funcionario.funcionario.id}" />
             <p:outputLabel for="text1" value="Nome:" />
             <p:inputText id="text1" value="#{funcionario.funcionario.nome}" required="true" label="Nome">
                 <f:validateLength minimum="2" />
@@ -58,7 +79,7 @@
             <p:inputText id="text3" value="#{funcionario.funcionario.senha}" required="true" label="Surname"/>
             <p:message for="text3" />
 
-            <p:commandButton process="tbl" icon="ui-icon-trash" value="Salvar" actionListener="#{funcionario.salvarFuncionario}" ajax="false"/>
+            <p:commandButton process="tbl" icon="ui-icon-trash" value="Salvar" actionListener="#{funcionario.salvarFuncionario}" ajax="false" update=":form"/>
 			<p:commandButton process="tbl" icon="ui-icon-trash" value="Alterar" actionListener="#{funcionario.alterarFuncionario}" ajax="false"/>
         </h:panelGrid>
     </p:panel>
@@ -67,7 +88,9 @@
 	
 	
 </h:form>
-</p:panel>	
+</p:panel>
+		</ui:define>
+	</ui:composition>
 </h:body>
 
 </html>
