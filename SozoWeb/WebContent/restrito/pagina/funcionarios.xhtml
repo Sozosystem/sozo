@@ -18,23 +18,44 @@
 <p:panel header="Funcionários">
 
 <h:form id="fordsm">
-	<p:panel id="basic" header="Buscar funcionários" style="margin-bottom:20px">
-			        <h:panelGrid columns="10" cellpadding="10">
+	<p:panel id="basic" header="Consultar Funcionários" style="margin-top: 20px;">
+			        	<h:panelGrid columns="6" cellpadding="5">
+			        	<!-- p:outputLabel for="id" value="ID:" />
+			            <p:inputMask id="id" value="#{funcionario.funcionarioConsulta.id}"></p:inputMask-->
+			            
 			       		<p:outputLabel for="nome" value="Nome:" />
 			            <p:inputMask id="nome" value="#{funcionario.funcionarioConsulta.nome}"></p:inputMask>
 			            
-			            <p:outputLabel for="tipo" value="Tipo:" />
-			            <p:inputMask id="tipo" mask="999.999.999-99"></p:inputMask>
+			            
 			            
 			            <p:outputLabel for="usuario" value="Usuário:" />
 			            <p:inputMask id="usuario" value="#{funcionario.funcionarioConsulta.usuario}"></p:inputMask>
-			            
+			            </h:panelGrid>
+			            <h:panelGrid columns="6" cellpadding="5">
+			             <p:outputLabel value="Tipo:" />
+			           	<p:selectOneMenu id="tipofuncc" converter="TipoFuncConverter"
+  							value="#{funcionario.funcionario.tipoFuncionario}">
+  						<f:selectItem noSelectionOption="true" 
+  								itemLabel="Selecione tipo de funcionário" itemValue="-1"/>
+  						<f:selectItems value="#{funcionario.tipoFuncionario}" var="tipoFunc"
+  								itemLabel="#{tipoFunc.descricao}" />
+  					</p:selectOneMenu>
+			             <p:outputLabel value="Situação" />
+  					<p:selectOneMenu id="text4" value="#{funcionario.funcionarioConsulta.situacao}">
+  						<f:selectItem itemLabel="Selecione uma opção" itemValue="" />
+  						<f:selectItems value="#{funcionario.situacoes}" />
+  					</p:selectOneMenu>
+  					</h:panelGrid>
+			            <h:panelGrid columns="4" cellpadding="5">
+			           
 			            <p:commandButton value="Consultar" icon="ui-icon-search" actionListener="#{funcionario.consultarFuncionario}" ajax="false" />
-			        </h:panelGrid>
+			            <p:commandButton value="Mostrar Todos" icon="ui-icon-search" actionListener="#{funcionario.mostrarTodosFuncionarios}" ajax="false" />
+			            </h:panelGrid>
+			        
 		    </p:panel>
 		    </h:form>
 		    <h:form id="form">
-	<p:panel header="Lista de Funcionários">
+	<p:panel header="Lista de Funcionários" style="margin-top: 20px;">
 		<p:dataTable selectionMode="single" id="tbl" var="f" value="#{funcionario.listaFuncionarios}" selection="#{funcionario.funcionarioSelecionado}" rowKey="#{f.id}"  rows="10"  paginator="true" emptyMessage="Nenhum registro encontrado.">
 			<p:column headerText="Id">
 		        <h:outputText value="#{f.id}" />       
@@ -52,36 +73,61 @@
 					<f:facet name="header">
 		                <h:outputText value="Tipo do funcionário" />
 		            </f:facet>
-			        <h:outputText value="Tipo" /> 
+			        <h:outputText value="#{f.tipoFuncionario.nome}" /> 
+			    </p:column>
+			    <p:column headerText="Situação">
+					<f:facet name="header">
+		                <h:outputText value="Situação" />
+		            </f:facet>
+			        <h:outputText value="#{f.situacao}" /> 
 			    </p:column>
 			    <f:facet name="footer">
-		            <p:commandButton process="tbl" icon="ui-icon-search" actionListener="#{funcionario.funcionarioAlterarSelecionado}" ajax="false" value="Alterar" />
+		            <p:commandButton process="tbl" icon="ui-icon-pencil" actionListener="#{funcionario.funcionarioAlterarSelecionado}" ajax="false" value="Alterar" />
 		            <p:commandButton process="tbl" icon="ui-icon-trash" value="Remover" action="#{funcionario.removerFuncionario}" update=":form" />
 		        </f:facet>
 		</p:dataTable>
 	</p:panel>
 	</h:form>
 	<h:form id="form2">
-	<p:panel id="panel" header="Form" style="margin-bottom:10px;">
-        <h:panelGrid columns="3" cellpadding="5">
-        	<h:inputHidden value="#{funcionario.funcionario.id}" />
+	<p:panel id="panel" header="Opções" style="margin-top: 20px;">
+		<h:inputHidden value="#{funcionario.funcionario.id}" />
+        <h:panelGrid columns="2" cellpadding="5">
+        	<h:panelGrid columns="2" cellpadding="5">
             <p:outputLabel for="text1" value="Nome:" />
-            <p:inputText id="text1" value="#{funcionario.funcionario.nome}" required="true" label="Nome">
+            <p:inputText id="text1" value="#{funcionario.funcionario.nome}" required="true">
                 <f:validateLength minimum="2" />
             </p:inputText>
-            <p:message for="text1" />
  
             <p:outputLabel for="text2" value="Usuário:" />
-            <p:inputText id="text2" value="#{funcionario.funcionario.usuario}" required="true" label="Surname"/>
-            <p:message for="text2" />
+            <p:inputText id="text2" value="#{funcionario.funcionario.usuario}" required="true"/>
             
             <p:outputLabel for="text3" value="Senha:" />
-            <p:inputText id="text3" value="#{funcionario.funcionario.senha}" required="true" label="Surname"/>
-            <p:message for="text3" />
+            <p:inputText id="text3" value="#{funcionario.funcionario.senha}" required="true"/>
+            </h:panelGrid>
+            <h:panelGrid columns="2" cellpadding="5" styleClass="topAligned">
+            <h:outputLabel for="Tipo Funcionário" value="Tipo de Funcionário: *"/>
+  					<p:selectOneMenu id="Tipo" converter="TipoFuncConverter"
+  							value="#{funcionario.funcionario.tipoFuncionario}"  required="true" label="Tipo Funcionário" >
+  						<f:selectItem noSelectionOption="true" 
+  								itemLabel="Selecione tipo de funcionário" itemValue="-1"/>
+  						<f:selectItems value="#{funcionario.tipoFuncionario}" var="tipoFunc"
+  								itemLabel="#{tipoFunc.descricao}" />
+  					</p:selectOneMenu>
+            
+            	<h:outputLabel for="Situação" value="Situação: *"/>
+  					<p:selectOneMenu id="Situação" value="#{funcionario.funcionario.situacao}" required="true" label="Situação" >
+  						<f:selectItem itemLabel="Selecione uma opção" itemValue="" />
+  						<f:selectItems value="#{funcionario.situacoes}" />
+  					</p:selectOneMenu>
 
-            <p:commandButton process="tbl" icon="ui-icon-trash" value="Salvar" actionListener="#{funcionario.salvarFuncionario}" ajax="false" update=":form"/>
-			<p:commandButton process="tbl" icon="ui-icon-trash" value="Alterar" actionListener="#{funcionario.alterarFuncionario}" ajax="false"/>
+            
+        	</h:panelGrid>
         </h:panelGrid>
+        <h:panelGrid  columns="4" cellpadding="5">
+        <p:commandButton process="tbl" icon="ui-icon-pin-w" value="Adicionar Funcionário" actionListener="#{funcionario.salvarFuncionario}" ajax="false" update=":form"/>
+			<p:commandButton process="tbl" icon="ui-icon-pencil" value="Salvar Alterarações" actionListener="#{funcionario.alterarFuncionario}" ajax="false"/>
+			<p:commandButton value="Limpar Campos"  icon="ui-icon-refresh" ajax="true" immediate="true" type="reset"/>  
+    	</h:panelGrid>
     </p:panel>
 	
 

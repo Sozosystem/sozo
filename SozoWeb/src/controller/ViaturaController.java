@@ -1,64 +1,116 @@
 package controller;
 
+
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-
+import javax.faces.bean.RequestScoped;
+import model.Viatura;
 import dao.EntityManagerHelper;
 import dao.ViaturaDAO;
-import model.Viatura;
 
 @ManagedBean(name="viatura")
+@RequestScoped
 public class ViaturaController {
-	
-	private ViaturaDAO dao;
 	private Viatura viatura;
 	private Viatura viaturaSelecionada;
+	private Viatura viaturaConsulta;
+	private ViaturaDAO dao;
+	private List<Viatura> listaViaturas;
+	//private Situacao[] situacoes = Situacao.values();
+	//private List<TipoFuncionario> tipoFuncionario;
+	//private TipoFuncionarioDAO tipoFuncionarioDao;
 	
 	public ViaturaController() {
 		EntityManagerHelper emh = new EntityManagerHelper();            
         dao = new ViaturaDAO(emh.getEntityManager());
+        //tipoFuncionarioDao = new TipoFuncionarioDAO(emh.getEntityManager());
+        
         viatura = new Viatura();
+        viaturaConsulta = new Viatura();
+        //listarTiposFunc();
+        mostrarTodasViaturas();
 	}
+
 	
-	public List<Viatura> getListaViaturas() {
-		return dao.findAll();
-	}
+	/*public void listarTiposFunc(){
+		tipoFuncionario = tipoFuncionarioDao.findAll();
+	}*/
 	
 	public void salvarViatura() {
-		System.out.println(viatura);
 		Viatura v = new Viatura();
-		v.setTipo(viatura.getTipo());
 		v.setPlaca(viatura.getPlaca());
+		v.setTipo(viatura.getTipo());
 		v.setDescricao(viatura.getDescricao());
+
 		dao.save(v);
+		mostrarTodasViaturas();
+		viatura = new Viatura();
 	}
 	
-	public String alterarViatura() {
+	public void alterarViatura() {
 		dao.update(viatura);
-		return "index.xhtml";
+		mostrarTodasViaturas();
+		viatura = new Viatura();
 	}
 	
-	public String removerViatura() {
+	public void removerViatura() {
 		dao.delete(viaturaSelecionada);
-		//viatura = new viatura();
-		return "index.xhtml";
+		mostrarTodasViaturas();
 	}
 	
+	public void consultarViatura() {
+		listaViaturas = dao.findByObject(viaturaConsulta);
+	}
+	
+	public void viaturaAlterarSelecionada() {
+		if(viaturaSelecionada == null) return;
+		viatura = viaturaSelecionada;
+	}
+	
+	public void mostrarTodasViaturas() {
+		listaViaturas = dao.findAll();
+	}
+
+
 	public Viatura getViatura() {
 		return viatura;
 	}
 
+
+	public Viatura getViaturaSelecionada() {
+		return viaturaSelecionada;
+	}
+
+
+	public Viatura getViaturaConsulta() {
+		return viaturaConsulta;
+	}
+
+
+	public List<Viatura> getListaViaturas() {
+		return listaViaturas;
+	}
+
+
 	public void setViatura(Viatura viatura) {
 		this.viatura = viatura;
 	}
-	
-	public Viatura getViaturaSelecionada() {
-        return viaturaSelecionada;
-    }
+
+
+	public void setViaturaSelecionada(Viatura viaturaSelecionada) {
+		this.viaturaSelecionada = viaturaSelecionada;
+	}
+
+
+	public void setViaturaConsulta(Viatura viaturaConsulta) {
+		this.viaturaConsulta = viaturaConsulta;
+	}
+
+
+	public void setListaViaturas(List<Viatura> listaViaturas) {
+		this.listaViaturas = listaViaturas;
+	}
+
  
-    public void setViaturaSelecionada(Viatura v) {
-        this.viaturaSelecionada = v;
-    }
-	
 }
