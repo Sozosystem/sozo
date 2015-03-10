@@ -3,6 +3,7 @@ package controller;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 
 import util.Mensagem;
 import model.Situacao;
@@ -11,6 +12,7 @@ import dao.EntityManagerHelper;
 import dao.SolicitanteDAO;
 
 @ManagedBean(name="solicitante")
+@ViewScoped
 public class SolicitanteController {
 	
 	private SolicitanteDAO dao;
@@ -19,6 +21,7 @@ public class SolicitanteController {
 	private Solicitante solicitanteConsulta;
 	private List<Solicitante> listaSolicitantes;
 	private Situacao[] situacoes = Situacao.values();
+	private boolean podeAlterar;
 	
 	
 	public SolicitanteController(){
@@ -34,14 +37,11 @@ public class SolicitanteController {
 	}
 	
 	public void alterarSolicitante() {
-		if(solicitante == null) {
-			Mensagem.alerta(Mensagem.INFO, "Selecione um solicitante", null);
-			return;
-		}
-		
 		dao.update(solicitante);
 		mostrarTodosSolicitantes();
 		solicitante = new Solicitante();
+		podeAlterar = false;
+		Mensagem.alerta(Mensagem.INFO, "Situação do solicitante alterada com sucesso", null);
 	}
 	
 	public void mostrarTodosSolicitantes() {
@@ -49,9 +49,12 @@ public class SolicitanteController {
 	}
 	
 	public void alterarSolicitanteSelecionado() {
-		if (solicitanteSelecionado == null)
+		if(solicitanteSelecionado == null) {
+			Mensagem.alerta(Mensagem.INFO, "Selecione um solicitante para alterar", null);
 			return;
+		}
 		solicitante = solicitanteSelecionado;
+		podeAlterar = true;
 	}
 
 	public Solicitante getSolicitante() {
@@ -92,6 +95,14 @@ public class SolicitanteController {
 
 	public void setSituacoes(Situacao[] situacoes) {
 		this.situacoes = situacoes;
+	}
+
+	public boolean getPodeAlterar() {
+		return podeAlterar;
+	}
+
+	public void setPodeAlterar(boolean podeAlterar) {
+		this.podeAlterar = podeAlterar;
 	}
 
 

@@ -3,22 +3,24 @@ package controller;
 
 import java.util.List;
 
-import javax.faces.application.ProtectedViewException;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+
+import util.Mensagem;
 import model.Viatura;
 import dao.EntityManagerHelper;
 import dao.ViaturaDAO;
 
 @ManagedBean(name="viatura")
-@RequestScoped
+@ViewScoped
 public class ViaturaController {
 	private Viatura viatura;
 	private Viatura viaturaSelecionada;
 	private Viatura viaturaConsulta;
 	private ViaturaDAO dao;
 	private List<Viatura> listaViaturas;
+	private boolean podeAlterar;
 
 	
 	public ViaturaController() {
@@ -32,6 +34,14 @@ public class ViaturaController {
 
 	
 	public void salvarViatura() {
+		Viatura vituraPlaca = new Viatura();
+		vituraPlaca.setPlaca(viatura.getPlaca());
+		List<Viatura> l = dao.findByObject(viaturaConsulta);
+		if(l.size() != 0) {
+			Mensagem.alerta(Mensagem.ERRO, "Uma viatura com esta placa já está cadastrada", null);
+			return;
+		}
+		
 		Viatura v = new Viatura();
 		v.setPlaca(viatura.getPlaca());
 		v.setTipo(viatura.getTipo());
@@ -40,17 +50,21 @@ public class ViaturaController {
 		dao.save(v);
 		mostrarTodasViaturas();
 		viatura = new Viatura();
+		Mensagem.alerta(Mensagem.INFO, "Viatura cadastrada com sucesso", null);
 	}
 	
 	public void alterarViatura() {
 		dao.update(viatura);
 		mostrarTodasViaturas();
 		viatura = new Viatura();
+		podeAlterar = false;
+		Mensagem.alerta(Mensagem.INFO, "Viatura adicionada com sucesso", null);
 	}
 	
 	public void removerViatura() {
 		dao.delete(viaturaSelecionada);
 		mostrarTodasViaturas();
+		Mensagem.alerta(Mensagem.INFO, "Viatura removida com sucesso", null);
 	}
 	
 	public void consultarViatura() {
@@ -58,8 +72,12 @@ public class ViaturaController {
 	}
 	
 	public void viaturaAlterarSelecionada() {
-		if(viaturaSelecionada == null) return;
+		if(viaturaSelecionada == null) {
+			Mensagem.alerta(Mensagem.INFO, "Selecione uma viatura para alterar", null);
+			return;
+		}
 		viatura = viaturaSelecionada;
+		podeAlterar = true;
 	}
 	
 	public void mostrarTodasViaturas() {
@@ -104,6 +122,16 @@ public class ViaturaController {
 
 	public void setListaViaturas(List<Viatura> listaViaturas) {
 		this.listaViaturas = listaViaturas;
+	}
+
+
+	public boolean getPodeAlterar() {
+		return podeAlterar;
+	}
+
+
+	public void setPodeAlterar(boolean podeAlterar) {
+		this.podeAlterar = podeAlterar;
 	}
 
  

@@ -3,20 +3,22 @@ package controller;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 
+import util.Mensagem;
 import model.TipoFuncionario;
 import dao.EntityManagerHelper;
 import dao.TipoFuncionarioDAO;
 
 @ManagedBean(name="tipoFuncionario")
-@RequestScoped
+@ViewScoped
 public class TipoFuncionarioController {
 	
 	private TipoFuncionarioDAO dao;
 	private TipoFuncionario tipoFunc;
 	private TipoFuncionario tipoFuncSelecionado;
 	private List<TipoFuncionario> listaTiposFunc;
+	private boolean podeAlterar;
 	
 	public TipoFuncionarioController() {
 		EntityManagerHelper emh = new EntityManagerHelper();            
@@ -36,6 +38,7 @@ public class TipoFuncionarioController {
 		dao.save(tipo);
 		mostrarTodosTipos();
 		tipoFunc = new TipoFuncionario();
+		Mensagem.alerta(Mensagem.INFO, "Tipo de funcionário cadastrado com sucesso", null);
 	}
 	
 	public void mostrarTodosTipos() {
@@ -46,16 +49,23 @@ public class TipoFuncionarioController {
 		dao.update(tipoFunc);
 		mostrarTodosTipos();
 		tipoFunc = new TipoFuncionario();
+		Mensagem.alerta(Mensagem.INFO, "Tipo de funcionário alterado com sucesso", null);
+		podeAlterar = false;
 	}
 	
 	public void removerTipo() {
 		dao.delete(tipoFuncSelecionado);
 		mostrarTodosTipos();
+		Mensagem.alerta(Mensagem.INFO, "Tipo de funcionário removido com sucesso", null);
 	}
 	
 	public void alterarTipoFuncSelecionado() {
-		if(tipoFunc == null) return;
+		if(tipoFuncSelecionado == null) {
+			Mensagem.alerta(Mensagem.INFO, "Selecione um Tipo de Funcionário para alterar", null);
+			return;
+		}
 		tipoFunc = tipoFuncSelecionado;
+		podeAlterar = true;
 	}
 	
 	public TipoFuncionario getTipoFunc() {
@@ -82,6 +92,14 @@ public class TipoFuncionarioController {
 
 	public void setListaTiposFunc(List<TipoFuncionario> listaTiposFunc) {
 		this.listaTiposFunc = listaTiposFunc;
+	}
+
+	public boolean getPodeAlterar() {
+		return podeAlterar;
+	}
+
+	public void setPodeAlterar(boolean podeAlterar) {
+		this.podeAlterar = podeAlterar;
 	}
 
 }

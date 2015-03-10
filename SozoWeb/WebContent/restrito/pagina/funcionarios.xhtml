@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
@@ -83,7 +82,7 @@
 			    </p:column>
 			    <f:facet name="footer">
 		            <p:commandButton process="tbl" icon="ui-icon-pencil" actionListener="#{funcionario.funcionarioAlterarSelecionado}" ajax="false" value="Alterar" />
-		            <p:commandButton process="tbl" icon="ui-icon-trash" value="Remover" action="#{funcionario.removerFuncionario}" update=":form" />
+		            <p:commandButton process="tbl" icon="ui-icon-trash" value="Remover" action="#{funcionario.removerFuncionario}" ajax="false" />
 		        </f:facet>
 		</p:dataTable>
 	</p:panel>
@@ -103,10 +102,10 @@
             <f:validateLength minimum="4" maximum="20" />
             </p:inputText>
             <p:outputLabel for="text3" value="Senha:" />
-            <p:password id="text3" value="#{funcionario.funcionario.senha}" match="psw2" validatorMessage="Os campos 'Senha' não são iguais" required="true" />
+            <p:password id="text3" value="#{funcionario.funcionario.senha}" match="psw2" validatorMessage="Os campos 'Senha' não são iguais" required="true" disabled="#{funcionario.podeAlterar}" />
             	 
             <p:outputLabel for="psw2" value="Confirmar Senha:" />
-            <p:password id="psw2" value="#{funcionario.funcionario.senha}">
+            <p:password id="psw2" value="#{funcionario.funcionario.senha}"  disabled="#{funcionario.podeAlterar}">
             	<f:validateLength minimum="6" maximum="20"  validatorMessage="asdasdasdasd" />
             </p:password>
             </h:panelGrid>
@@ -130,9 +129,8 @@
         	</h:panelGrid>
         </h:panelGrid>
         <h:panelGrid  columns="4" cellpadding="5">
-        	<p:commandButton process="tbl" icon="ui-icon-pin-w" value="Adicionar Funcionário" actionListener="#{funcionario.salvarFuncionario}" ajax="false" update=":form"/>
-			<p:commandButton process="tbl" icon="ui-icon-pencil" value="Salvar Alterarações" actionListener="#{funcionario.alterarFuncionario}" ajax="false"/>
-			<p:commandButton value="Limpar Campos"  icon="ui-icon-refresh" ajax="true" immediate="true" type="reset"/>  
+        	<p:commandButton icon="ui-icon-pin-w" value="Adicionar Funcionário" actionListener="#{funcionario.salvarFuncionario}" ajax="false" update=":form2" disabled="#{funcionario.podeAlterar}"/>
+			<p:commandButton icon="ui-icon-pencil" value="Salvar Alterarações" actionListener="#{funcionario.alterarFuncionario}" ajax="false" disabled="#{!funcionario.podeAlterar}"/>
     	</h:panelGrid>
     </p:panel>
 	

@@ -3,7 +3,7 @@ package controller;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 
 import model.Funcionario;
 import model.Situacao;
@@ -14,7 +14,7 @@ import dao.FuncionarioDAO;
 import dao.TipoFuncionarioDAO;
 
 @ManagedBean(name = "funcionario")
-@RequestScoped
+@ViewScoped
 public class FuncionarioController {
 	private Funcionario funcionario;
 	private Funcionario funcionarioSelecionado;
@@ -24,6 +24,7 @@ public class FuncionarioController {
 	private Situacao[] situacoes = Situacao.values();
 	private List<TipoFuncionario> tipoFuncionario;
 	private TipoFuncionarioDAO tipoFuncionarioDao;
+	private boolean podeAlterar;
 
 	public FuncionarioController() {
 		EntityManagerHelper emh = new EntityManagerHelper();
@@ -55,6 +56,7 @@ public class FuncionarioController {
 			dao.save(f);
 			mostrarTodosFuncionarios();
 			funcionario = new Funcionario();
+			Mensagem.alerta(Mensagem.INFO, "Funcionário adicionado com sucesso", null);
 		} else {
 			Mensagem.alerta(Mensagem.ERRO, "Usuário já existente", "");
 		}
@@ -66,14 +68,22 @@ public class FuncionarioController {
 	}
 
 	public void alterarFuncionario() {
+		if(funcionarioSelecionado == null) {
+			Mensagem.alerta(Mensagem.INFO, "Selecione um funcionário para alterar", null);
+			return;
+		}
+		System.out.println("TENTANDO ALTERAR");
 		dao.update(funcionario);
 		mostrarTodosFuncionarios();
 		funcionario = new Funcionario();
+		podeAlterar = false;
+		Mensagem.alerta(Mensagem.INFO, "Funcionário alterado com sucesso", null);
 	}
 
 	public void removerFuncionario() {
 		dao.delete(funcionarioSelecionado);
 		mostrarTodosFuncionarios();
+		Mensagem.alerta(Mensagem.INFO, "Funcionário removido com sucesso", null);
 	}
 
 	public void consultarFuncionario() {
@@ -81,9 +91,12 @@ public class FuncionarioController {
 	}
 
 	public void funcionarioAlterarSelecionado() {
-		if (funcionarioSelecionado == null)
+		if(funcionarioSelecionado == null) {
+			Mensagem.alerta(Mensagem.INFO, "Selecione um funcionário para alterar", null);
 			return;
+		}
 		funcionario = funcionarioSelecionado;
+		podeAlterar = true;
 	}
 
 	public void mostrarTodosFuncionarios() {
@@ -128,6 +141,14 @@ public class FuncionarioController {
 
 	public void setTipoFuncionario(List<TipoFuncionario> tipoFuncionario) {
 		this.tipoFuncionario = tipoFuncionario;
+	}
+
+	public boolean getPodeAlterar() {
+		return podeAlterar;
+	}
+
+	public void setPodeAlterar(boolean podeAlterar) {
+		this.podeAlterar = podeAlterar;
 	}
 
 }

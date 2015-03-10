@@ -43,7 +43,7 @@
 				<p:panel header="Lista de Solicitantes"  style="margin-top: 20px;">
 					<p:dataTable selectionMode="single" id="tbl" var="s"
 						value="#{solicitante.listaSolicitantes}"
-						selection="#{solicitante.solicitante}" rowKey="#{s.id}" rows="10"
+						selection="#{solicitante.solicitanteSelecionado}" rowKey="#{s.id}" rows="10"
 						paginator="true" emptyMessage="Nenhum registro encontrado.">
 						<p:column headerText="Id">
 							<h:outputText value="#{s.id}" />
@@ -86,7 +86,7 @@
   	</h:panelGrid>
   	
 	<h:panelGrid columns="4" cellpadding="5">
-		<p:commandButton process="tbl" icon="ui-icon-pencil" value="Salvar Alterarações" actionListener="#{solicitante.alterarSolicitante}" ajax="false"/>
+		<p:commandButton process="tbl" icon="ui-icon-pencil" value="Salvar Alterarações" actionListener="#{solicitante.alterarSolicitante}" ajax="false" disabled="#{!solicitante.podeAlterar}"/>
 	</h:panelGrid>
 			        
 	</p:panel>

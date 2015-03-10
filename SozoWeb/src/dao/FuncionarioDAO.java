@@ -32,9 +32,8 @@ public class FuncionarioDAO extends GenericDAO<Integer, Funcionario> {
 	public boolean verificaUsuarioFunc(String usuario) {
 		boolean resposta = false;
 		String usuarioF = usuario.toUpperCase();
-		Funcionario f = new Funcionario();
 		try {
-			f = (Funcionario) this.entityManager.createQuery(
+			this.entityManager.createQuery(
 				"from Funcionario WHERE upper(usuario) ='" + usuarioF + "'")
 				.getSingleResult();
 		} catch (NoResultException e){

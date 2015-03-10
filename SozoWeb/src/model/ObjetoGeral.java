@@ -17,7 +17,6 @@ public abstract class ObjetoGeral {
 		
 	public ObjetoGeral() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	public ObjetoGeral(Calendar dataUltimaAtualizacao, Situacao situacao) {

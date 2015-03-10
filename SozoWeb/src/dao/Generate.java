@@ -1,7 +1,6 @@
 package dao;
 
 import model.Funcionario;
-import model.TipoFuncionario;
 
 
 public class Generate {
