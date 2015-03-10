@@ -36,14 +36,14 @@ public class ViaturaController {
 	public void salvarViatura() {
 		Viatura vituraPlaca = new Viatura();
 		vituraPlaca.setPlaca(viatura.getPlaca());
-		List<Viatura> l = dao.findByObject(viaturaConsulta);
+		List<Viatura> l = dao.findByObject(vituraPlaca);
 		if(l.size() != 0) {
 			Mensagem.alerta(Mensagem.ERRO, "Uma viatura com esta placa já está cadastrada", null);
 			return;
 		}
 		
 		Viatura v = new Viatura();
-		v.setPlaca(viatura.getPlaca());
+		v.setPlaca(viatura.getPlaca().toUpperCase());
 		v.setTipo(viatura.getTipo());
 		v.setDescricao(viatura.getDescricao());
 
