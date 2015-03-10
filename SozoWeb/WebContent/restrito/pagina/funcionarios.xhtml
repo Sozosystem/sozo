@@ -104,7 +104,7 @@
             <p:outputLabel for="text3" value="Senha:" />
             <p:password id="text3" value="#{funcionario.funcionario.senha}" match="psw2" validatorMessage="Os campos 'Senha' não são iguais" required="true" disabled="#{funcionario.podeAlterar}" />
             	 
-            <p:outputLabel for="psw2" value="Confirmar Senha:" />
+            <p:outputLabel for="psw2" value="Confirmar Senha: *" />
             <p:password id="psw2" value="#{funcionario.funcionario.senha}"  disabled="#{funcionario.podeAlterar}">
             	<f:validateLength minimum="6" maximum="20"  validatorMessage="asdasdasdasd" />
             </p:password>
