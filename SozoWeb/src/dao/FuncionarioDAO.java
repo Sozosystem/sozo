@@ -15,14 +15,16 @@ public class FuncionarioDAO extends GenericDAO<Integer, Funcionario> {
 
 		Funcionario funcionarioLogado = new Funcionario();
 		try {
-			funcionarioLogado = (Funcionario) this.entityManager.createQuery(
+			Funcionario f = (Funcionario) this.entityManager.createQuery(
 					"from Funcionario WHERE usuario LIKE '%"
 							+ funcionario.getUsuario()
-							+ "%' AND senha='"
-							+ funcionario.getSenha() + "'")
+							+ "%' AND senha LIKE '%"
+							+ funcionario.getSenha() + "%'")
 					.getSingleResult();
-			System.out.println(funcionarioLogado.getNome());
-		} catch (NoResultException nre) {
+			if(!f.getSenha().equals(funcionario.getSenha())) throw new Exception();
+
+			funcionarioLogado = f;
+		} catch (Exception e) {
 			throw new Exception("Login ou senha inválidos.");
 		}
 		return funcionarioLogado;
