@@ -44,7 +44,6 @@ public class LoginController {
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 		this.funcionarioLogado = null;
 		
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info!", "Logoff efetuado com sucesso"));
 		try {
 			FacesContext.getCurrentInstance().getExternalContext().redirect("login-funcionario.xhtml");
 		} catch (IOException e) {

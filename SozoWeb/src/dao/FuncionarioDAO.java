@@ -25,7 +25,7 @@ public class FuncionarioDAO extends GenericDAO<Integer, Funcionario> {
 
 			funcionarioLogado = f;
 		} catch (Exception e) {
-			throw new Exception("Login ou senha inválidos.");
+			throw new Exception("Login ou senha inválidos");
 		}
 		return funcionarioLogado;
 
