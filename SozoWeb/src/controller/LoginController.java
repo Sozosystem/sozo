@@ -32,12 +32,9 @@ public class LoginController {
         f.setSenha(funcionario.getSenha());
         try {
         	this.funcionarioLogado = funcionarioDAO.verificarLogin(f);
-        	System.out.println("Funcionário logado com sucesso :)");
-        	System.out.println(FacesContext.getCurrentInstance().getExternalContext());
         	FacesContext.getCurrentInstance().getExternalContext().redirect("restrito/pagina/index.xhtml");
         	funcionario = new Funcionario();
         }catch(Exception e) {
-        	//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ocorreu um problema", e.getMessage()));
         	Mensagem.alerta(Mensagem.ERRO, "Ocorreu um problema", e.getMessage());
         }
     }
