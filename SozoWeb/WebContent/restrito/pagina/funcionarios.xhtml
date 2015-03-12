@@ -127,7 +127,7 @@
             
             	<h:outputLabel for="Situação" value="Situação: *"/>
   					<p:selectOneMenu id="Situação" value="#{funcionario.funcionario.situacao}" required="true" label="Situação" >
-  						<f:selectItem itemLabel="Selecione uma opção" itemValue="" />
+  						<f:selectItem itemLabel="Selecione uma opção" itemValue="-1" />
   						<f:selectItems value="#{funcionario.situacoes}" />
   					</p:selectOneMenu>
 

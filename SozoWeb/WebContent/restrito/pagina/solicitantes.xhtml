@@ -81,8 +81,8 @@
 		<p:inputMask id="tel" value="#{solicitante.solicitante.telefone}" disabled="true"></p:inputMask>
 		<h:inputHidden value="#{solicitante.solicitante.telefone}" />
 		
-		<p:outputLabel value="Situação:" />
-	  	<p:selectOneMenu id="text4" value="#{solicitante.solicitante.situacao}">
+		<p:outputLabel for="Situação" value="Situação:" />
+	  	<p:selectOneMenu id="Situação" value="#{solicitante.solicitante.situacao}" required="true">
 	  		<f:selectItem itemLabel="Selecione uma opção" itemValue="" />
 	  		<f:selectItems value="#{solicitante.situacoes}" />
 	  	</p:selectOneMenu>
