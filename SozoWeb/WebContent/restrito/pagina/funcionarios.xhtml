@@ -97,13 +97,13 @@
         <h:panelGrid columns="2" cellpadding="5">
         	<h:panelGrid columns="2" cellpadding="5">
             <p:outputLabel for="text1" value="Nome:"/>
-            <p:inputText id="text1" value="#{funcionario.funcionario.nome}" required="true"  styleClass="keyfilter-nome"  validatorMessage="Nome: Erro de validação: O nome deve conter apenas letras entre 6 e 100 caracteres">
+            <p:inputText id="text1" value="#{funcionario.funcionario.nome}" required="true"  styleClass="keyfilter-nome"  validatorMessage="Nome: Erro de validação: O nome deve conter apenas letras entre 6 e 100 caracteres"  autocomplete="off">
                 <f:validateLength minimum="1"  maximum="100" update="validation"/>
                 <f:validateRegex pattern="^[a-zA-Z]+[ a-zA-Zá-ùÁ-Ù]+[a-zA-Zá-ùÁ-Ù]$"/>
             </p:inputText>
  
             <p:outputLabel for="text2" value="Usuário:"  />
-            <p:inputText id="text2" value="#{funcionario.funcionario.usuario}" required="true" maxlength="15"  styleClass="keyfilter-usuario" validatorMessage="Usuário: Erro de validação: O usuário deve conter apenas letras, números e os caracteres _ . - entre 6 e 20 caracteres">
+            <p:inputText id="text2" value="#{funcionario.funcionario.usuario}" required="true" maxlength="15"  styleClass="keyfilter-usuario" validatorMessage="Usuário: Erro de validação: O usuário deve conter apenas letras, números e os caracteres _ . - entre 6 e 20 caracteres"  autocomplete="off">
             	<f:validateLength minimum="4" maximum="20" />
             	<f:validateRegex pattern="^[a-zA-Z_.-]+$"/>
             </p:inputText>

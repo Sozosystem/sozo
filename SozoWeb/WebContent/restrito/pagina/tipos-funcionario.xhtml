@@ -46,7 +46,7 @@
         <h:panelGrid columns="2" cellpadding="5">
  
             <p:outputLabel for="text2" value="Nome:" />
-            <p:inputText id="text2" value="#{tipoFuncionario.tipoFunc.nome}" required="true" validatorMessage="Nome: Erro de validação: O nome deve conter apenas letras entre 3 e 50 caracteres" styleClass="keyfilter-nome">
+            <p:inputText id="text2" value="#{tipoFuncionario.tipoFunc.nome}" required="true" validatorMessage="Nome: Erro de validação: O nome deve conter apenas letras entre 3 e 50 caracteres" styleClass="keyfilter-nome"  autocomplete="off">
             	<f:validateLength  minimum="3" maximum="50"  />
             	<f:validateRegex pattern="^[a-zA-Z]+[ a-zA-Zá-ùÁ-Ù]+[a-zA-Zá-ùÁ-Ù]$" />
             </p:inputText>
