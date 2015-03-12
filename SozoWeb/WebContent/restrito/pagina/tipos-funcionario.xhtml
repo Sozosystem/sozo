@@ -39,12 +39,16 @@
 
 <h:form id="form2">	
 	<p:panel id="panel" header="Opções" style="margin-top: 20px;">
+		<p:messages severity="error">
+			<p:effect type="bounce" event="load" delay="0" />
+		</p:messages>
         <h:inputHidden value="#{tipoFuncionario.tipoFunc.id}" />
         <h:panelGrid columns="2" cellpadding="5">
  
             <p:outputLabel for="text2" value="Nome:" />
-            <p:inputText id="text2" value="#{tipoFuncionario.tipoFunc.nome}" required="true">
-            <f:validateLength  minimum="3" maximum="50"  />
+            <p:inputText id="text2" value="#{tipoFuncionario.tipoFunc.nome}" required="true" validatorMessage="Nome: Erro de validação: O nome deve conter apenas letras entre 3 e 50 caracteres" styleClass="keyfilter-nome">
+            	<f:validateLength  minimum="3" maximum="50"  />
+            	<f:validateRegex pattern="^[a-zA-Z]+[ a-zA-Zá-ùÁ-Ù]+[a-zA-Zá-ùÁ-Ù]$" />
             </p:inputText>
             
             <p:outputLabel for="text3" value="Descricao" />
@@ -60,6 +64,9 @@
     
 </h:form>
 </p:panel>	
+<script>
+	$('.keyfilter-nome').keyfilter(/[a-z á-ú]/i);
+</script>
 </ui:define>
 	</ui:composition>
 </h:body>

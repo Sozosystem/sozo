@@ -1,3 +1,6 @@
+* {
+	border-radius: 0px !important;
+}
 .ui-widget {  
 	font-size: 12px !important;  
 }  

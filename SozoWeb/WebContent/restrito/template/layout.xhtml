@@ -10,30 +10,20 @@
 <h:head>
 	<title>Sozo - Área do Funcionário</title>
 	<h:outputStylesheet library="css" name="style.css" />
+	<script type="text/javascript" src="#{resource['javascript/keyfilter.js']}"></script>
+	<link rel="icon" type="image/png" href="#{resource['images/sozo-logo-tiny.png']}" />
 	<script>
 	$(document).ready(function() {
-		var a = 0;
-		var element = $(".five");
-		console.log(element)
-		setInterval(function() {
-		    element.css({transform: "rotate(" + a + "deg)"});
-		    a+=4;
-		}, 1000 / 20);
-	});
-	$(document).ready(function() {
-
 		   $('.ui-menuitem-link').each(function(){
 		       if(window.location.pathname.indexOf($(this).attr('href')) != -1) {
 		           $(this).css({
 		        	   'background': '#3498db',
 		        	   'color': 'white'
-		           });//or add class
+		           });
 		       }
 		   });  
-
 		})
 	</script>
-	<link rel="icon" type="image/png" href="#{resource['images/sozo-logo-tiny.png']}" />
 </h:head>
 <h:body>
 	<h:panelGrid columns="1" cellpadding="10" style="position: absolute; margin-left: -470px;left: 50%; width: 940px;">

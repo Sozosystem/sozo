@@ -67,6 +67,9 @@
 
 <h:form id="formAlterar">
 	<p:panel id="basic" header="Alterar Situação" style="margin-top: 20px;">
+	<p:messages severity="error">
+		<p:effect type="bounce" event="load" delay="0" />
+	</p:messages>
 	<h:panelGrid columns="10" cellpadding="5">
 		<h:inputHidden value="#{solicitante.solicitante.id}" />
 		

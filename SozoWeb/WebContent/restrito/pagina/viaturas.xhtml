@@ -65,16 +65,20 @@
 </h:form>
 <h:form id="form2">	
 	<p:panel id="panel" header="Opções" style="margin-top: 20px;">
+		<p:messages severity="error">
+			<p:effect type="bounce" event="load" delay="0" />
+		</p:messages>
         <h:inputHidden value="#{viatura.viatura.id}" />
         <h:panelGrid columns="2" cellpadding="5">
  
             <p:outputLabel for="text2" value="Placa:" />
-            <p:inputMask id="text2" value="#{viatura.viatura.placa}" required="true"  mask="aaa-9999" style="text-transform: uppercase;">
+            <p:inputMask id="text2" value="#{viatura.viatura.placa}" required="true"  mask="aaa-9999" styleClass="text-transform: uppercase;">
             </p:inputMask>
             
             <p:outputLabel for="text1" value="Tipo:" />
-            <p:inputText id="text1" value="#{viatura.viatura.tipo}" required="true">
+            <p:inputText id="text1" value="#{viatura.viatura.tipo}" required="true" validatorMessage="Tipo: Erro de validação: O nome deve conter apenas letras entre 5 e 50 caracteres" styleClass="keyfilter-tipo">
             	<f:validateLength  minimum="5" maximum="50"/>
+            	<f:validateRegex pattern="^[a-zA-Z]+[ a-zA-Zá-ùÁ-Ù]+[a-zA-Zá-ùÁ-Ù]$" />
             </p:inputText>
             
             <p:outputLabel for="text3" value="Descricao" />
@@ -90,6 +94,9 @@
     
 </h:form>
 </p:panel>	
+<script>
+	$('.keyfilter-tipo').keyfilter(/[a-z á-ú]/i);
+</script>
 </ui:define>
 	</ui:composition>
 </h:body>
