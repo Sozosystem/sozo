@@ -4,8 +4,11 @@ package controller;
 import java.util.List;
 
 
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+
+import org.primefaces.context.RequestContext;
 
 import util.Mensagem;
 import model.Viatura;
@@ -62,12 +65,20 @@ public class ViaturaController {
 	}
 	
 	public void removerViatura() {
+		if(viaturaSelecionada == null) {
+			Mensagem.alerta(Mensagem.INFO, "Selecione uma viatura para remover", null);
+			return;
+		}
 		dao.delete(viaturaSelecionada);
 		mostrarTodasViaturas();
 		Mensagem.alerta(Mensagem.INFO, "Viatura removida com sucesso", null);
 	}
 	
 	public void consultarViatura() {
+		if(viaturaConsulta.getPlaca() == "" && viaturaConsulta.getTipo() == "") {
+			Mensagem.alerta(Mensagem.INFO, "Preencha ao menos um campo para realizar a consulta", null);
+			return;
+		}
 		listaViaturas = dao.findByObject(viaturaConsulta);
 	}
 	
@@ -84,7 +95,13 @@ public class ViaturaController {
 		listaViaturas = dao.findAll();
 	}
 
-
+	public void cancelarAlteracao() {
+		viaturaSelecionada = null;
+		viatura = new Viatura();
+		podeAlterar = false;
+		RequestContext.getCurrentInstance().reset("form2");
+	}
+	
 	public Viatura getViatura() {
 		return viatura;
 	}

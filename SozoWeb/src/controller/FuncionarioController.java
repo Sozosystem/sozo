@@ -5,6 +5,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.primefaces.context.RequestContext;
 import model.Funcionario;
 import model.Situacao;
 import model.TipoFuncionario;
@@ -81,13 +82,21 @@ public class FuncionarioController {
 	}
 
 	public void removerFuncionario() {
+		if(funcionarioSelecionado == null) {
+			Mensagem.alerta(Mensagem.INFO, "Selecione um funcionário para remover", null);
+			return;
+		}
 		dao.delete(funcionarioSelecionado);
 		mostrarTodosFuncionarios();
 		Mensagem.alerta(Mensagem.INFO, "Funcionário removido com sucesso", null);
 	}
 
 	public void consultarFuncionario() {
-		listaFuncionarios = dao.findByObject(funcionarioConsulta);
+		if(funcionarioConsulta.getNome() == "" && funcionarioConsulta.getUsuario() == "" && funcionarioConsulta.getSituacao() == null && funcionarioConsulta.getTipoFuncionario() == null) {
+			Mensagem.alerta(Mensagem.INFO, "Preencha ao menos um campo para realizar a consulta", null);
+			return;
+		}
+		listaFuncionarios = dao.consultar(funcionarioConsulta);
 	}
 
 	public void funcionarioAlterarSelecionado() {
@@ -102,7 +111,14 @@ public class FuncionarioController {
 	public void mostrarTodosFuncionarios() {
 		listaFuncionarios = dao.findAll();
 	}
-
+	
+	public void cancelarAlteracao() {
+		funcionarioSelecionado = null;
+		funcionario = new Funcionario();
+		podeAlterar = false;
+		RequestContext.getCurrentInstance().reset("form2");
+	}
+	
 	public Funcionario getFuncionario() {
 		return funcionario;
 	}

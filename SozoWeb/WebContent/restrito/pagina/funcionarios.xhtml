@@ -33,10 +33,9 @@
 			            </h:panelGrid>
 			            <h:panelGrid columns="6" cellpadding="5">
 			             <p:outputLabel value="Tipo:" />
-			           	<p:selectOneMenu id="tipofuncc" converter="TipoFuncConverter"
-  							value="#{funcionario.funcionario.tipoFuncionario}">
-  						<f:selectItem noSelectionOption="true" 
-  								itemLabel="Selecione tipo de funcionário" itemValue="-1"/>
+			           	<p:selectOneMenu converter="TipoFuncConverter"
+  							value="#{funcionario.funcionarioConsulta.tipoFuncionario}">
+  							<f:selectItem noSelectionOption="true" itemLabel="Selecione tipo de funcionário" itemValue="-1"/>
   						<f:selectItems value="#{funcionario.tipoFuncionario}" var="tipoFunc"
   								itemLabel="#{tipoFunc.nome}" />
   					</p:selectOneMenu>
@@ -105,7 +104,7 @@
             <p:outputLabel for="text2" value="Usuário:"  />
             <p:inputText id="text2" value="#{funcionario.funcionario.usuario}" required="true" maxlength="15"  styleClass="keyfilter-usuario" validatorMessage="Usuário: Erro de validação: O usuário deve conter apenas letras, números e os caracteres _ . - entre 6 e 20 caracteres"  autocomplete="off">
             	<f:validateLength minimum="4" maximum="20" />
-            	<f:validateRegex pattern="^[a-zA-Z_.-]+$"/>
+            	<f:validateRegex pattern="^[0-9a-zA-Z_.-]+$"/>
             </p:inputText>
             <p:outputLabel for="text3" value="Senha:" />
             <p:password id="text3" value="#{funcionario.funcionario.senha}" match="psw2" validatorMessage="Os campos 'Senha' não são iguais" required="true" disabled="#{funcionario.podeAlterar}" />
@@ -137,6 +136,7 @@
         <h:panelGrid  columns="4" cellpadding="5">
         	<p:commandButton icon="ui-icon-pin-w" value="Adicionar Funcionário" actionListener="#{funcionario.salvarFuncionario}" ajax="false" update=":form2" disabled="#{funcionario.podeAlterar}"/>
 			<p:commandButton icon="ui-icon-pencil" value="Salvar Alterarações" actionListener="#{funcionario.alterarFuncionario}" ajax="false" disabled="#{!funcionario.podeAlterar}"/>
+			<p:commandButton icon="ui-icon-close" value="Cancelar Alteraração" action="#{funcionario.cancelarAlteracao}" ajax="false" disabled="#{!funcionario.podeAlterar}" immediate="true"/>
     	</h:panelGrid>
     </p:panel>
 	
@@ -147,7 +147,7 @@
 </p:panel>
 <script>
 	$('.keyfilter-nome').keyfilter(/[a-z á-ú]/i);
-	$('.keyfilter-usuario').keyfilter(/[a-z_.-]/i);
+	$('.keyfilter-usuario').keyfilter(/[0-9a-z_.-]/i);
 </script>
 		</ui:define>
 	</ui:composition>

@@ -90,6 +90,7 @@
   	
 	<h:panelGrid columns="4" cellpadding="5">
 		<p:commandButton process="tbl" icon="ui-icon-pencil" value="Salvar Alterarações" actionListener="#{solicitante.alterarSolicitante}" ajax="false" disabled="#{!solicitante.podeAlterar}"/>
+		<p:commandButton icon="ui-icon-close" value="Cancelar Alteraração" actionListener="#{solicitante.cancelarAlteracao}" ajax="false" disabled="#{!solicitante.podeAlterar}"  immediate="true"/>
 	</h:panelGrid>
 			        
 	</p:panel>

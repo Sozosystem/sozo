@@ -13,9 +13,8 @@ body {
 	height: 150px;
 	position: absolute;
 	left: 50%;
-	top: 50%;
 	margin-left: -140px;
-	margin-top: -200px;
+	margin-top: 40px;
 }
 .logo-text {
 	font-size: 32px;	

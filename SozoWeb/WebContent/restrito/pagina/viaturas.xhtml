@@ -76,7 +76,7 @@
             </p:inputMask>
             
             <p:outputLabel for="text1" value="Tipo:" />
-            <p:inputText id="text1" value="#{viatura.viatura.tipo}" required="true" validatorMessage="Tipo: Erro de validação: O nome deve conter apenas letras entre 5 e 50 caracteres" styleClass="keyfilter-tipo">
+            <p:inputText id="text1" value="#{viatura.viatura.tipo}" required="true" validatorMessage="Tipo: Erro de validação: O tipo deve conter apenas letras entre 5 e 50 caracteres" styleClass="keyfilter-tipo">
             	<f:validateLength  minimum="5" maximum="50"/>
             	<f:validateRegex pattern="^[a-zA-Z]+[ a-zA-Zá-ùÁ-Ù]+[a-zA-Zá-ùÁ-Ù]$" />
             </p:inputText>
@@ -89,6 +89,7 @@
 		<h:panelGrid columns="3" cellpadding="5">
             <p:commandButton process="tbl" icon="ui-icon-pin-w" value="Adicionar Viatura" actionListener="#{viatura.salvarViatura}" ajax="false" disabled="#{viatura.podeAlterar}"/>
 			<p:commandButton process="tbl" icon="ui-icon-pencil" value="Salvar Alterações" actionListener="#{viatura.alterarViatura}" ajax="false" disabled="#{!viatura.podeAlterar}"/>
+        	<p:commandButton icon="ui-icon-close" value="Cancelar Alteraração" actionListener="#{viatura.cancelarAlteracao}" ajax="false" disabled="#{!viatura.podeAlterar}"  immediate="true"/>
         </h:panelGrid>
     </p:panel>
     

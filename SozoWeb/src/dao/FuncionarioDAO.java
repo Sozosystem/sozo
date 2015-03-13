@@ -1,7 +1,10 @@
 package dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
 
 import model.Funcionario;
 
@@ -45,4 +48,18 @@ public class FuncionarioDAO extends GenericDAO<Integer, Funcionario> {
 
 	}
 
+	public List<Funcionario> consultar(Funcionario f) {
+		String q = "FROM Funcionario f WHERE f.nome LIKE :nome AND f.usuario LIKE :usuario";
+		if(f.getSituacao() != null) q +=  " AND f.situacao LIKE :situacao";
+		if(f.getTipoFuncionario() != null) q +=  " AND f.tipoFuncionario LIKE :tipoFuncionario";
+
+		TypedQuery<Funcionario> query = entityManager.createQuery(q, Funcionario.class);
+		
+		query.setParameter("nome", "%" + f.getNome() + "%");
+		query.setParameter("usuario", "%" + f.getUsuario() + "%");
+		if(f.getTipoFuncionario() != null) query.setParameter("tipoFuncionario", f.getTipoFuncionario());
+		if(f.getSituacao() != null) query.setParameter("situacao", f.getSituacao());
+		
+		return query.getResultList();
+	}
 }

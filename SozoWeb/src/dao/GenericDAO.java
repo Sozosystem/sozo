@@ -40,8 +40,6 @@ public class GenericDAO<PK, T> {
     			transaction.rollback();
     		}
     	}
-        
-        //entityManager.
     }
  
     public void update(T entity) {
@@ -68,7 +66,6 @@ public class GenericDAO<PK, T> {
     			transaction.rollback();
     		}
     	}
-        
     }
  
     public List<T> findAll() {
@@ -77,13 +74,11 @@ public class GenericDAO<PK, T> {
     }
     
     public List<T> findByObject(T entity) {
-	
 		Example example = Example.create(entity).enableLike(MatchMode.ANYWHERE).excludeZeroes().ignoreCase();
 		Session s = (Session) entityManager.getDelegate();
 		Criteria result = s.createCriteria(entity.getClass()).add(example);
 		
 		return result.list();
-
 	}
     
     private Class<?> getTypeClass() {

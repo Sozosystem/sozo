@@ -5,6 +5,8 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.primefaces.context.RequestContext;
+
 import util.Mensagem;
 import model.Situacao;
 import model.Solicitante;
@@ -33,6 +35,10 @@ public class SolicitanteController {
 	}
 	
 	public void consultarSolicitante() {
+		if(solicitanteConsulta.getNome() == "" && solicitanteConsulta.getTelefone() == "" && solicitanteConsulta.getSituacao() == null) {
+			Mensagem.alerta(Mensagem.INFO, "Preencha ao menos um campo para realizar a consulta", null);
+			return;
+		}
 		listaSolicitantes = dao.findByObject(solicitanteConsulta);
 	}
 	
@@ -57,6 +63,13 @@ public class SolicitanteController {
 		podeAlterar = true;
 	}
 
+	public void cancelarAlteracao() {
+		solicitanteSelecionado = null;
+		solicitante = new Solicitante();
+		podeAlterar = false;
+		RequestContext.getCurrentInstance().reset("formAlterar");
+	}
+	
 	public Solicitante getSolicitante() {
 		return solicitante;
 	}

@@ -5,6 +5,8 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.primefaces.context.RequestContext;
+
 import util.Mensagem;
 import model.TipoFuncionario;
 import dao.EntityManagerHelper;
@@ -32,6 +34,12 @@ public class TipoFuncionarioController {
 	}
 	
 	public void salvarTipo() {
+		TipoFuncionario tipoConsulta = new TipoFuncionario();
+		tipoConsulta.setNome(tipoFunc.getNome());
+		if(dao.findByObject(tipoConsulta).size() > 0) {
+			Mensagem.alerta(Mensagem.ERRO, "Já existe um tipo de funcionário com este nome", null);
+			return;
+		}
 		TipoFuncionario tipo = new TipoFuncionario();
 		tipo.setNome(tipoFunc.getNome());
 		tipo.setDescricao(tipoFunc.getDescricao());
@@ -54,6 +62,10 @@ public class TipoFuncionarioController {
 	}
 	
 	public void removerTipo() {
+		if(tipoFuncSelecionado == null) {
+			Mensagem.alerta(Mensagem.INFO, "Selecione um Tipo de Funcionário para remover", null);
+			return;
+		}
 		dao.delete(tipoFuncSelecionado);
 		mostrarTodosTipos();
 		Mensagem.alerta(Mensagem.INFO, "Tipo de funcionário removido com sucesso", null);
@@ -66,6 +78,13 @@ public class TipoFuncionarioController {
 		}
 		tipoFunc = tipoFuncSelecionado;
 		podeAlterar = true;
+	}
+	
+	public void cancelarAlteracao() {
+		tipoFuncSelecionado = null;
+		tipoFunc = new TipoFuncionario();
+		podeAlterar = false;
+		RequestContext.getCurrentInstance().reset("form2");
 	}
 	
 	public TipoFuncionario getTipoFunc() {
