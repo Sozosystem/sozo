@@ -11,6 +11,8 @@ public abstract class ObjetoGeral {
 	private Integer id;
 	@Temporal(TemporalType.DATE)
 	private Calendar dataUltimaAtualizacao;
+	@Temporal(TemporalType.DATE)
+	private Calendar dataCriacao;
 	@Enumerated(EnumType.STRING)
 	private Situacao situacao;
 	
@@ -30,8 +32,17 @@ public abstract class ObjetoGeral {
 		this.dataUltimaAtualizacao = dataUltimaAtualizacao;
 		this.situacao = situacao;
 	}
-
-
+	
+	@PrePersist
+	protected void onCreate() {
+		dataCriacao = Calendar.getInstance();
+	}
+	
+	@PreUpdate
+	protected void onUpdate() {
+		dataUltimaAtualizacao = Calendar.getInstance();
+	}
+	
 	public Integer getId() {
 		return id;
 	}
@@ -43,19 +54,34 @@ public abstract class ObjetoGeral {
 	public void setCodigo(Integer id) {
 		this.id = id;
 	}
+	
 	public Calendar getDataUltimaAtualizacao() {
 		return dataUltimaAtualizacao;
 	}
+	
 	public void setDataUltimaAtualizacao(Calendar dataUltimaAtualizacao) {
 		this.dataUltimaAtualizacao = dataUltimaAtualizacao;
 	}
+	
 	public Situacao getSituacao() {
 		return situacao;
 	}
+	
 	public void setSituacao(Situacao situacao) {
 		this.situacao = situacao;
 	}
 
+	public Calendar getDataCriacao() {
+		return dataCriacao;
+	}
+	
+
+	
+	public void setDataCriacao(Calendar dataCriacao) {
+		this.dataCriacao = dataCriacao;
+	}
+
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
