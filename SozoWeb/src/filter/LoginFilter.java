@@ -13,26 +13,36 @@ import controller.LoginController;
 
  
 public class LoginFilter implements Filter {
- 
-         public void destroy() {
+		
+	public void destroy() {
 
-         }
+	}
  
-         public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        	 	String contextPath = ((HttpServletRequest) request).getContextPath();
-        	 	String area = ((HttpServletRequest) request).getRequestURI().split("/")[2];
-        	 	if(area.equals("restrito")) {
-	                LoginController login = (LoginController) ((HttpServletRequest) request).getSession().getAttribute("login");
-	                if (login == null || login.getFuncionarioLogado() == null) {
-	                	((HttpServletResponse) response).sendRedirect(contextPath + "/login-funcionario.xhtml");
-	                } else {
-	                	chain.doFilter(request, response);
-	                }
-        	 	}
-         }
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    	String contextPath = ((HttpServletRequest) request).getContextPath();
+    	String area = ((HttpServletRequest) request).getRequestURI().split("/")[2];
+    	String pagina = ((HttpServletRequest) request).getRequestURI().split("/")[4];
+        if(area.equals("restrito")) {
+        	LoginController login = (LoginController) ((HttpServletRequest) request).getSession().getAttribute("login");
+        	if (login == null || login.getFuncionarioLogado() == null) {
+        		((HttpServletResponse) response).sendRedirect(contextPath + "/login-funcionario.xhtml");
+        	} else {
+        		if(login.getFuncionarioLogado().getTipoFuncionario().getNome().equals("Administrador")) {
+        			chain.doFilter(request, response);
+	        	}else {
+	        		System.out.println(pagina);
+	        		if(pagina.equals("ocorrencias.xhtml") || pagina.equals("index.xhtml")) {
+	        			chain.doFilter(request, response);
+	        		}else {
+	        			((HttpServletResponse) response).sendRedirect(contextPath + "/restrito/pagina/index.xhtml");
+	        		}
+	           	}
+	        }
+        }
+    }
  
-         public void init(FilterConfig arg0) throws ServletException {
+    public void init(FilterConfig arg0) throws ServletException {
 
-         }
+    }
  
 }

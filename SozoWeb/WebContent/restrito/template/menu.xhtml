@@ -9,15 +9,18 @@
 		
 	<ui:composition>
 	   <h:form>  
-		    <p:growl id="messages" severity="info, warn"/>
 			<p:menubar>
-				<p:submenu label="Funcionários">
+				
+				<p:submenu label="Funcionários" rendered="#{login.funcionarioLogado.tipoFuncionario.nome == 'Administrador'}">
 		            <p:menuitem value="Funcionários &nbsp;" url="funcionarios.xhtml" ajax="false" />
 		            <p:menuitem value="Tipos de Funcionários &nbsp;" url="tipos-funcionario.xhtml" ajax="false"/>
 		        </p:submenu>
-				<p:menuitem value="Viaturas &nbsp;" url="viaturas.xhtml" ajax="false"/>
-				<p:menuitem value="Solicitantes &nbsp;" url="solicitantes.xhtml" ajax="false" />
-		 		<p:menuitem value="Sair &nbsp;" actionListener="#{login.deslogar}"  icon="ui-icon-power" style="margin-left: 40px;" />
+				<p:menuitem value="Viaturas &nbsp;" url="viaturas.xhtml" ajax="false" rendered="#{login.funcionarioLogado.tipoFuncionario.nome == 'Administrador'}" />
+				<p:menuitem value="Solicitantes &nbsp;" url="solicitantes.xhtml" ajax="false"  rendered="#{login.funcionarioLogado.tipoFuncionario.nome == 'Administrador'}" />
+		 		<p:submenu label="Ocorrências">
+		            <p:menuitem value="Ocorrências &nbsp;" url="ocorrencias.xhtml" ajax="false" />
+		        </p:submenu>
+		        <p:menuitem value="Sair &nbsp;" actionListener="#{login.deslogar}"  icon="ui-icon-power" style="margin-left: 40px;" />
 		    </p:menubar>
 		</h:form>
 	</ui:composition>

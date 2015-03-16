@@ -36,9 +36,14 @@ public class TipoFuncionarioController {
 	public void salvarTipo() {
 		TipoFuncionario tipoConsulta = new TipoFuncionario();
 		tipoConsulta.setNome(tipoFunc.getNome());
-		if(dao.findByObject(tipoConsulta).size() > 0) {
-			Mensagem.alerta(Mensagem.ERRO, "Já existe um tipo de funcionário com este nome", null);
-			return;
+		List<TipoFuncionario> tipos = dao.findByObject(tipoConsulta);
+		if(tipos.size() > 0) {
+			for (TipoFuncionario t : tipos) {
+				if(t.getNome().equals(tipoFunc.getNome())) {
+					Mensagem.alerta(Mensagem.ERRO, "Já existe um tipo de funcionário com este nome", null);
+					return;
+				}
+			}
 		}
 		TipoFuncionario tipo = new TipoFuncionario();
 		tipo.setNome(tipoFunc.getNome());
@@ -66,9 +71,14 @@ public class TipoFuncionarioController {
 			Mensagem.alerta(Mensagem.INFO, "Selecione um Tipo de Funcionário para remover", null);
 			return;
 		}
-		dao.delete(tipoFuncSelecionado);
-		mostrarTodosTipos();
-		Mensagem.alerta(Mensagem.INFO, "Tipo de funcionário removido com sucesso", null);
+		
+		try {
+			dao.delete(tipoFuncSelecionado);
+			mostrarTodosTipos();
+			Mensagem.alerta(Mensagem.INFO, "Tipo de funcionário removido com sucesso", null);
+		} catch (Exception e) {
+			Mensagem.alerta(Mensagem.INFO, "Não é possível remover um tipo de funcionário que já esteja relacionado com um funcionário", null);
+		}
 	}
 	
 	public void alterarTipoFuncSelecionado() {

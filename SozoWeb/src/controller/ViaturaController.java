@@ -5,6 +5,7 @@ import java.util.List;
 
 
 
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
@@ -69,7 +70,11 @@ public class ViaturaController {
 			Mensagem.alerta(Mensagem.INFO, "Selecione uma viatura para remover", null);
 			return;
 		}
-		dao.delete(viaturaSelecionada);
+		try {
+			dao.delete(viaturaSelecionada);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		mostrarTodasViaturas();
 		Mensagem.alerta(Mensagem.INFO, "Viatura removida com sucesso", null);
 	}

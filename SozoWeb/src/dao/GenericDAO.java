@@ -46,7 +46,7 @@ public class GenericDAO<PK, T> {
         EntityTransaction transaction = entityManager.getTransaction();
     	try {
 	    	transaction.begin();
-	    	 entityManager.merge(entity);
+	    	entityManager.merge(entity);
 	        transaction.commit();
     	} catch (Exception e) {
     		if(transaction.isActive()) {
@@ -55,7 +55,7 @@ public class GenericDAO<PK, T> {
     	}
     }
  
-    public void delete(T entity) {
+    public void delete(T entity) throws Exception {
         EntityTransaction transaction = entityManager.getTransaction();
     	try {
 	    	transaction.begin();
@@ -65,6 +65,7 @@ public class GenericDAO<PK, T> {
     		if(transaction.isActive()) {
     			transaction.rollback();
     		}
+    		throw e;
     	}
     }
  

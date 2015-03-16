@@ -6,6 +6,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import org.primefaces.context.RequestContext;
+
 import model.Funcionario;
 import model.Situacao;
 import model.TipoFuncionario;
@@ -61,7 +62,6 @@ public class FuncionarioController {
 		} else {
 			Mensagem.alerta(Mensagem.ERRO, "Usuário já existente", "");
 		}
-
 	}
 
 	public void limparCampos() {
@@ -86,7 +86,11 @@ public class FuncionarioController {
 			Mensagem.alerta(Mensagem.INFO, "Selecione um funcionário para remover", null);
 			return;
 		}
-		dao.delete(funcionarioSelecionado);
+		try {
+			dao.delete(funcionarioSelecionado);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		mostrarTodosFuncionarios();
 		Mensagem.alerta(Mensagem.INFO, "Funcionário removido com sucesso", null);
 	}

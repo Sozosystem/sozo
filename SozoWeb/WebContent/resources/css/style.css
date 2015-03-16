@@ -10,12 +10,18 @@ body {
 }
 .login-panel {
 	width: 280px;
-	height: 150px;
 	position: absolute;
 	left: 50%;
 	margin-left: -140px;
 	margin-top: 40px;
 }
+
+.primeiraVez-panel {
+	width: 300px;
+	margin: 0 auto;
+	margin-top: 40px;
+}
+
 .logo-text {
 	font-size: 32px;	
 	float: left;
