@@ -97,8 +97,7 @@
         	<h:panelGrid columns="2" cellpadding="5">
             <p:outputLabel for="text1" value="Nome:"/>
             <p:inputText id="text1" value="#{funcionario.funcionario.nome}" required="true"  styleClass="keyfilter-nome"  validatorMessage="Nome: Erro de validação: O nome deve conter apenas letras entre 6 e 100 caracteres"  autocomplete="off">
-                <f:validateLength minimum="1"  maximum="100" update="validation"/>
-                <f:validateRegex pattern="^[a-zA-Z]+[ a-zA-Zá-ùÁ-Ù]+[a-zA-Zá-ùÁ-Ù]$"/>
+                <f:validateRegex pattern="^[a-zA-Z]+[ a-zA-Zá-ùÁ-Ù]{4,100}[a-zA-Zá-ùÁ-Ù]$"/>
             </p:inputText>
  
             <p:outputLabel for="text2" value="Usuário:"  />
@@ -116,7 +115,7 @@
             </h:panelGrid>
             <h:panelGrid columns="2" cellpadding="5" styleClass="topAligned">
             <h:outputLabel for="Tipo Funcionário" value="Tipo de Funcionário: *"/>
-  					<p:selectOneMenu id="Tipo" converter="TipoFuncConverter"
+  						<p:selectOneMenu id="Tipo" converter="TipoFuncConverter"
   							value="#{funcionario.funcionario.tipoFuncionario}"  required="true" label="Tipo Funcionário">
   						<f:selectItem noSelectionOption="true" 
   								itemLabel="Selecione tipo de funcionário" itemValue="-1"/>
