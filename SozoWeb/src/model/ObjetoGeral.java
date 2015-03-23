@@ -1,6 +1,8 @@
 package model;
 
 import java.util.Calendar;
+import java.util.Date;
+
 import javax.persistence.*;
 
 @MappedSuperclass
@@ -9,10 +11,10 @@ public abstract class ObjetoGeral {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar dataUltimaAtualizacao;
-	@Temporal(TemporalType.DATE)
-	private Calendar dataCriacao;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dataCriacao;
 	@Enumerated(EnumType.STRING)
 	private Situacao situacao;
 	
@@ -35,7 +37,7 @@ public abstract class ObjetoGeral {
 	
 	@PrePersist
 	protected void onCreate() {
-		dataCriacao = Calendar.getInstance();
+		dataCriacao = Calendar.getInstance().getTime();
 	}
 	
 	@PreUpdate
@@ -71,13 +73,13 @@ public abstract class ObjetoGeral {
 		this.situacao = situacao;
 	}
 
-	public Calendar getDataCriacao() {
+	public Date getDataCriacao() {
 		return dataCriacao;
 	}
 	
 
 	
-	public void setDataCriacao(Calendar dataCriacao) {
+	public void setDataCriacao(Date dataCriacao) {
 		this.dataCriacao = dataCriacao;
 	}
 

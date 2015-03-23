@@ -24,7 +24,7 @@
 	</filter> 
 	<filter-mapping>
 		<filter-name>LoginFilter</filter-name>
-		<url-pattern>/restrito/*</url-pattern>
+		<url-pattern>/restritoX/*</url-pattern>
 	</filter-mapping>
 	
   <context-param>

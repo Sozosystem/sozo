@@ -13,7 +13,34 @@
 <h:body>
 <ui:composition template="../template/layout.xhtml">
 	<ui:define name="content">
-	
+		<p:panel header="Ocorrências">
+		<ui:include src="map.xhtml"></ui:include>
+		<h:form id="form">
+			<p:panel header="Ocorrências Pendentes" style="margin-top: 20px;">
+				<p:dataTable selectionMode="single" id="tbl" var="o"  value="#{ocorrencia.listaOcorrencias}" selection="#{ocorrencia.ocorrenciaSelecionada}" rowKey="#{o.id}" emptyMessage="Nenhum registro encontrado.">
+					<p:column headerText="Id">
+				        <h:outputText value="#{o.id}" />       
+				    </p:column>
+				    <p:column headerText="Lat.">
+				        <h:outputText value="#{o.latitude}" />       
+				    </p:column>
+				    <p:column headerText="Lon.">
+				        <h:outputText value="#{o.longitude}" />       
+				    </p:column>
+				    <p:column headerText="Horário">
+				        <h:outputText value="#{o.dataCriacao}" />       
+				    </p:column>
+				    <p:column headerText="Imagem">
+				        <h:outputText value="link" />       
+				    </p:column>
+					<f:facet name="footer">
+				    	<p:commandButton process="tbl" icon="ui-icon-pencil" actionListener="#{ocorrencia.alterarSelecionado}" ajax="false" value="Tratar Ocorrência" />
+				    </f:facet>
+				</p:dataTable>
+				
+			</p:panel>
+		</h:form>
+		</p:panel>
 	</ui:define>
 </ui:composition>
 </h:body>
