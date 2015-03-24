@@ -14,6 +14,14 @@ var gmap = new google.maps.Map(document.getElementById("map"),mapProp);
 
 var ocorrencias = [];
 var markers = [];
+var count = 0;
+function findOcorrenciaById(id) {
+	for(var i in markers) {
+		var o = markers[i].ocorrencia;
+		if(o.id == id) return true;
+	}
+	return false;
+}
 
 function updateMap() {
 	$.ajax({
@@ -21,22 +29,26 @@ function updateMap() {
 		type: "GET",
 	    dataType: "json",
 	    success: function (data) {
-	    	ocorrencias = data;
-	    	//remove todos os markers
-            for(var i in markers) {
-            	var m = markers[i];
-            	m.setMap(null);
-            	markers.splice(i, 1)
-            }
-	        $.each(data, function (i) {
-	            var o = data[i]; //Object ocorrencia
-	            
-	            var marker = new google.maps.Marker({
+	    	
+	        for(var i in data) {
+	        	var o = data[i];
+	        	if(findOcorrenciaById(o.id)) continue;
+	            var m = new google.maps.Marker({
 	            	position: new google.maps.LatLng(o.latitude, o.longitude)
 	            });
-	            marker.setMap(gmap);
-	            markers.push(marker);
-	            var infowindow = new google.maps.InfoWindow({
+	            m.setMap(gmap);
+	            markers.push(m);
+	            
+	            
+	            
+	            
+	            m.ocorrencia = data[i];
+	        }
+	        
+	        for(var i in markers) {
+	        	var m = markers[i];
+	        	var o = m.ocorrencia;
+	        	var infowindow = new google.maps.InfoWindow({
 	                content: "" +
 	                "<h1>" + o.id + "</h1>" +
 	                "<h3> Data e Hora: " + o.data + "</h3>" +
@@ -45,11 +57,37 @@ function updateMap() {
 	                "<a href='" + "ocorrencia.xhtml?ocorrencia=" + o.id + "'> Tratar Ocorrência </a>"
 	                
 	            });
-	            google.maps.event.addListener(marker, 'click', function() {
-	                gmap.setCenter(marker.getPosition());
-	                infowindow.open(gmap, marker);
-	            });
-	        });
+	        	google.maps.event.addListener(m,'click', (function(m, infowindow){ 
+	                return function() {
+	                   infowindow.open(gmap,m);
+	                };
+	            })(m,infowindow)); 
+	        }
+	        ocorrencias = data;
+	        console.log(data)
+	        if(count != 0) {
+		    	for(var i = 0; i < markers.length; i++) {
+		    		var o = markers[i].ocorrencia;
+		    		var tem = false
+		    		for(var j = 0; j < data.length; j++) {
+		    			var oo = data[j];
+		    			if(o.id == oo.id) {
+		    				tem = true;
+		    				break;
+		    			}
+		    			
+		    		}
+		    		if(tem == false) {
+		    			markers[i].setMap(null);
+		    			markers.splice(i, 1);
+		    			console.log("tentando remover", i);
+		    		}
+		    		
+		    	}
+	    	}
+	        
+	        count++;
+	        
 	    }
 	});
 }
