@@ -75,9 +75,8 @@ public class LoginController {
 		this.funcionarioLogado = null;
 		
 		try {
-			FacesContext.getCurrentInstance().getExternalContext().redirect("login-funcionario.xhtml");
+			FacesContext.getCurrentInstance().getExternalContext().redirect("/SozoWeb/login-funcionario.xhtml");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
