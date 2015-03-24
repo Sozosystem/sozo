@@ -12,85 +12,29 @@
 
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
 	<p:panel header="Mapa">
-		<p:gmap center="41.381542, 2.122893" zoom="15" type="ROADMAP" style="width:100%;height:400px" id="map" />
+		<p:gmap type="ROADMAP" style="width:100%;height:400px" id="map" />
 	</p:panel>
-<script>
-var myCenter=new google.maps.LatLng(#{ocorrencia.ocorrencia.latitude},#{ocorrencia.ocorrencia.longitude});
-
-function initialize() {
-	var mapProp = {
-		center:myCenter,
-		zoom:15,
-		mapTypeId:google.maps.MapTypeId.ROADMAP
-	};
-  
-var gmap = new google.maps.Map(document.getElementById("map"),mapProp);
-var ocorrencias = [];
-var markers = [];
-function findOcorrenciaById (id) {
-	for(var i in ocorrencias) {
-		var o = ocorrencias[i];
-		if(id == o.id) return true
-	}
-	return false
-}
-function updateMap() {
-	$.ajax({
-		url: 'ocorrencias/ocorrencias-recentes-json.xhtml',
-		type: "GET",
-	    dataType: "json",
-	    success: function (data) {
-	    	ocorrencias = data;
-	    	//remove todos os markers
-            for(var i in markers) {
-            	var m = markers[i];
-            	m.setMap(null);
-            	markers.splice(i, 1)
-            }
-	        $.each(data, function (i) {
-	            var o = data[i]; //Object ocorrencia
-	            
-	            var marker = new google.maps.Marker({
-	            	position: new google.maps.LatLng(o.latitude, o.longitude)
-	            });
-	            marker.setMap(gmap);
-	            markers.push(marker);
-	            var infowindow = new google.maps.InfoWindow({
-	                content: "" +
-	                "<h1>" + o.id + "</h1>" +
-	                "<h3> Data e Hora: " + o.data + "</h3>" +
-	                "<h5> Latitude:" + o.latitude + "</h5>" +
-	                "<h5> Longitude:" + o.longitude + "</h5>"
-	                
-	            });
-	            google.maps.event.addListener(marker, 'click', function() {
-	                //window.location.href = "ocorrencia.xhtml?ocorrencia=" + o.id 
-	                gmap.setCenter(marker.getPosition());
-	                infowindow.open(gmap, marker);
-	            });
-	        });
-	    }
-	});
-}
-updateMap();
-
-setInterval(function() {
-	updateMap();
-}, 10000);
+	<script type="text/javascript" src="#{resource['javascript/map.js']}"></script>
+	<script>
 	
-	//Ao Clicar em uma ocorrencia da tabela com as ocorrencias pendentes o local da ocorrência passa a ser o centro do map
-	$(".ui-datatable-selectable").on("click", function() {
-		var i = $(this).index();
-		var o = ocorrencias[i];
-		gmap.setCenter(new google.maps.LatLng(o.latitude, o.longitude));
-	});
-}
+	
 
-
-
-
-		
-google.maps.event.addDomListener(window, 'load', initialize);
-</script>
+	function initialize() {
+		var myCenter= new google.maps.LatLng(#{ocorrencia.ocorrencia.latitude}, #{ocorrencia.ocorrencia.longitude});
+		if(window.location.href.indexOf("ocorrencias.xhtml") != -1) return;
+		var mapProp = {
+			center:myCenter,
+			zoom: 15,
+			mapTypeId:google.maps.MapTypeId.ROADMAP
+		};
+		var gmap = new google.maps.Map(document.getElementById("map"),mapProp);
+		var marker = new google.maps.Marker({
+	    	position: myCenter
+	    });
+	    marker.setMap(gmap);
+	}
+	google.maps.event.addDomListener(window, 'load', initialize);
+	  
+	</script>
 </h:body>
 </html>

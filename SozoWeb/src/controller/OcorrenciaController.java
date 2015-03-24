@@ -4,9 +4,12 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 
 import org.primefaces.json.JSONArray;
 import org.primefaces.json.JSONException;
@@ -15,13 +18,15 @@ import org.primefaces.json.JSONObject;
 import util.Mensagem;
 import dao.EntityManagerHelper;
 import dao.OcorrenciaDAO;
+import filter.LoginFilter;
+import model.Funcionario;
 import model.Ocorrencia;
 import model.SituacaoOcorrencia;
 
 @ManagedBean(name="ocorrencia")
 @ViewScoped
 public class OcorrenciaController extends BaseBeanController implements ControllerI {
-
+	
 	private Ocorrencia ocorrenciaSelecionada;
 	private Ocorrencia ocorrenciaAlterada;
 	private Ocorrencia ocorrencia;
@@ -30,6 +35,7 @@ public class OcorrenciaController extends BaseBeanController implements Controll
 	
 	public OcorrenciaController() {
 		super();
+		
 		EntityManagerHelper emh = new EntityManagerHelper();            
         dao = new OcorrenciaDAO(emh.getEntityManager());
         
@@ -39,6 +45,15 @@ public class OcorrenciaController extends BaseBeanController implements Controll
 		String idOcorrencia = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("ocorrencia");  
 		if(idOcorrencia != null) {
 			ocorrencia = dao.getById(Integer.parseInt(idOcorrencia));
+			if(ocorrencia.getSituacaoOcorrencia() != SituacaoOcorrencia.PENDENTE && LoginFilter.funcionarioLogado.getId() != ocorrencia.getFuncionario().getId()) {
+				try {
+					FacesContext.getCurrentInstance().getExternalContext().redirect("ocorrencias.xhtml");
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			ocorrencia.setFuncionario(LoginFilter.funcionarioLogado);
 			ocorrencia.setSituacaoOcorrencia(SituacaoOcorrencia.EM_ANALISE);
 			dao.update(ocorrencia);
 			
@@ -49,7 +64,7 @@ public class OcorrenciaController extends BaseBeanController implements Controll
 	public void ocorrenciaPendentes() {
 		Ocorrencia o = new Ocorrencia();
 		o.setSituacaoOcorrencia(SituacaoOcorrencia.PENDENTE);
-		listaOcorrencias = dao.findByObject(o);
+		this.listaOcorrencias = dao.findByObject(o);
 	}
 	
 	public String ocorrenciasPendentesJSON() throws JSONException {

@@ -16,7 +16,7 @@
 		<p:panel header="Ocorrências">
 		<ui:include src="map.xhtml"></ui:include>
 		<h:form id="form">
-			<p:panel header="Ocorrências Pendentes" style="margin-top: 20px;">
+			<p:panel header="Ocorrências Pendentes" style="margin-top: 20px;" rendered="false">
 				<p:dataTable selectionMode="single" id="tbl" var="o"  value="#{ocorrencia.listaOcorrencias}" selection="#{ocorrencia.ocorrenciaSelecionada}" rowKey="#{o.id}" emptyMessage="Nenhum registro encontrado.">
 					<p:column headerText="Id">
 				        <h:outputText value="#{o.id}" />       
@@ -37,7 +37,6 @@
 				    	<p:commandButton process="tbl" icon="ui-icon-pencil" actionListener="#{ocorrencia.alterarSelecionado}" ajax="false" value="Tratar Ocorrência" />
 				    </f:facet>
 				</p:dataTable>
-				
 			</p:panel>
 		</h:form>
 		</p:panel>
