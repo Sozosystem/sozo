@@ -110,6 +110,7 @@ public class FuncionarioController {
 		}
 		funcionario = funcionarioSelecionado;
 		podeAlterar = true;
+		RequestContext.getCurrentInstance().scrollTo("form2");
 	}
 
 	public void mostrarTodosFuncionarios() {

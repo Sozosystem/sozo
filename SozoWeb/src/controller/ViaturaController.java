@@ -62,7 +62,7 @@ public class ViaturaController {
 		mostrarTodasViaturas();
 		viatura = new Viatura();
 		podeAlterar = false;
-		Mensagem.alerta(Mensagem.INFO, "Viatura adicionada com sucesso", null);
+		Mensagem.alerta(Mensagem.INFO, "Viatura alterada com sucesso", null);
 	}
 	
 	public void removerViatura() {
@@ -94,6 +94,7 @@ public class ViaturaController {
 		}
 		viatura = viaturaSelecionada;
 		podeAlterar = true;
+		RequestContext.getCurrentInstance().scrollTo("form2");
 	}
 	
 	public void mostrarTodasViaturas() {

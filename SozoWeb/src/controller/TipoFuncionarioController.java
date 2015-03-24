@@ -88,6 +88,7 @@ public class TipoFuncionarioController {
 		}
 		tipoFunc = tipoFuncSelecionado;
 		podeAlterar = true;
+		RequestContext.getCurrentInstance().scrollTo("form2");
 	}
 	
 	public void cancelarAlteracao() {

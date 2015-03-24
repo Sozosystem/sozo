@@ -61,6 +61,7 @@ public class SolicitanteController {
 		}
 		solicitante = solicitanteSelecionado;
 		podeAlterar = true;
+		RequestContext.getCurrentInstance().scrollTo("form2");
 	}
 
 	public void cancelarAlteracao() {
