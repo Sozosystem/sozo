@@ -1,6 +1,7 @@
 package filter;
 
 import java.io.IOException;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -9,11 +10,14 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import model.Funcionario;
 import controller.LoginController;
 
  
 public class LoginFilter implements Filter {
-		
+	public static Funcionario funcionarioLogado;
+	
 	public void destroy() {
 
 	}
@@ -27,6 +31,7 @@ public class LoginFilter implements Filter {
         	if (login == null || login.getFuncionarioLogado() == null) {
         		((HttpServletResponse) response).sendRedirect(contextPath + "/login-funcionario.xhtml");
         	} else {
+        		funcionarioLogado = login.getFuncionarioLogado();
         		if(login.getFuncionarioLogado().getTipoFuncionario().getNome().equals("Administrador")) {
         			chain.doFilter(request, response);
 	        	}else {
