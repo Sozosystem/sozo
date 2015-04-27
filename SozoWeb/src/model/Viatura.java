@@ -13,6 +13,9 @@ public class Viatura extends ObjetoGeral {
 	private String tipo;
 	private String placa;
 	private String descricao;
+	private double latitude;
+	private double longitude;
+	private boolean disponivel;
 	
 	public Viatura() {
 		
@@ -42,6 +45,30 @@ public class Viatura extends ObjetoGeral {
 	}
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public double getLongitude() {
+		return longitude;
+	}
+
+	public boolean isDisponivel() {
+		return disponivel;
+	}
+
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
+
+	public void setDisponivel(boolean disponivel) {
+		this.disponivel = disponivel;
 	}
 }
 	

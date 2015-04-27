@@ -18,10 +18,12 @@ import org.primefaces.json.JSONObject;
 import util.Mensagem;
 import dao.EntityManagerHelper;
 import dao.OcorrenciaDAO;
+import dao.ViaturaDAO;
 import filter.LoginFilter;
 import model.Funcionario;
 import model.Ocorrencia;
 import model.SituacaoOcorrencia;
+import model.Viatura;
 
 @ManagedBean(name="ocorrencia")
 @ViewScoped
@@ -31,13 +33,18 @@ public class OcorrenciaController extends BaseBeanController implements Controll
 	private Ocorrencia ocorrenciaAlterada;
 	private Ocorrencia ocorrencia;
 	private List<Ocorrencia> listaOcorrencias;
+	private List<Viatura> listaViaturas;
 	private OcorrenciaDAO dao;
+	private ViaturaDAO daoViatura;
+	private boolean foto = true;
+	private Viatura viaturaSelecionada;
 	
 	public OcorrenciaController() {
 		super();
 		
 		EntityManagerHelper emh = new EntityManagerHelper();            
         dao = new OcorrenciaDAO(emh.getEntityManager());
+        daoViatura = new ViaturaDAO(emh.getEntityManager());
         
 		ocorrencia = new Ocorrencia();
 		ocorrenciaSelecionada = new Ocorrencia();
@@ -45,6 +52,7 @@ public class OcorrenciaController extends BaseBeanController implements Controll
 		String idOcorrencia = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("ocorrencia");  
 		if(idOcorrencia != null) {
 			ocorrencia = dao.getById(Integer.parseInt(idOcorrencia));
+			viaturasDisponiveis();
 			if(ocorrencia.getSituacaoOcorrencia() != SituacaoOcorrencia.PENDENTE && LoginFilter.funcionarioLogado.getId() != ocorrencia.getFuncionario().getId()) {
 				try {
 					FacesContext.getCurrentInstance().getExternalContext().redirect("ocorrencias.xhtml");
@@ -52,6 +60,13 @@ public class OcorrenciaController extends BaseBeanController implements Controll
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+			}
+			if(ocorrencia.getFoto().contains(".mp4")) {
+				this.foto = false;
+				System.out.println("video");
+			}else {
+				this.foto = true;
+				System.out.println("foto");
 			}
 			ocorrencia.setFuncionario(LoginFilter.funcionarioLogado);
 			ocorrencia.setSituacaoOcorrencia(SituacaoOcorrencia.EM_ANALISE);
@@ -61,29 +76,83 @@ public class OcorrenciaController extends BaseBeanController implements Controll
 		//mostrarTodos();
 	}
 	
+	public void tratarOcorrencia() {
+		if(viaturaSelecionada == null) {
+			Mensagem.alerta(Mensagem.INFO, "Selecione ao menos uma viatura", null);
+			return;
+		}
+		List<Viatura> viaturas = ocorrencia.getViaturas();
+		viaturas.add(viaturaSelecionada);
+		ocorrencia.setSituacaoOcorrencia(SituacaoOcorrencia.ATENDIMENTO_ENCAMINHADO);
+		dao.save(ocorrencia);
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("ocorrencias.xhtml");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void cancelarOcorrencia() {
+		ocorrencia.setSituacaoOcorrencia(SituacaoOcorrencia.CANCELADA);
+		dao.save(ocorrencia);
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("ocorrencias.xhtml");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void ocorrenciaPendentes() {
 		Ocorrencia o = new Ocorrencia();
 		o.setSituacaoOcorrencia(SituacaoOcorrencia.PENDENTE);
 		this.listaOcorrencias = dao.findByObject(o);
 	}
 	
+	public void viaturasDisponiveis() {
+		Viatura v = new Viatura();
+		v.setDisponivel(true);
+		this.listaViaturas = daoViatura.findByObject(v);
+	}
+	
 	public String ocorrenciasPendentesJSON() throws JSONException {
-		JSONArray ocorrencias = new JSONArray();
+		viaturasDisponiveis();
 		
+		JSONObject data = new JSONObject();
+		JSONArray ocorrenciasArray = new JSONArray();
+		JSONArray viaturasArray = new JSONArray();
 		for (Ocorrencia o : listaOcorrencias) {
 			JSONObject ocorrencia = new JSONObject(o);
 			ocorrencia.put("id", o.getId());
 			if(o.getDataCriacao() != null) {
 				SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");  
-				String data = formatador.format(o.getDataCriacao());
-				ocorrencia.put("data", data);
+				String date = formatador.format(o.getDataCriacao());
+				ocorrencia.put("data", date);
 			}else {
 				ocorrencia.put("data", "null");
 			}
 			
-			ocorrencias.put(ocorrencia);
+			ocorrenciasArray.put(ocorrencia);
 		}
-		return ocorrencias.toString();
+		for(Viatura v : listaViaturas) {
+			JSONObject viatura = new JSONObject(v);
+			viaturasArray.put(viatura);
+		}
+		data.put("ocorrencias", ocorrenciasArray);
+		data.put("viaturas", viaturasArray);
+		return data.toString();
+	}
+	
+	public String viaturasDisponiveisJSON() throws JSONException {
+		viaturasDisponiveis();
+		JSONObject data = new JSONObject();
+		JSONArray viaturasArray = new JSONArray();
+		
+		for(Viatura v : listaViaturas) {
+			JSONObject viatura = new JSONObject(v);
+			viaturasArray.put(viatura);
+		}
+		data.put("viaturas", viaturasArray);
+		return data.toString();
 	}
 	
 	@Override
@@ -129,6 +198,7 @@ public class OcorrenciaController extends BaseBeanController implements Controll
 		}
 		
 	}
+	
 
 	@Override
 	public void cancelarAlteracao() {
@@ -166,6 +236,30 @@ public class OcorrenciaController extends BaseBeanController implements Controll
 
 	public void setListaOcorrencias(List<Ocorrencia> listaOcorrencias) {
 		this.listaOcorrencias = listaOcorrencias;
+	}
+
+	public boolean getFoto() {
+		return foto;
+	}
+
+	public void setFoto(boolean foto) {
+		this.foto = foto;
+	}
+
+	public List<Viatura> getListaViaturas() {
+		return listaViaturas;
+	}
+
+	public void setListaViaturas(List<Viatura> listaViaturas) {
+		this.listaViaturas = listaViaturas;
+	}
+
+	public Viatura getViaturaSelecionada() {
+		return viaturaSelecionada;
+	}
+
+	public void setViaturaSelecionada(Viatura viaturaSelecionada) {
+		this.viaturaSelecionada = viaturaSelecionada;
 	}
 
 }

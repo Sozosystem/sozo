@@ -29,9 +29,28 @@
 		};
 		var gmap = new google.maps.Map(document.getElementById("map"),mapProp);
 		var marker = new google.maps.Marker({
-	    	position: myCenter
+	    	position: myCenter,
+	    	icon: "/SozoWeb/javax.faces.resource/images/marker-icon.png.xhtml",
+	    	animation: google.maps.Animation.DROP
 	    });
 	    marker.setMap(gmap);
+	    $.ajax({
+			url: 'viaturas/viaturas-disponiveis-json.xhtml',
+			type: "GET",
+		    dataType: "json",
+		    success: function (data) {
+		    	var viaturas = data.viaturas;
+		        for(var i in viaturas) {
+		        	var v = viaturas[i];
+		            var m = new google.maps.Marker({
+		            	position: new google.maps.LatLng(v.latitude, v.longitude),
+		            	icon: "/SozoWeb/javax.faces.resource/images/ambulance-icon.png.xhtml"
+		            });
+		            m.setMap(gmap);
+		        }
+		    }
+	    });
+	    
 	}
 	google.maps.event.addDomListener(window, 'load', initialize);
 	  

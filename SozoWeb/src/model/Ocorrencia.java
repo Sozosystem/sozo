@@ -29,6 +29,7 @@ public class Ocorrencia extends ObjetoGeral{
 	private List<Viatura> viaturas = new ArrayList<Viatura>();
 	@Enumerated(EnumType.STRING)
 	private SituacaoOcorrencia situacaoOcorrencia;
+	private String foto;
 	
 	public List<Viatura> getViaturas() {
 		return viaturas;
@@ -77,6 +78,12 @@ public class Ocorrencia extends ObjetoGeral{
 	}
 	public void setSituacaoOcorrencia(SituacaoOcorrencia situacaoOcorrencia) {
 		this.situacaoOcorrencia = situacaoOcorrencia;
+	}
+	public String getFoto() {
+		return foto;
+	}
+	public void setFoto(String foto) {
+		this.foto = foto;
 	}
 	
 }

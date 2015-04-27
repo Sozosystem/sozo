@@ -18,7 +18,7 @@ var count = 0;
 function findOcorrenciaById(id) {
 	for(var i in markers) {
 		var o = markers[i].ocorrencia;
-		if(o.id == id) return true;
+		if(o.id == id) return markers[i];
 	}
 	return false;
 }
@@ -29,20 +29,28 @@ function updateMap() {
 		type: "GET",
 	    dataType: "json",
 	    success: function (data) {
-	    	
-	        for(var i in data) {
-	        	var o = data[i];
-	        	if(findOcorrenciaById(o.id)) continue;
+	    	var ocorrencias = data.ocorrencias;
+	        for(var i in ocorrencias) {
+	        	var o = ocorrencias[i];
+	        	var m = findOcorrenciaById(o.id);
+	        	
+	        	if(m) {
+	        		var timeDiff = new Date().getTime() - m.time;
+	        		var icon = Math.ceil(Math.ceil(timeDiff / 1000) / 10);
+	        		icon = (icon > 10) ? 10 : icon; 
+	        		console.log(icon);
+	        		if(icon > 5) m.setAnimation(google.maps.Animation.BOUNCE);
+	        		m.setIcon("/SozoWeb/javax.faces.resource/images/marker-icon-" + icon + ".png.xhtml");
+	        	}else {
 	            var m = new google.maps.Marker({
-	            	position: new google.maps.LatLng(o.latitude, o.longitude)
+	            	position: new google.maps.LatLng(o.latitude, o.longitude),
+	            	icon: "/SozoWeb/javax.faces.resource/images/marker-icon-1.png.xhtml"
 	            });
+	            m.time = new Date().getTime();
 	            m.setMap(gmap);
-	            markers.push(m);
-	            
-	            
-	            
-	            
-	            m.ocorrencia = data[i];
+	            markers.push(m);    
+	            m.ocorrencia = o;
+	        	}
 	        }
 	        
 	        for(var i in markers) {
@@ -63,14 +71,23 @@ function updateMap() {
 	                };
 	            })(m,infowindow)); 
 	        }
-	        ocorrencias = data;
-	        console.log(data)
+	        
+	        var viaturas = data.viaturas;
+	        for(var i in viaturas) {
+	        	var v = viaturas[i];
+	            var m = new google.maps.Marker({
+	            	position: new google.maps.LatLng(v.latitude, v.longitude),
+	            	icon: "/SozoWeb/javax.faces.resource/images/ambulance-icon.png.xhtml"
+	            });
+	            m.setMap(gmap);
+	        }
+	        	
 	        if(count != 0) {
 		    	for(var i = 0; i < markers.length; i++) {
 		    		var o = markers[i].ocorrencia;
 		    		var tem = false
-		    		for(var j = 0; j < data.length; j++) {
-		    			var oo = data[j];
+		    		for(var j = 0; j < ocorrencias.length; j++) {
+		    			var oo = ocorrencias[j];
 		    			if(o.id == oo.id) {
 		    				tem = true;
 		    				break;
