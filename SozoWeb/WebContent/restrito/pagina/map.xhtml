@@ -16,24 +16,30 @@
 	</p:panel>
 	<script type="text/javascript" src="#{resource['javascript/map.js']}"></script>
 	<script>
-	
+	//<![CDATA[
 	
 
 	function initialize() {
 		var myCenter= new google.maps.LatLng(#{ocorrencia.ocorrencia.latitude}, #{ocorrencia.ocorrencia.longitude});
+		
 		if(window.location.href.indexOf("ocorrencias.xhtml") != -1) return;
 		var mapProp = {
 			center:myCenter,
 			zoom: 15,
 			mapTypeId:google.maps.MapTypeId.ROADMAP
 		};
-		var gmap = new google.maps.Map(document.getElementById("map"),mapProp);
+		console.log(document.getElementById("j_idt21:map"));
+		var gmap = new google.maps.Map(document.getElementById("j_idt21:map"),mapProp);
 		var marker = new google.maps.Marker({
 	    	position: myCenter,
 	    	icon: "/SozoWeb/javax.faces.resource/images/marker-icon.png.xhtml",
 	    	animation: google.maps.Animation.DROP
 	    });
 	    marker.setMap(gmap);
+	    directionsService = new google.maps.DirectionsService({ supressMarkers: true});
+	    directionsService.supressMarkers = true;
+	    
+	    
 	    $.ajax({
 			url: 'viaturas/viaturas-disponiveis-json.xhtml',
 			type: "GET",
@@ -46,14 +52,53 @@
 		            	position: new google.maps.LatLng(v.latitude, v.longitude),
 		            	icon: "/SozoWeb/javax.faces.resource/images/ambulance-icon.png.xhtml"
 		            });
+		            var infowindow = new google.maps.InfoWindow({
+		                content: v.placa
+		                
+		            });
+		        	google.maps.event.addListener(m,'click', (function(m, infowindow){ 
+		                return function() {
+		                   infowindow.open(gmap,m);
+		                };
+		            })(m,infowindow)); 
 		            m.setMap(gmap);
+		            tracarRotas(m.getPosition());
 		        }
 		    }
 	    });
 	    
+	    function tracarRotas(x) {
+	    	var directionsRenderer = new google.maps.DirectionsRenderer({suppressMarkers: true});
+	    	directionsRenderer.suppressMarkers = true;
+		    directionsRenderer.setMap(gmap);
+		    
+	    	var request = {
+	    			origin: x, 
+	    			destination: myCenter,
+	    			travelMode: google.maps.DirectionsTravelMode.DRIVING
+	    			};
+
+	    			directionsService.route(request, function(response, status) {
+		    			if (status == google.maps.DirectionsStatus.OK) {
+		    				console.log(response);
+		    				directionsRenderer.setDirections(response);
+		    				var totalDistance = 0;
+		    				var totalDuration = 0;
+		    				
+		    				var legs = response.routes[0].legs;
+		    				
+		    				for(var i=0; i<legs.length; ++i) {
+		    				    totalDistance += legs[i].distance.value;
+		    				    totalDuration += legs[i].duration.value;
+		    				}
+		    				console.log(totalDuration)
+		    			}
+	    			});
+	    }
+	    
 	}
 	google.maps.event.addDomListener(window, 'load', initialize);
-	  
+	//]]>
 	</script>
 </h:body>
 </html>

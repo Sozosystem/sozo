@@ -55,7 +55,7 @@ public class Viatura extends ObjetoGeral {
 		return longitude;
 	}
 
-	public boolean isDisponivel() {
+	public boolean getDisponivel() {
 		return disponivel;
 	}
 

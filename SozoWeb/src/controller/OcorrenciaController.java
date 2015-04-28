@@ -61,12 +61,10 @@ public class OcorrenciaController extends BaseBeanController implements Controll
 					e.printStackTrace();
 				}
 			}
-			if(ocorrencia.getFoto().contains(".mp4")) {
+			if(ocorrencia.getFoto() != null && ocorrencia.getFoto().contains(".mp4")) {
 				this.foto = false;
-				System.out.println("video");
 			}else {
 				this.foto = true;
-				System.out.println("foto");
 			}
 			ocorrencia.setFuncionario(LoginFilter.funcionarioLogado);
 			ocorrencia.setSituacaoOcorrencia(SituacaoOcorrencia.EM_ANALISE);
@@ -81,10 +79,18 @@ public class OcorrenciaController extends BaseBeanController implements Controll
 			Mensagem.alerta(Mensagem.INFO, "Selecione ao menos uma viatura", null);
 			return;
 		}
+		Viatura v = daoViatura.getById(viaturaSelecionada.getId());
+		System.out.println(v.getDisponivel());
+		if(!v.getDisponivel()) {
+			Mensagem.alerta(Mensagem.INFO, "A viatura selecionada não está mais disponível", null);
+			return;
+		}
 		List<Viatura> viaturas = ocorrencia.getViaturas();
 		viaturas.add(viaturaSelecionada);
 		ocorrencia.setSituacaoOcorrencia(SituacaoOcorrencia.ATENDIMENTO_ENCAMINHADO);
 		dao.save(ocorrencia);
+		viaturaSelecionada.setDisponivel(false);
+		daoViatura.save(viaturaSelecionada);
 		try {
 			FacesContext.getCurrentInstance().getExternalContext().redirect("ocorrencias.xhtml");
 		} catch (IOException e) {
@@ -135,6 +141,7 @@ public class OcorrenciaController extends BaseBeanController implements Controll
 		}
 		for(Viatura v : listaViaturas) {
 			JSONObject viatura = new JSONObject(v);
+			viatura.put("id", v.getId());
 			viaturasArray.put(viatura);
 		}
 		data.put("ocorrencias", ocorrenciasArray);

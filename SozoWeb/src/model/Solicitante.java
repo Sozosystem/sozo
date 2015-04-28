@@ -10,6 +10,7 @@ public class Solicitante extends ObjetoGeral{
 	private String nome;
 	private String telefone;
 	private String imei;
+	private int confiabilidade = 1;
 
 	public String getNome() {
 		return nome;
@@ -28,6 +29,12 @@ public class Solicitante extends ObjetoGeral{
 	}
 	public void setImei(String imei) {
 		this.imei = imei;
+	}
+	public int getConfiabilidade() {
+		return confiabilidade;
+	}
+	public void setConfiabilidade(int confiabilidade) {
+		this.confiabilidade = confiabilidade;
 	}
 	
 }
