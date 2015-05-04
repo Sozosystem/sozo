@@ -22,7 +22,6 @@
 	function initialize() {
 		var myCenter= new google.maps.LatLng(#{ocorrencia.ocorrencia.latitude}, #{ocorrencia.ocorrencia.longitude});
 		
-		if(window.location.href.indexOf("ocorrencias.xhtml") != -1) return;
 		var mapProp = {
 			center:myCenter,
 			zoom: 15,

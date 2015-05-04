@@ -16,6 +16,36 @@
 		<p:panel header="Ocorrências">
 		<ui:include src="map.xhtml"></ui:include>
 		<h:form id="form">
+		<div id="form:tbl" class="ui-datatable ui-widget">
+			<div class="ui-datatable-tablewrapper">
+				<table role="grid">
+					<thead id="form:tbl_head">
+						<tr role="row">
+							<th id="form:tbl:j_idt22" class="ui-state-default" role="columnheader">
+								<span class="ui-column-title">Id</span>
+							</th>
+							<th id="form:tbl:j_idt24" class="ui-state-default" role="columnheader">
+								<span class="ui-column-title">Nome</span>
+							</th>
+							<th id="form:tbl:j_idt26" class="ui-state-default" role="columnheader">
+								<span class="ui-column-title">Descrição</span>
+							</th>
+						</tr>
+						</thead>
+					<tfoot id="form:tbl_foot"></tfoot>
+					<tbody id="form:tbl_data" class="ui-datatable-data ui-widget-content ocorrencias" style="cursor: pointer">
+						
+					</tbody>
+				</table>
+			</div>
+			
+			<div class="ui-datatable-footer ui-widget-header ui-corner-bottom">
+				<button id="form:tbl:j_idt29" name="form:tbl:j_idt29" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left" onclick="" type="submit" role="button" aria-disabled="false">
+					<span class="ui-button-icon-left ui-icon ui-c ui-icon-pencil"></span>
+					<span class="ui-button-text ui-c">Tratar Ocorrência</span>
+				</button>
+			</div><input type="hidden" id="form:tbl_selection" name="form:tbl_selection" autocomplete="off" value=""></input>
+		</div>
 			<p:panel header="Ocorrências Pendentes" style="margin-top: 20px;" rendered="false">
 				<p:dataTable selectionMode="single" id="tbl" var="o"  value="#{ocorrencia.listaOcorrencias}" selection="#{ocorrencia.ocorrenciaSelecionada}" rowKey="#{o.id}" emptyMessage="Nenhum registro encontrado.">
 					<p:column headerText="Id">
