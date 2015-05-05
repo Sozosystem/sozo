@@ -1,6 +1,7 @@
-
+var notification;
 
 function initialize() {
+	notification = document.getElementsByTagName('audio')[0];
 	if(window.location.href.indexOf("ocorrencia.xhtml") != -1)  return;
 	var myCenter=new google.maps.LatLng(-8.057838,-34.882897);
 	var mapProp = {
@@ -63,6 +64,7 @@ function updateMap() {
 	        	if(m) {
 	        		
 	        	}else {
+	        		notification.play();
 		            var m = new google.maps.Marker({
 		            	position: new google.maps.LatLng(o.la, o.lo),
 		            	icon: "/SozoWeb/javax.faces.resource/images/marker-icon-1.png.xhtml"
@@ -229,7 +231,7 @@ var Ocorrencias = (function() {
 			$(".ocorrencia").each(function(i) {
 				$(this).css({border: '1px solid #dddddd'})
 			});
-			element.css({border: '3px solid green'})
+			element.css({'box-sizing': 'border-box',border: '3px solid green'})
 			clickCallback();
 		});
 		return element;
