@@ -38,7 +38,7 @@
 	    directionsService = new google.maps.DirectionsService({ supressMarkers: true});
 	    directionsService.supressMarkers = true;
 	    
-	    
+	    var viaturas = [];
 	    $.ajax({
 			url: 'viaturas/viaturas-disponiveis-json.xhtml',
 			type: "GET",
@@ -61,12 +61,12 @@
 		                };
 		            })(m,infowindow)); 
 		            m.setMap(gmap);
-		            tracarRotas(m.getPosition());
+		            tracarRotas(m.getPosition(), v, viaturas.length);
 		        }
 		    }
 	    });
 	    
-	    function tracarRotas(x) {
+	    function tracarRotas(x, v, l) {
 	    	var directionsRenderer = new google.maps.DirectionsRenderer({suppressMarkers: true});
 	    	directionsRenderer.suppressMarkers = true;
 		    directionsRenderer.setMap(gmap);
@@ -90,9 +90,32 @@
 		    				    totalDistance += legs[i].distance.value;
 		    				    totalDuration += legs[i].duration.value;
 		    				}
-		    				console.log(totalDuration)
+		    				v.duration = totalDuration;
+		    				v.distance = totalDistance;
+		    				viaturas.push(v);
+		    				if(viaturas.length == l) {
+		    					montarTabela();
+		    				}
 		    			}
 	    			});
+	    }
+	    
+	    function montarTabela() {
+	    	function compare(a,b) {
+	    		  if (a.duration < b.duration)
+	    		     return -1;
+	    		  if (a.duration > b.duration)
+	    		    return 1;
+	    		  return 0;
+	    		}
+
+	    	viaturas.sort(compare);
+	    	for(var i in viaturas) {
+	    		var v = viaturas[i];
+	    		var div = "<div style='border: 1px solid #ccc; padding: 4px; margin-right: 10px; width: 100px; float: left'>" +
+	    					v.placa +  " / " + Math.ceil(v.duration / 60) + "m </div>";
+	    		$('#viaturas').append(div);
+	    	}
 	    }
 	    
 	}

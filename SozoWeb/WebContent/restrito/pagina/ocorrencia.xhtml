@@ -16,6 +16,13 @@
 		<p:panel header="Ocorrência Id: #{ocorrencia.ocorrencia.id}">
 		<h:form>
 			<ui:include src="map.xhtml"></ui:include>
+			
+
+				<p:panel header="Viaturas mais próximas" style="margin-top: 20px;">
+					<div id="viaturas" style="display: table"></div>
+					<div class="clear: both;"> </div>
+				</p:panel>
+				
 				<p:panel header="Imagem" style="margin-top: 20px; text-align: center"  rendered="#{ocorrencia.foto == true}">
 					<img src="http://localhost/sozoAPI/public/uploads/#{ocorrencia.ocorrencia.foto}"></img>
 				</p:panel>
@@ -24,6 +31,7 @@
 						<source src="http://localhost/sozoAPI/public/uploads/#{ocorrencia.ocorrencia.foto}" type="video/mp4"></source>
 					</video>
 				</p:panel>
+			
 			<p:panel header="Detalhes Ocorrência" style="margin-top: 20px; text-align: center">
 				<h:panelGrid columns="3" cellspacing="5" cellpadding="5" width="100%" style="text-align: left;">
 					<h:outputText value="#{ocorrencia.ocorrencia.dataCriacao}">

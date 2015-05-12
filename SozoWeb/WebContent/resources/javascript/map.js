@@ -216,12 +216,19 @@ var Ocorrencias = (function() {
 	var tableOcorrencias;
 	var colors = ["#ffde3d", "#ffbd3c", "#ff9d3c","#ff7d3c", "#ff5e3d", "#ff3c3c", "#ff1d1d", "#fc0000", "#dd0000", "#bd0000"];
 	var module = {};
+	var selected = null;
 	module.init = function() {
 		tableOcorrencias = $(".ocorrencias");
+		$("#tratar").click(function(e) {
+			e.preventDefault();
+			if(!selected) return;
+			window.location.href = "ocorrencia.xhtml?ocorrencia="+  selected.attr('data-id');
+			console.log(selected.attr('data-id'));
+		})
 	}
 	
 	module.insertRow = function(ocorrencia, clickCallback) {
-		var element = $('<tr data-ri="0" data-rk="32" class="ui-widget-content ui-datatable-even ui-datatable-selectable ocorrencia" role="row" aria-selected="false">' +
+		var element = $('<tr data-ri="0" data-id="' + ocorrencia.id + '" data-rk="32" class="ui-widget-content ui-datatable-even ui-datatable-selectable ocorrencia" role="row" aria-selected="false">' +
 							'<td role="gridcell">' + ocorrencia.id + '</td>' +
 							'<td role="gridcell">' + ocorrencia.la + '</td>' +
 							'<td role="gridcell">' + ocorrencia.lo + '</td>' +
@@ -231,6 +238,7 @@ var Ocorrencias = (function() {
 			$(".ocorrencia").each(function(i) {
 				$(this).css({border: '1px solid #dddddd'})
 			});
+			selected = $(this);
 			element.css({'box-sizing': 'border-box',border: '3px solid green'})
 			clickCallback();
 		});
@@ -255,4 +263,5 @@ var Ocorrencias = (function() {
 
 $(function() {
 	Ocorrencias.init();
+	
 });
