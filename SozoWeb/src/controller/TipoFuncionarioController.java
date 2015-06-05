@@ -1,9 +1,11 @@
 package controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
 
@@ -96,6 +98,22 @@ public class TipoFuncionarioController {
 		tipoFunc = new TipoFuncionario();
 		podeAlterar = false;
 		RequestContext.getCurrentInstance().reset("form2");
+	}
+	
+	public void voltar() {
+		tipoFuncSelecionado = null;
+		tipoFunc = new TipoFuncionario();
+		podeAlterar = false;
+		try {
+			FacesContext
+					.getCurrentInstance()
+					.getExternalContext()
+					.redirect(
+							"ocorrencias.xhtml");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 	
 	public TipoFuncionario getTipoFunc() {

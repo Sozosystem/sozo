@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Calendar;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -7,8 +9,8 @@ import javax.persistence.Table;
 @Table(name="solicitante")
 public class Solicitante extends ObjetoGeral{
 
-	private String nome;
-	private String telefone;
+	private String nome = "";
+	private String telefone= "";
 	private String imei;
 	private int confiabilidade = 1;
 
@@ -35,6 +37,24 @@ public class Solicitante extends ObjetoGeral{
 	}
 	public void setConfiabilidade(int confiabilidade) {
 		this.confiabilidade = confiabilidade;
+	}
+	@Override
+	public String toString() {
+		return "Solicitante nome=" + nome + ", telefone=" + telefone
+				+ ", imei=" + imei + ", confiabilidade=" + confiabilidade;
+	}
+	public Solicitante() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public Solicitante(Calendar dataUltimaAtualizacao, Situacao situacao) {
+		super(dataUltimaAtualizacao, situacao);
+		// TODO Auto-generated constructor stub
+	}
+	public Solicitante(Integer id, Calendar dataUltimaAtualizacao,
+			Situacao situacao) {
+		super(id, dataUltimaAtualizacao, situacao);
+		// TODO Auto-generated constructor stub
 	}
 	
 }

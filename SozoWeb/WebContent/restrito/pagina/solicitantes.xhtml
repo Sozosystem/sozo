@@ -5,100 +5,125 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
+
 <h:head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-	<title>Insert title here</title>
+	<title>Projeto Teste</title>
 </h:head>
 <h:body>
 
-<ui:composition template="../template/layout.xhtml">
-<ui:define name="content">
-<p:panel header="Solicitantes">
-<h:form id="fordsm">
-	<p:panel id="basic" header="Consultar Solicitantes" style="margin-top: 20px;">
-	<h:panelGrid columns="10" cellpadding="5">
-		<!-- p:outputLabel for="id" value="ID:" />
-		<p:inputMask id="id" value="#{funcionario.funcionarioConsulta.id}"></p:inputMask-->
-				            
-		<p:outputLabel for="nome" value="Nome:" />
-		<p:inputMask id="nome" value="#{solicitante.solicitanteConsulta.nome}"></p:inputMask>            
-				            
-		<p:outputLabel for="tel" value="Telefone:" />
-		<p:inputMask id="tel" value="#{solicitante.solicitanteConsulta.telefone}"></p:inputMask>
-		
-		<p:outputLabel value="Situação:" />
-	  	<p:selectOneMenu id="text4" value="#{solicitante.solicitanteConsulta.situacao}">
-	  		<f:selectItem itemLabel="Selecione uma opção" itemValue="" />
-	  		<f:selectItems value="#{solicitante.situacoes}" />
-	  	</p:selectOneMenu>
-  	</h:panelGrid>
-	<h:panelGrid columns="4" cellpadding="5">
-		<p:commandButton value="Consultar" icon="ui-icon-search" actionListener="#{solicitante.consultarSolicitante}" ajax="false" />
-		<p:commandButton value="Mostrar Todos" icon="ui-icon-search" actionListener="#{solicitante.mostrarTodosSolicitantes}" ajax="false" />
-	</h:panelGrid>
-			        
-	</p:panel>
-</h:form>
-			<h:form id="form">
-				<p:panel header="Lista de Solicitantes"  style="margin-top: 20px;">
-					<p:dataTable selectionMode="single" id="tbl" var="s"
-						value="#{solicitante.listaSolicitantes}"
-						selection="#{solicitante.solicitanteSelecionado}" rowKey="#{s.id}" rows="10"
-						paginator="true" emptyMessage="Nenhum registro encontrado.">
-						<p:column headerText="Id">
-							<h:outputText value="#{s.id}" />
-						</p:column>
-						<p:column headerText="Nome">
-							<h:outputText value="#{s.nome}" />
-						</p:column>
-						<p:column headerText="Telefone">
-							<h:outputText value="#{s.telefone}" />
-						</p:column>
-						<p:column headerText="Situação">
-							<h:outputText value="#{s.situacao}" />
-						</p:column>
-						<f:facet name="footer">
-				            <p:commandButton process="tbl" icon="ui-icon-pencil" actionListener="#{solicitante.alterarSolicitanteSelecionado}" ajax="false" value="Alterar" />
-				        </f:facet>
-					</p:dataTable>
-				</p:panel>
-			</h:form>
+	<ui:composition template="../template/layout.xhtml">
+		<ui:define name="content">
+			<p:panel header="Solicitantes">
+
+				<h:form id="fordsm">
+					<p:panel id="basic" header="Consultar" style="margin-top: 20px;">
+
+						<h:panelGrid columns="2" cellpadding="5">
+							<p:outputLabel for="nome" value="Nome:" />
+							<p:inputText id="nome"
+								value="#{solicitante.solicitante.nome}">
+								<p:ajax event="keyup" listener="#{solicitante.consultar}"
+									update=":form:tbl"></p:ajax>
+							</p:inputText>
+
+							<p:outputLabel for="tel" value="Telefone:" />
+							<p:inputMask id="tel" value="#{solicitante.solicitante.telefone}">
+								<p:ajax event="keyup" listener="#{solicitante.consultar}"
+									update=":form:tbl"></p:ajax>
+							</p:inputMask>
+
+							<p:outputLabel value="Situação:" rendered="false" />
+							<p:selectOneMenu id="text4"
+								value="#{solicitante.solicitanteConsulta.situacao}"
+								rendered="false">
+								<f:selectItem itemLabel="Selecione uma opção" itemValue="" />
+								<f:selectItems value="#{solicitante.situacoes}" />
+							</p:selectOneMenu>
+						</h:panelGrid>
+						<h:panelGrid columns="4" cellpadding="5">
+							<p:commandButton value="Consultar" icon="ui-icon-search"
+								actionListener="#{solicitante.consultar}" ajax="false" />
+							<p:commandButton value="Mostrar Todos" icon="ui-icon-search"
+								actionListener="#{solicitante.mostrarTodosSolicitantes}"
+								ajax="false" />
+						</h:panelGrid>
+
+					</p:panel>
+				</h:form>
+				<h:form id="form">
+					<p:panel header="Lista de Solicitantes" style="margin-top: 20px;">
+						<p:dataTable selectionMode="single" id="tbl" var="s"
+							value="#{solicitante.listaSolicitantes}"
+							selection="#{solicitante.solicitanteSelecionado}"
+							rowKey="#{s.id}" rows="10" paginator="true"
+							emptyMessage="Nenhum registro encontrado.">
+							<p:column headerText="Id">
+								<h:outputText value="#{s.id}" />
+							</p:column>
+							<p:column headerText="Nome">
+								<h:outputText value="#{s.nome}" />
+							</p:column>
+							<p:column headerText="Telefone">
+								<h:outputText value="#{s.telefone}" />
+							</p:column>
+							<p:column headerText="Confiabilidade">
+								<h:outputText value="#{s.confiabilidade}" />
+							</p:column>
+							<f:facet name="footer">
+								<p:commandButton process="tbl" icon="ui-icon-pencil"
+									actionListener="#{solicitante.alterarSolicitanteSelecionado}"
+									ajax="false" value="Alterar" rendered="false" />
+							</f:facet>
+						</p:dataTable>
+					</p:panel>
+				</h:form>
 
 
-<h:form id="form2">
-	<p:panel id="basic" header="Alterar Situação" style="margin-top: 20px;">
-	<p:messages severity="error">
-		<p:effect type="bounce" event="load" delay="0" />
-	</p:messages>
-	<h:panelGrid columns="10" cellpadding="5">
-		<h:inputHidden value="#{solicitante.solicitante.id}" />
-		
-		<p:outputLabel for="nome" value="Nome:" />
-		<p:inputMask id="nome" value="#{solicitante.solicitante.nome}" disabled="true"></p:inputMask>  
-		<h:inputHidden value="#{solicitante.solicitante.nome}" />
-				            
-		<p:outputLabel for="tel" value="Telefone:" />
-		<p:inputMask id="tel" value="#{solicitante.solicitante.telefone}" disabled="true"></p:inputMask>
-		<h:inputHidden value="#{solicitante.solicitante.telefone}" />
-		
-		<p:outputLabel for="Situação" value="Situação:" />
-	  	<p:selectOneMenu id="Situação" value="#{solicitante.solicitante.situacao}" required="true">
-	  		<f:selectItem itemLabel="Selecione uma opção" itemValue="" />
-	  		<f:selectItems value="#{solicitante.situacoes}" />
-	  	</p:selectOneMenu>
-  	</h:panelGrid>
-  	
-	<h:panelGrid columns="4" cellpadding="5">
-		<p:commandButton process="tbl" icon="ui-icon-pencil" value="Salvar Alterarações" actionListener="#{solicitante.alterarSolicitante}" ajax="false" disabled="#{!solicitante.podeAlterar}"/>
-		<p:commandButton icon="ui-icon-close" value="Cancelar Alteraração" actionListener="#{solicitante.cancelarAlteracao}" ajax="false" disabled="#{!solicitante.podeAlterar}"  immediate="true"/>
-	</h:panelGrid>
-			        
-	</p:panel>
-</h:form>
+				<h:form id="form2">
+					<p:panel id="basic" header="Alterar Situação"
+						style="margin-top: 20px;" visible="false">
+						<p:messages severity="error">
+							<p:effect type="bounce" event="load" delay="0" />
+						</p:messages>
+						<h:panelGrid columns="10" cellpadding="5">
+							<h:inputHidden value="#{solicitante.solicitante.id}" />
 
-</p:panel>
-</ui:define>
-</ui:composition>
+							<p:outputLabel for="nome" value="Nome:" />
+							<p:inputMask id="nome" value="#{solicitante.solicitante.nome}"
+								disabled="true"></p:inputMask>
+							<h:inputHidden value="#{solicitante.solicitante.nome}" />
 
+							<p:outputLabel for="tel" value="Telefone:" />
+							<p:inputMask id="tel" value="#{solicitante.solicitante.telefone}"
+								disabled="true"></p:inputMask>
+							<h:inputHidden value="#{solicitante.solicitante.telefone}" />
+
+							<p:outputLabel for="Situação" value="Situação:" />
+							<p:selectOneMenu id="Situação"
+								value="#{solicitante.solicitante.situacao}" required="true">
+								<f:selectItem itemLabel="Selecione uma opção" itemValue="" />
+								<f:selectItems value="#{solicitante.situacoes}" />
+							</p:selectOneMenu>
+						</h:panelGrid>
+
+						<h:panelGrid columns="4" cellpadding="5">
+							<p:commandButton process="tbl" icon="ui-icon-pencil"
+								value="Salvar Alterarações"
+								actionListener="#{solicitante.alterarSolicitante}" ajax="false"
+								disabled="#{!solicitante.podeAlterar}" />
+							<p:commandButton icon="ui-icon-close"
+								value="Cancelar Alteraração"
+								actionListener="#{solicitante.cancelarAlteracao}" ajax="false"
+								disabled="#{!solicitante.podeAlterar}" immediate="true" />
+						</h:panelGrid>
+
+					</p:panel>
+				</h:form>
+			</p:panel>
+			<script>
+	$('.keyfilter-tipo').keyfilter(/[a-z á-ú]/i);
+</script>
+		</ui:define>
+	</ui:composition>
 </h:body>
 </html>

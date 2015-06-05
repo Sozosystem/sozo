@@ -11,14 +11,27 @@
 	   <h:form>  
 			<p:menubar>
 				
-				<p:submenu label="Funcionários" rendered="#{login.funcionarioLogado.tipoFuncionario.nome == 'Administrador'}">
-		            <p:menuitem value="Funcionários &nbsp;" url="funcionarios.xhtml" ajax="false" />
-		            <p:menuitem value="Tipos de Funcionários &nbsp;" url="tipos-funcionario.xhtml" ajax="false"/>
+				<p:submenu label="Cadastro" rendered="#{login.funcionarioLogado.tipoFuncionario.nome == 'Administrador'}">
+		            <p:menuitem value="Funcionários &nbsp;" url="funcionario-cadastro.xhtml" ajax="false" />
+		            <p:menuitem value="Tipos de Funcionários &nbsp;" url="tipo-funcionario-cadastro.xhtml" ajax="false"/>
+		       		<p:menuitem value="Viaturas &nbsp;" url="viatura-cadastro.xhtml" ajax="false" rendered="#{login.funcionarioLogado.tipoFuncionario.nome == 'Administrador'}" />
 		        </p:submenu>
-				<p:menuitem value="Viaturas &nbsp;" url="viaturas.xhtml" ajax="false" rendered="#{login.funcionarioLogado.tipoFuncionario.nome == 'Administrador'}" />
-				<p:menuitem value="Solicitantes &nbsp;" url="solicitantes.xhtml" ajax="false"  rendered="#{login.funcionarioLogado.tipoFuncionario.nome == 'Administrador'}" />
-			 	<p:menuitem value="Ocorrências &nbsp;" url="ocorrencias.xhtml" ajax="false" />
-		        <p:menuitem value="Sair &nbsp;" actionListener="#{login.deslogar}"  icon="ui-icon-power" style="margin-left: 40px;" />
+		        <p:submenu  label="Consultas" rendered="#{login.funcionarioLogado.tipoFuncionario.nome == 'Administrador'}">
+		       		<p:menuitem value="Funcionários &nbsp;" url="funcionarios.xhtml" ajax="false"  rendered="#{login.funcionarioLogado.tipoFuncionario.nome == 'Administrador'}" />
+		        	<p:menuitem value="Tipos de Funcionários &nbsp;" url="tipos-funcionario.xhtml" ajax="false"/>
+		        	<p:menuitem value="Solicitantes &nbsp;" url="solicitantes.xhtml" ajax="false"  rendered="#{login.funcionarioLogado.tipoFuncionario.nome == 'Administrador'}" />
+		        	<p:menuitem value="Viaturas &nbsp;" url="viaturas.xhtml" ajax="false"  rendered="#{login.funcionarioLogado.tipoFuncionario.nome == 'Administrador'}" />
+		        </p:submenu>
+		        <p:submenu label="Ocorrências">
+		        	 <p:menuitem value="Tratar &nbsp;" url="ocorrencias.xhtml" ajax="false" />
+		        	 <p:menuitem value="Acompanhar &nbsp;" url="acompanhamento.xhtml" ajax="false"  rendered="#{login.funcionarioLogado.tipoFuncionario.nome == 'Administrador'}" />
+		        	 <p:menuitem value="Acompanhar &nbsp;" url="acompanhamentoFunc.xhtml" ajax="false"  rendered="#{login.funcionarioLogado.tipoFuncionario.nome != 'Administrador'}" />
+		        </p:submenu>
+		        <p:submenu label="Relatórios" rendered="#{login.funcionarioLogado.tipoFuncionario.nome == 'Administrador'}">
+		        <p:menuitem value="Relatórios &nbsp;" url="relatorios.xhtml" ajax="false" />
+		        <p:menuitem value="Relatórios Gráficos &nbsp;" url="relatorios-graficos.xhtml" ajax="false" />
+		        </p:submenu> 	
+		        <p:menuitem value="Sair &nbsp;" actionListener="#{login.deslogar}"  icon="ui-icon-power" style="margin-left: 20px;"/>
 		    </p:menubar>
 		</h:form>
 	</ui:composition>

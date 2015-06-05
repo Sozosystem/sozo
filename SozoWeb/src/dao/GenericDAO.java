@@ -21,7 +21,15 @@ import org.hibernate.criterion.MatchMode;
 public class GenericDAO<PK, T> {
     protected EntityManager entityManager;
  
-    public GenericDAO(EntityManager entityManager) {
+    public EntityManager getEntityManager() {
+		return entityManager;
+	}
+
+	public void setEntityManager(EntityManager entityManager) {
+		this.entityManager = entityManager;
+	}
+
+	public GenericDAO(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
  

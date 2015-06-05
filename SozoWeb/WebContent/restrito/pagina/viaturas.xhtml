@@ -22,7 +22,8 @@
 		<p:inputMask id="id" value="#{viatura.viaturaConsulta.id}"></p:inputMask-->
 			            
 		<p:outputLabel for="placa" value="Placa:" />
-		<p:inputMask id="placa" value="#{viatura.viaturaConsulta.placa}"></p:inputMask>
+		<p:inputMask id="placa" value="#{viatura.viaturaConsulta.placa}" mask= "?aaa-9999" style="text-transform:uppercase;" >
+		</p:inputMask>
 			            
 			            
 		<p:outputLabel for="tipo" value="Tipo:" />
@@ -57,14 +58,14 @@
 			        <h:outputText value="#{v.descricao}" /> 
 			    </p:column>
 			    <f:facet name="footer">
-		            <p:commandButton process="tbl" icon="ui-icon-pencil" actionListener="#{viatura.viaturaAlterarSelecionada}" ajax="false" value="Alterar" />
+		            <p:commandButton process="tbl" icon="ui-icon-pencil" actionListener="#{viatura.viaturaAlterarSelecionada}" onclick="" ajax="false" value="Alterar" />
 		            <p:commandButton process="tbl" icon="ui-icon-trash" value="Remover" action="#{viatura.removerViatura}" ajax="false" />
 		        </f:facet>
 		</p:dataTable>
 	</p:panel>
 </h:form>
 <h:form id="form2">	
-	<p:panel id="panel" header="Opções" style="margin-top: 20px;">
+	<p:panel id="panel" header="Opções" style="margin-top: 20px;" visible="#{viatura.podeAlterar}">
 		<p:messages severity="error">
 			<p:effect type="bounce" event="load" delay="0" />
 		</p:messages>
@@ -72,7 +73,7 @@
         <h:panelGrid columns="2" cellpadding="5">
  
             <p:outputLabel for="text2" value="Placa:" />
-            <p:inputMask id="text2" value="#{viatura.viatura.placa}" required="true"  mask="aaa-9999" styleClass="text-transform: uppercase;">
+            <p:inputMask id="text2" value="#{viatura.viatura.placa}" required="true"  mask="?aaa-9999" style="text-transform: uppercase;">
             </p:inputMask>
             
             <p:outputLabel for="text1" value="Tipo:" />
@@ -86,9 +87,8 @@
             	<f:validateLength  minimum="3" maximum="250"/>
             </p:inputTextarea>
 		</h:panelGrid>
-		<h:panelGrid columns="3" cellpadding="5">
-            <p:commandButton process="tbl" icon="ui-icon-pin-w" value="Adicionar Viatura" actionListener="#{viatura.salvarViatura}" ajax="false" disabled="#{viatura.podeAlterar}"/>
-			<p:commandButton process="tbl" icon="ui-icon-pencil" value="Salvar Alterações" actionListener="#{viatura.alterarViatura}" ajax="false" disabled="#{!viatura.podeAlterar}"/>
+		<h:panelGrid columns="2" cellpadding="5">
+			<p:commandButton process="tbl" icon="ui-icon-pencil" value="Salvar Alterações" actionListener="#{viatura.alterarViatura}" ajax="false"/>
         	<p:commandButton icon="ui-icon-close" value="Cancelar Alteraração" actionListener="#{viatura.cancelarAlteracao}" ajax="false" disabled="#{!viatura.podeAlterar}"  immediate="true"/>
         </h:panelGrid>
     </p:panel>
@@ -96,7 +96,7 @@
 </h:form>
 </p:panel>	
 <script>
-	$('.keyfilter-tipo').keyfilter(/[a-z á-ú]/i);
+	$('.keyfilter-tipo').keyfilter(/[a-z á-ú]/i);	
 </script>
 </ui:define>
 	</ui:composition>

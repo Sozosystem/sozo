@@ -33,16 +33,19 @@
 				
 			</div>
 			<div class="logo-text"> Área Administrativa</div>
+			
 	</div>
+	
+
 	    <p:layoutUnit position="west" resizable="true" size="200" minSize="40" maxSize="350" style="background-color: rgba(255,255,255,0) !important;">
+	    	<div align="right">	<p:outputLabel style="font-size: 14px;width: 60px;text-align: right" value="Olá, #{login.funcionarioLogado}" var="f" label="f.nome"/></div>
 	    	<ui:insert name="header" >
 				<ui:include src="menu.xhtml" />
 			</ui:insert> 
 	    </p:layoutUnit>
-	 
 	    <p:layoutUnit position="center">
 	        <ui:insert name="content" >
-		      <ui:include src="conteudo/viaturas.xhtml" />
+		      <ui:include src="/restrito/pagina/index.xhtml" />
 		   	</ui:insert> 
 	    </p:layoutUnit>
 	</h:panelGrid>

@@ -1,13 +1,17 @@
 package controller;
 
 
+import java.io.IOException;
 import java.util.List;
+
+
 
 
 
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
 
@@ -50,6 +54,7 @@ public class ViaturaController {
 		v.setPlaca(viatura.getPlaca().toUpperCase());
 		v.setTipo(viatura.getTipo());
 		v.setDescricao(viatura.getDescricao());
+		v.setDisponivel(true);
 
 		dao.save(v);
 		mostrarTodasViaturas();
@@ -105,7 +110,18 @@ public class ViaturaController {
 		viaturaSelecionada = null;
 		viatura = new Viatura();
 		podeAlterar = false;
-		RequestContext.getCurrentInstance().reset("form2");
+	}
+	
+	public void voltar() {
+		viaturaSelecionada = null;
+		viatura = new Viatura();
+		podeAlterar = false;
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("ocorrencias.xhtml");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public Viatura getViatura() {

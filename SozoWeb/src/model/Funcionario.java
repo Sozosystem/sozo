@@ -56,6 +56,12 @@ public class Funcionario extends ObjetoGeral{
 	public void setTipoFuncionario(TipoFuncionario tipoFuncionario) {
 		this.tipoFuncionario = tipoFuncionario;
 	}
+
+	@Override
+	public String toString() {
+		return nome;
+	}
+	
 	
 	
 }

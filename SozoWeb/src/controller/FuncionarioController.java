@@ -1,9 +1,11 @@
 package controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
 
@@ -122,6 +124,18 @@ public class FuncionarioController {
 		funcionario = new Funcionario();
 		podeAlterar = false;
 		RequestContext.getCurrentInstance().reset("form2");
+	}
+	
+	public void voltar() {
+		funcionarioSelecionado = null;
+		funcionario = new Funcionario();
+		podeAlterar = false;
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("ocorrencias.xhtml");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public Funcionario getFuncionario() {

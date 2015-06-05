@@ -70,5 +70,16 @@ public class Viatura extends ObjetoGeral {
 	public void setDisponivel(boolean disponivel) {
 		this.disponivel = disponivel;
 	}
+
+	
+	public String toString() {
+		
+		return placa;
+	}
+
+	
+	
+
+	
 }
 	

@@ -36,7 +36,8 @@ public class LoginFilter implements Filter {
         			chain.doFilter(request, response);
 	        	}else {
 	        		System.out.println(pagina);
-	        		if(pagina.equals("ocorrencias.xhtml") || pagina.equals("index.xhtml")) {
+	        		if(pagina.equals("ocorrencias.xhtml") || pagina.equals("index.xhtml") || pagina.equals("ocorrencia.xhtml") || pagina.equals("ocorrencias")
+	        			||	pagina.equals("acompanhamentoFunc.xhtml") ||pagina.equals("acompanhamento-detalhe.xhtml") ) {
 	        			chain.doFilter(request, response);
 	        		}else {
 	        			((HttpServletResponse) response).sendRedirect(contextPath + "/restrito/pagina/index.xhtml");

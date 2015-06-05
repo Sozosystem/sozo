@@ -17,5 +17,7 @@
 				value="jdbc:mysql://localhost:3306/sozoweb" />
 				
 		</properties>
+		
+		
 	</persistence-unit>
 </persistence>

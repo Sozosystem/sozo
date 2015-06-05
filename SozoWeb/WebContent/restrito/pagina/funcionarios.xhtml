@@ -26,8 +26,6 @@
 			            <p:inputMask id="nome" value="#{funcionario.funcionarioConsulta.nome}">
 			            </p:inputMask>
 			            
-			            
-			            
 			            <p:outputLabel for="usuario" value="Usuário:" />
 			            <p:inputMask id="usuario" value="#{funcionario.funcionarioConsulta.usuario}"></p:inputMask>
 			            </h:panelGrid>
@@ -46,7 +44,6 @@
   					</p:selectOneMenu>
   					</h:panelGrid>
 			            <h:panelGrid columns="4" cellpadding="5">
-			           
 			            <p:commandButton value="Consultar" icon="ui-icon-search" actionListener="#{funcionario.consultarFuncionario}" ajax="false" />
 			            <p:commandButton value="Mostrar Todos" icon="ui-icon-search" actionListener="#{funcionario.mostrarTodosFuncionarios}" ajax="false" />
 			            </h:panelGrid>
@@ -88,7 +85,7 @@
 	</p:panel>
 	</h:form>
 	<h:form id="form2">
-	<p:panel id="panel" header="Opções" style="margin-top: 20px;">
+	<p:panel id="panel" header="Opções" style="margin-top: 20px;" visible="#{funcionario.podeAlterar}">
 		<p:messages severity="error">
 			<p:effect type="bounce" event="load" delay="0" />
 		</p:messages>
@@ -133,7 +130,6 @@
         	</h:panelGrid>
         </h:panelGrid>
         <h:panelGrid  columns="4" cellpadding="5">
-        	<p:commandButton icon="ui-icon-pin-w" value="Adicionar Funcionário" actionListener="#{funcionario.salvarFuncionario}" ajax="false" update=":form2" disabled="#{funcionario.podeAlterar}"/>
 			<p:commandButton icon="ui-icon-pencil" value="Salvar Alterarações" actionListener="#{funcionario.alterarFuncionario}" ajax="false" disabled="#{!funcionario.podeAlterar}"/>
 			<p:commandButton icon="ui-icon-close" value="Cancelar Alteraração" action="#{funcionario.cancelarAlteracao}" ajax="false" disabled="#{!funcionario.podeAlterar}" immediate="true"/>
     	</h:panelGrid>

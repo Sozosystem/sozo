@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -16,6 +17,7 @@ import javax.persistence.TemporalType;
 @Entity
 public class Ocorrencia extends ObjetoGeral{
 	
+	private String tempo;
 	private double latitude;
 	private double longitude;
 	private String imagem;
@@ -30,6 +32,9 @@ public class Ocorrencia extends ObjetoGeral{
 	@Enumerated(EnumType.STRING)
 	private SituacaoOcorrencia situacaoOcorrencia;
 	private String foto;
+	@ElementCollection
+    private List<String > observacao = new ArrayList<String>();
+	private Endereco endereco;
 	
 	public List<Viatura> getViaturas() {
 		return viaturas;
@@ -62,6 +67,9 @@ public class Ocorrencia extends ObjetoGeral{
 		this.dataHoraFinal = dataHoraFinal;
 	}
 	public Funcionario getFuncionario() {
+		if (funcionario == null){  
+		    funcionario = new Funcionario();  
+		}  
 		return funcionario;
 	}
 	public void setFuncionario(Funcionario funcionario) {
@@ -84,6 +92,35 @@ public class Ocorrencia extends ObjetoGeral{
 	}
 	public void setFoto(String foto) {
 		this.foto = foto;
+	}
+
+	public List<String> getObservacao() {
+		return observacao;
+	}
+	public void setObservacao(List<String> observacao) {
+		this.observacao = observacao;
+	}
+	
+	public Endereco getEndereco() {
+		return endereco;
+	}
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+	@Override
+	public String toString() {
+		return "Ocorrencia latitude=" + latitude + ", longitude=" + longitude
+				+ ", imagem=" + imagem + ", dataHoraFinal=" + dataHoraFinal
+				+ ", funcionario=" + funcionario + ", solicitante="
+				+ solicitante + ", viaturas=" + viaturas
+				+ ", situacaoOcorrencia=" + situacaoOcorrencia + ", foto="
+				+ foto;
+	}
+	public String getTempo() {
+		return tempo;
+	}
+	public void setTempo(String tempo) {
+		this.tempo = tempo;
 	}
 	
 }

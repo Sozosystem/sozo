@@ -25,8 +25,8 @@ public class SolicitanteController {
 	private Situacao[] situacoes = Situacao.values();
 	private boolean podeAlterar;
 	
-	
 	public SolicitanteController(){
+		super();
 		EntityManagerHelper emh = new EntityManagerHelper();            
 		dao = new SolicitanteDAO(emh.getEntityManager());
 		solicitante = new Solicitante();
@@ -34,12 +34,29 @@ public class SolicitanteController {
 		mostrarTodosSolicitantes();
 	}
 	
-	public void consultarSolicitante() {
-		if(solicitanteConsulta.getNome() == "" && solicitanteConsulta.getTelefone() == "" && solicitanteConsulta.getSituacao() == null) {
-			Mensagem.alerta(Mensagem.INFO, "Preencha ao menos um campo para realizar a consulta", null);
-			return;
+	public void consultar() {
+		System.out.println(solicitante.getNome());
+		System.out.println(solicitante.getTelefone());
+		
+		
+		try {
+			//List<Solicitante> aux = null;
+			if (!solicitante.getNome().equals("") || !solicitante.getTelefone().equals("")) {
+				System.out.println("1");
+				listaSolicitantes = dao.consultar(solicitante);
+			}
+			
+				if(solicitante.getNome().equals("") && solicitante.getTelefone().equals("")){
+					System.out.println("2");
+					listaSolicitantes = dao.findAll();
+				}
+					
+				
+				
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+
 		}
-		listaSolicitantes = dao.findByObject(solicitanteConsulta);
 	}
 	
 	public void alterarSolicitante() {
@@ -47,11 +64,12 @@ public class SolicitanteController {
 		mostrarTodosSolicitantes();
 		solicitante = new Solicitante();
 		podeAlterar = false;
-		Mensagem.alerta(Mensagem.INFO, "Situação do solicitante alterada com sucesso", null);
+		Mensagem.alerta(Mensagem.INFO, "Situaï¿½ï¿½o do solicitante alterada com sucesso", null);
 	}
 	
 	public void mostrarTodosSolicitantes() {
 		this.listaSolicitantes = dao.findAll();
+		consultar();
 	}
 	
 	public void alterarSolicitanteSelecionado() {

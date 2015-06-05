@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Projeto Teste</title>
+</h:head>
+<h:body>
+	<ui:composition template="../template/layout.xhtml">
+		<ui:define name="content">
+ 
+    	
+<p:panel header="Funcionários">
+
+	<h:form id="form">
+	<p:panel id="panel" header="Opções" style="margin-top: 20px;">
+		<p:messages severity="error">
+			<p:effect type="bounce" event="load" delay="0" />
+		</p:messages>
+		<h:inputHidden value="#{funcionario.funcionario.id}" />
+        <h:panelGrid columns="2" cellpadding="5">
+        	<h:panelGrid columns="2" cellpadding="5">
+            <p:outputLabel for="text1" value="Nome:"/>
+            <p:inputText id="text1" value="#{funcionario.funcionario.nome}" required="true"  styleClass="keyfilter-nome"  validatorMessage="Nome: Erro de validação: O nome deve conter apenas letras entre 6 e 100 caracteres"  autocomplete="off">
+                <f:validateRegex pattern="^[a-zA-Z]+[ a-zA-Zá-ùÁ-Ù]{4,100}[a-zA-Zá-ùÁ-Ù]$"/>
+            </p:inputText>
+ 
+            <p:outputLabel for="text2" value="Usuário:"  />
+            <p:inputText id="text2" value="#{funcionario.funcionario.usuario}" required="true" maxlength="15"  styleClass="keyfilter-usuario" validatorMessage="Usuário: Erro de validação: O usuário deve conter apenas letras, números e os caracteres _ . - entre 6 e 20 caracteres"  autocomplete="off">
+            	<f:validateLength minimum="4" maximum="20" />
+            	<f:validateRegex pattern="^[0-9a-zA-Z_.-]+$"/>
+            </p:inputText>
+            <p:outputLabel for="text3" value="Senha:" />
+            <p:password id="text3" value="#{funcionario.funcionario.senha}" match="psw2" validatorMessage="Os campos 'Senha' não são iguais" required="true" disabled="#{funcionario.podeAlterar}" />
+            	 
+            <p:outputLabel for="psw2" value="Confirmar Senha: *" />
+            <p:password id="psw2" value="#{funcionario.funcionario.senha}"  disabled="#{funcionario.podeAlterar}">
+            	<f:validateLength minimum="6" maximum="20" />
+            </p:password>
+            </h:panelGrid>
+            <h:panelGrid columns="2" cellpadding="5" styleClass="topAligned">
+            <h:outputLabel for="Tipo Funcionário" value="Tipo de Funcionário: *"/>
+  						<p:selectOneMenu id="Tipo" converter="TipoFuncConverter"
+  							value="#{funcionario.funcionario.tipoFuncionario}"  required="true" label="Tipo Funcionário">
+  						<f:selectItem noSelectionOption="true" 
+  								itemLabel="Selecione tipo de funcionário" itemValue="-1"/>
+  						<f:selectItems value="#{funcionario.tipoFuncionario}" var="tipoFunc"
+  								itemLabel="#{tipoFunc.nome}" />
+  					</p:selectOneMenu>
+            
+            	<h:outputLabel for="Situação" value="Situação: *"/>
+  					<p:selectOneMenu id="Situação" value="#{funcionario.funcionario.situacao}" required="true" label="Situação" >
+  						<f:selectItem itemLabel="Selecione uma opção" itemValue="" />
+  						<f:selectItems value="#{funcionario.situacoes}" />
+  					</p:selectOneMenu>
+
+            
+        	</h:panelGrid>
+        </h:panelGrid>
+        <h:panelGrid  columns="4" cellpadding="5">
+        	<p:commandButton icon="ui-icon-pin-w" value="Adicionar Funcionário" actionListener="#{funcionario.salvarFuncionario}" ajax="false"/>
+			<p:commandButton icon="ui-icon-arrowreturnthick-1-w" value="Voltar" action="#{funcionario.voltar}" ajax="false" immediate="true"/>
+    	</h:panelGrid>
+    </p:panel>
+	
+
+	
+	
+</h:form>
+</p:panel>
+<script>
+	$('.keyfilter-nome').keyfilter(/[a-z á-ú]/i);
+	$('.keyfilter-usuario').keyfilter(/[0-9a-z_.-]/i);
+</script>
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Projeto Teste</title>
+	<meta http-equiv="refresh" content="10;url=www.localhost:8080/SozoWeb/restrito/pagina/acompanhamento.xhtml" />
+</h:head>
+<h:body>
+	<ui:composition template="../template/layout.xhtml">
+		<ui:define name="content">
+			<p:panel header="Acompanhamento">
+
+				<h:form id="fordsm">
+					<p:panel id="basic" header="Consultar Ocorrências"
+						style="margin-top: 20px;">
+
+						<h:panelGrid columns="2" cellpadding="5">
+
+							<h:panelGrid columns="4" cellpadding="5">
+
+								<p:outputLabel for="inicio" value="Inicio:" />
+								<p:calendar id="inicio" value="#{ocorrencia.dataInicial}"/>
+
+
+								<p:outputLabel for="fim" value="Fim:" />
+								<p:calendar id="fim" value="#{ocorrencia.dataFinal}"/>
+
+
+								<p:outputLabel for="funcionario" value="Funcionário:" />
+								<p:inputText id="funcionario"
+									value="#{ocorrencia.ocorrencia.funcionario.nome}">
+									<p:ajax event="keyup" listener="#{ocorrencia.consultar}"
+										update=":form:tbl"></p:ajax>
+								</p:inputText>
+							</h:panelGrid>
+
+
+
+						</h:panelGrid>
+						<h:panelGrid columns="4" cellpadding="5">
+							<p:commandButton value="Consultar" icon="ui-icon-search"
+								actionListener="#{ocorrencia.consultarAcomp}" ajax="false"
+								style="center" />
+							<p:commandButton value="Mostrar Todas" icon="ui-icon-search"
+								actionListener="#{ocorrencia.todasOcorrencias}" ajax="false" />
+						</h:panelGrid>
+
+					</p:panel>
+				</h:form>
+
+				<h:form id="form">
+					<p:panel header="Lista de Ocorrências" style="margin-top: 20px;">
+						<p:dataTable  id="tbl" value="#{ocorrencia.listaOcorrenciasAcomp}"  var="o"
+							emptyMessage="Nenhum registro encontrado."
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} 
+							{PageLinks} {NextPageLink} {LastPageLink} "
+							paginator="true" rows="10" style="margin-bottom:20px">
+
+							<p:column style="width:32px;text-align: center">
+								<f:facet name="header">
+									<h:outputText value="Id" />
+								</f:facet>
+								<h:outputText value="#{o.id}" />
+							</p:column>
+
+							<p:column style="width:100px;text-align: center">
+								<f:facet name="header">
+									<h:outputText value="Funcionário" />
+								</f:facet>
+								<h:outputText value="#{o.funcionario.nome}" />
+							</p:column>
+
+							<p:column style="width:125px;text-align: center">
+								<f:facet name="header">
+									<h:outputText value="Data Criação" />
+								</f:facet>
+								<h:outputText value="#{o.dataCriacao}"/>
+							</p:column>
+							
+							<p:column style="width:120px;text-align: center">
+								<f:facet name="header">
+									<h:outputText value="Tempo" />
+								</f:facet>
+								<h:outputText value="#{o.tempo}"/>
+							</p:column>
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="Situação" />
+								</f:facet>
+								<h:outputText value="#{o.situacaoOcorrencia}" />
+							</p:column>
+
+
+							<p:column style="width:80px;text-align: center">
+								<f:facet name="header">
+									<h:outputText value="Placa" />
+								</f:facet>
+								<h:outputText value="#{o.viaturas}" />
+							</p:column>
+							
+								<p:column style="width:60px;text-align: center">
+								<f:facet name="header">
+									<h:outputText value="Tratamento" />
+								</f:facet>
+								<p:commandButton process="tbl" icon="ui-icon-search" title="tratamento"  action="#{ocorrencia.detalheAcompanhamento}" ajax="false">
+                        			<f:setPropertyActionListener value="#{o.id}" target="#{ocorrencia.ocorrenciaSelecionada.id}"/>
+                        		</p:commandButton>
+								</p:column>
+
+
+						</p:dataTable>
+
+					</p:panel>
+				</h:form>
+			</p:panel>
+			<script>
+				$('.keyfilter-tipo').keyfilter(/[a-z á-ú]/i);
+			</script>
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+</html>

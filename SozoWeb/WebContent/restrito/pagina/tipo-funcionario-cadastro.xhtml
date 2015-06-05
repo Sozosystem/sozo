@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Projeto Teste</title>
+</h:head>
+<h:body>
+<ui:composition template="../template/layout.xhtml">
+		<ui:define name="content">
+<p:panel header="Tipos de Funcionários">
+
+<h:form id="form2">	
+	<p:panel id="panel" header="Opções" style="margin-top: 20px;">
+		<p:messages severity="error">
+			<p:effect type="bounce" event="load" delay="0" />
+		</p:messages>
+        <h:inputHidden value="#{tipoFuncionario.tipoFunc.id}" />
+        <h:panelGrid columns="2" cellpadding="5">
+ 
+            <p:outputLabel for="text2" value="Nome:" />
+            <p:inputText id="text2" value="#{tipoFuncionario.tipoFunc.nome}" required="true" validatorMessage="Nome: Erro de validação: O nome deve conter apenas letras entre 3 e 50 caracteres" styleClass="keyfilter-nome"  autocomplete="off">
+            	<f:validateRegex pattern="^[a-zA-Z]+[ a-zA-Zá-ùÁ-Ù]+[a-zA-Zá-ùÁ-Ù]$" />
+            </p:inputText>
+            
+            <p:outputLabel for="text3" value="Descricao" />
+            <p:inputTextarea id="text3" value="#{tipoFuncionario.tipoFunc.descricao}" required="true" rows="6" cols="50">
+            	<f:validateLength  minimum="3" maximum="250"/>
+            </p:inputTextarea>
+		</h:panelGrid>
+		<h:panelGrid columns="3" cellpadding="5">
+            <p:commandButton process="tbl" icon="ui-icon-pin-w" value="Adicionar Tipode de Funcionário" actionListener="#{tipoFuncionario.salvarTipo}" ajax="false" disabled="#{tipoFuncionario.podeAlterar}"/>
+        	<p:commandButton icon="ui-icon-arrowreturnthick-1-w" value="Voltar" actionListener="#{tipoFuncionario.voltar}" ajax="false" disabled="#{!tipoFuncionario.podeAlterar}"  immediate="true"/>
+        </h:panelGrid>
+    </p:panel>
+    
+</h:form>
+</p:panel>	
+<script>
+	$('.keyfilter-nome').keyfilter(/[a-z á-ú]/i);
+</script>
+</ui:define>
+	</ui:composition>
+</h:body>
+
+</html>

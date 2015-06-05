@@ -38,7 +38,7 @@
 </h:form>
 
 <h:form id="form2">	
-	<p:panel id="panel" header="Opções" style="margin-top: 20px;">
+	<p:panel id="panel" header="Opções" style="margin-top: 20px;" visible="#{tipoFuncionario.podeAlterar}">
 		<p:messages severity="error">
 			<p:effect type="bounce" event="load" delay="0" />
 		</p:messages>
@@ -56,7 +56,6 @@
             </p:inputTextarea>
 		</h:panelGrid>
 		<h:panelGrid columns="3" cellpadding="5">
-            <p:commandButton process="tbl" icon="ui-icon-pin-w" value="Adicionar Tipode de Funcionário" actionListener="#{tipoFuncionario.salvarTipo}" ajax="false" disabled="#{tipoFuncionario.podeAlterar}"/>
 			<p:commandButton process="tbl" icon="ui-icon-pencil" value="Salvar Alterações" actionListener="#{tipoFuncionario.alterarTipo}" ajax="false" disabled="#{!tipoFuncionario.podeAlterar}"/>
         	<p:commandButton icon="ui-icon-close" value="Cancelar Alteraração" actionListener="#{tipoFuncionario.cancelarAlteracao}" ajax="false" disabled="#{!tipoFuncionario.podeAlterar}"  immediate="true"/>
         </h:panelGrid>

@@ -62,7 +62,7 @@ public class LoginController {
         f.setSenha(funcionario.getSenha());
         try {
         	this.funcionarioLogado = funcionarioDAO.verificarLogin(f);
-        	FacesContext.getCurrentInstance().getExternalContext().redirect("restrito/pagina/index.xhtml");
+        	FacesContext.getCurrentInstance().getExternalContext().redirect("restrito/pagina/ocorrencias.xhtml");
         	funcionario = new Funcionario();
         }catch(Exception e) {
         	Mensagem.alerta(Mensagem.ERRO, e.getMessage(), null);
@@ -105,5 +105,9 @@ public class LoginController {
 		this.primeiraVez = primeiraVez;
 	}
 
-
+	@Override
+	public String toString() {
+		return "LoginController funcionarioLogado=" + funcionarioLogado;
+	}
+	
 }

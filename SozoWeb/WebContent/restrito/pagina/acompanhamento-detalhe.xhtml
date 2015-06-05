@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+
+<h:head>
+	<title>Sozo - Área do Funcionário</title>
+</h:head>
+<h:body>
+<ui:composition template="../template/layout.xhtml">
+	<ui:define name="content">
+		<p:panel header="Ocorrência Id: #{ocorrencia.ocorrencia.id}">
+		<h:form>
+				
+			
+			<p:panel header="Detalhes Ocorrência" style="margin-top: 20px; text-align: center">
+				<h:panelGrid columns="2" cellspacing="5"  cellpadding="5" width="100%" style="text-align: left;">
+					
+					<h:outputText value="Código: #{ocorrencia.ocorrencia.id}"/>
+					<h:outputText value="Data da Criação: #{ocorrencia.ocorrencia.dataCriacao}">
+				              <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+				 	</h:outputText>
+				 	
+				 	<h:outputText value="Atendente: #{ocorrencia.ocorrencia.funcionario.nome}"/>
+				 	<h:outputText value="Situação: #{ocorrencia.ocorrencia.situacaoOcorrencia}"/>
+		
+					
+					<ui:repeat value="#{ocorrencia.ocorrencia.viaturas}" var="pl"> 
+					<h:outputText value="Viaturas: #{pl}"/></ui:repeat>
+						
+					<h:outputText value="Latitude #{ocorrencia.ocorrencia.latitude}  Longitude: #{ocorrencia.ocorrencia.longitude}"/>
+					
+					<h:outputText value="Cidade:  #{ocorrencia.ocorrencia.endereco.cidade} - #{ocorrencia.ocorrencia.endereco.estado}"/>
+					<h:outputText value="Bairo:  #{ocorrencia.ocorrencia.endereco.bairro}"/>
+					<h:outputText value="Logradouro:  #{ocorrencia.ocorrencia.endereco.logradouro}"/>
+					
+				
+				</h:panelGrid>
+			</p:panel>	
+					
+			<p:panel header="Observação" style="margin-top: 20px; text-align: center">
+				<h:panelGrid columns="1" cellspacing="5"  cellpadding="5" width="100%"  style="text-align: left;"  >
+				<p:dataTable  id="tbl1" value="#{ocorrencia.ocorrencia.observacao}"  var="o"
+							emptyMessage="Nenhum registro encontrado." 
+							scrollable="true" scrollHeight="100">
+							<p:column>
+								<f:facet name="header" >
+									<h:outputText value="Histórico"  />
+								</f:facet>
+								<h:outputText value="#{o}"/>
+							</p:column>
+					<f:facet name="footer">
+        					Total de  #{fn:length(ocorrencia.ocorrencia.observacao)} informações.
+    				</f:facet>
+				</p:dataTable>
+				</h:panelGrid>
+			</p:panel>
+			
+			<p:panel header="Detalhes Solicitante" style="margin-top: 20px; text-align: center">
+				<h:panelGrid columns="3" cellspacing="5" cellpadding="5" width="100%" style="text-align: left;">
+					<h:outputText value="Nome: #{ocorrencia.ocorrencia.solicitante.nome}"/>
+					<h:outputText value="Telefone: #{ocorrencia.ocorrencia.solicitante.telefone}"/>
+					<h:outputText value="Confiabilidade: #{ocorrencia.ocorrencia.solicitante.confiabilidade}"/>
+				</h:panelGrid>
+			</p:panel>
+			<p:panel header="Viaturas" style="margin-top: 20px;">
+					<p:dataTable selectionMode="single" id="tbl" var="v"  value="#{ocorrencia.listaViaturas}" selection="#{ocorrencia.viaturaSelecionada}" rowKey="#{v.id}" emptyMessage="Nenhuma viatura disponível.">
+						<p:column headerText="ID">
+					        <h:outputText value="#{v.id}" />       
+					    </p:column>
+					    <p:column headerText="Placa ">
+					        <h:outputText value="#{v.placa}" />       
+					    </p:column>
+					    <p:column headerText="Tipo">
+					        <h:outputText value="#{v.tipo}" />       
+					    </p:column>
+					    	<f:facet name="footer">
+					    	<p:commandButton process="tbl" icon="ui-icon-check" actionListener="#{ocorrencia.tratarOcorrencia}" ajax="false" value="Tratar Ocorrência" />
+					    	<p:commandButton process="tbl" icon="ui-icon-close" actionListener="#{ocorrencia.cancelarOcorrencia}" ajax="false" value="Cancelar Ocorrência" />
+					    	<p:commandButton process="tbl" icon="ui-icon-back" actionListener="#{ocorrencia.voltarAcomp}" ajax="false" value="Voltar" />
+					    </f:facet>
+					</p:dataTable>
+				</p:panel>
+				<p:panel header="Imagem" style="margin-top: 20px; text-align: center"  rendered="#{ocorrencia.foto == true}">
+					<img src="http://localhost/sozoAPI/public/uploads/#{ocorrencia.ocorrencia.foto}" height="400px" width="50%"></img>
+				</p:panel>
+				<p:panel header="Video" style="margin-top: 20px; text-align: center"  rendered="#{ocorrencia.foto != true}">
+					<video controls="true">
+						<source src="http://localhost/sozoAPI/public/uploads/#{ocorrencia.ocorrencia.foto}" height="400px" width="50%" type="video/mp4"></source>
+					</video>
+				</p:panel>
+				
+			
+				</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</h:body>
+</html>
