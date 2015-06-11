@@ -35,7 +35,7 @@ public class LoginController {
 			setPrimeiraVez(true);
 			tipoAdministrador = new TipoFuncionario();
 			tipoAdministrador.setNome("Administrador");
-			tipoAdministrador.setDescricao("Responsável pela administraçãp geral do sistema");
+			tipoAdministrador.setDescricao("ResponsÃ¡vel pela administraÃ§Ã£o geral do sistema");
 			tipoAdministrador.setSituacao(Situacao.ATIVO);
 			tipoFuncionarioDAO.save(tipoAdministrador);
 		}
@@ -53,7 +53,7 @@ public class LoginController {
 		funcionarioDAO.save(f);
 		funcionario = new Funcionario();
 		primeiraVez = false;
-		Mensagem.alerta(Mensagem.INFO, "Funcionário Administrador adicionado com sucesso", null);
+		Mensagem.alerta(Mensagem.INFO, "FuncionÃ¡rio Administrador adicionado com sucesso", null);
 	}
 	
 	public void logar(ActionEvent actionEvent) throws Exception {
@@ -70,7 +70,7 @@ public class LoginController {
     }
 	
 	public void deslogar() {
-		System.out.println("Usuário deslogado");
+		System.out.println("Usuï¿½rio deslogado");
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 		this.funcionarioLogado = null;
 		

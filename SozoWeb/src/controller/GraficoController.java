@@ -4,7 +4,6 @@ package controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import model.AuxGrafico;
@@ -12,8 +11,6 @@ import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.ChartSeries;
-import org.primefaces.model.chart.PieChartModel;
-
 import dao.EntityManagerHelper;
 import dao.OcorrenciaDAO;
 
@@ -93,8 +90,8 @@ public class GraficoController {
 	    
 	    private BarChartModel comecarGrafico1() {
 	        BarChartModel model = new BarChartModel();
-	        SimpleDateFormat formatador = new SimpleDateFormat(
-	 				"dd/MM/yyyy");
+	    /*    SimpleDateFormat formatador = new SimpleDateFormat(
+	 				"dd/MM/yyyy");*/
 	        ChartSeries ocorrencia = new ChartSeries();
 	        ocorrencia.setLabel("Ocorrências");
 	        if(listaPorDiaFunc.size()<=0){
@@ -117,8 +114,8 @@ public class GraficoController {
 	    
 	    private BarChartModel comecarGrafico3() {
 	        BarChartModel model = new BarChartModel();
-	        SimpleDateFormat formatador = new SimpleDateFormat(
-	 				"dd/MM/yyyy");
+	        /*SimpleDateFormat formatador = new SimpleDateFormat(
+	 				"dd/MM/yyyy");*/
 	        ChartSeries ocorrencia = new ChartSeries();
 	        ocorrencia.setLabel("Ocorrências");
 	       
@@ -134,8 +131,8 @@ public class GraficoController {
 	    
 	    private BarChartModel comecarGrafico4() {
 	        BarChartModel model = new BarChartModel();
-	        SimpleDateFormat formatador = new SimpleDateFormat(
-	 				"dd/MM/yyyy");
+	       /* SimpleDateFormat formatador = new SimpleDateFormat(
+	 				"dd/MM/yyyy");*/
 	    	 
 	         
 	        ChartSeries ocorrencia = new ChartSeries();

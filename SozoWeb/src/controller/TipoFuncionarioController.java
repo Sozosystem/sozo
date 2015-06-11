@@ -42,7 +42,7 @@ public class TipoFuncionarioController {
 		if(tipos.size() > 0) {
 			for (TipoFuncionario t : tipos) {
 				if(t.getNome().equals(tipoFunc.getNome())) {
-					Mensagem.alerta(Mensagem.ERRO, "J· existe um tipo de funcion·rio com este nome", null);
+					Mensagem.alerta(Mensagem.ERRO, "J√° existe funcion√°rio com este nome.", null);
 					return;
 				}
 			}
@@ -53,7 +53,7 @@ public class TipoFuncionarioController {
 		dao.save(tipo);
 		mostrarTodosTipos();
 		tipoFunc = new TipoFuncionario();
-		Mensagem.alerta(Mensagem.INFO, "Tipo de funcion·rio cadastrado com sucesso", null);
+		Mensagem.alerta(Mensagem.INFO, "Tipo de funcion√°rio cadastrado com sucesso", null);
 	}
 	
 	public void mostrarTodosTipos() {
@@ -64,28 +64,28 @@ public class TipoFuncionarioController {
 		dao.update(tipoFunc);
 		mostrarTodosTipos();
 		tipoFunc = new TipoFuncionario();
-		Mensagem.alerta(Mensagem.INFO, "Tipo de funcion·rio alterado com sucesso", null);
+		Mensagem.alerta(Mensagem.INFO, "Tipo de funcion√°rio alterado com sucesso", null);
 		podeAlterar = false;
 	}
 	
 	public void removerTipo() {
 		if(tipoFuncSelecionado == null) {
-			Mensagem.alerta(Mensagem.INFO, "Selecione um Tipo de Funcion·rio para remover", null);
+			Mensagem.alerta(Mensagem.INFO, "Selecione um Tipo de Funcion√°rio para remover", null);
 			return;
 		}
 		
 		try {
 			dao.delete(tipoFuncSelecionado);
 			mostrarTodosTipos();
-			Mensagem.alerta(Mensagem.INFO, "Tipo de funcion·rio removido com sucesso", null);
+			Mensagem.alerta(Mensagem.INFO, "Tipo de funcionÔøΩrio removido com sucesso", null);
 		} catch (Exception e) {
-			Mensagem.alerta(Mensagem.INFO, "N„o È possÌvel remover um tipo de funcion·rio que j· esteja relacionado com um funcion·rio", null);
+			Mensagem.alerta(Mensagem.INFO, "N√£oo √© poss√≠vel remover um tipo de funcion√°rio que j√° esteja relacionado com um funcion√°rio", null);
 		}
 	}
 	
 	public void alterarTipoFuncSelecionado() {
 		if(tipoFuncSelecionado == null) {
-			Mensagem.alerta(Mensagem.INFO, "Selecione um Tipo de Funcion·rio para alterar", null);
+			Mensagem.alerta(Mensagem.INFO, "Selecione um Tipo de Funcion√°rio para alterar", null);
 			return;
 		}
 		tipoFunc = tipoFuncSelecionado;

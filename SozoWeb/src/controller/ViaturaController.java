@@ -46,7 +46,7 @@ public class ViaturaController {
 		vituraPlaca.setPlaca(viatura.getPlaca());
 		List<Viatura> l = dao.findByObject(vituraPlaca);
 		if(l.size() != 0) {
-			Mensagem.alerta(Mensagem.ERRO, "Uma viatura com esta placa j· est· cadastrada", null);
+			Mensagem.alerta(Mensagem.ERRO, "Uma viatura com esta placa j√° est√° cadastrada", null);
 			return;
 		}
 		

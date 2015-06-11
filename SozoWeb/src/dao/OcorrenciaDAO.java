@@ -1,15 +1,11 @@
 package dao;
 
-import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-
-import org.joda.time.DateTime;
-
 import filter.LoginFilter;
 import model.AuxGrafico;
 import model.Ocorrencia;
