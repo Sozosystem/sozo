@@ -9,7 +9,7 @@
 
 <h:head>
 	<title>Projeto Teste</title>
-	<meta http-equiv="refresh" content="10;url=www.localhost:8080/SozoWeb/restrito/pagina/acompanhamento.xhtml" />
+	<meta http-equiv="refresh" content="10;url=www.localhost:8080/SozoWeb/restrito/pagina/acompanhamento.xhtml"/>
 </h:head>
 <h:body>
 	<ui:composition template="../template/layout.xhtml">
@@ -123,9 +123,16 @@
 							</p:column>
 
 						
-							<p:column style="width:80px;text-align: center">
+							<p:column style="width:80px;text-align: center" rendered="false" >
 							 <ui:repeat value="#{o.viaturas}" var="pl"> 
 							 <h:outputText value="#{pl}"/></ui:repeat>
+							</p:column>
+							
+							<p:column style="width:80px;text-align: center" >
+							 <f:facet name="header">
+									<h:outputText value="Placas" />
+								</f:facet>
+							 <h:outputText value="#{o.viaturas}"/>
 							</p:column>
 							
 							

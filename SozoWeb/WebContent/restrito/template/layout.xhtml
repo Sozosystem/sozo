@@ -27,14 +27,16 @@
 </h:head>
 <h:body>
 	<p:growl id="messages" severity="info, warn"/>
-	<h:panelGrid columns="1" cellpadding="5" style="position: absolute; margin-left: -470px;left: 50%; width: 940px">
-	<div class="logo-head" >
-			<div class="logo">
+	<h:panelGrid columns="1" cellpadding="10" style="position: absolute; margin-left: -470px;left: 50%; width: 940px;">
+	<div class="logo-head">
+			<div class="logo">	
 			</div>
 			<div class="logo-text"> Área Administrativa</div>
-	</div>
-	<p:outputLabel value=""/>
-		<p:outputLabel style="width: 60px;font-weight: bold;color: white" value="Olá, #{login.funcionarioLogado}" var="f" label="f.nome"/>
+		</div>
+		<p:outputLabel value=""/>
+		
+		<p:outputLabel styleClass="login" value="Olá, #{login.funcionarioLogado}" var="f" label="f.nome"/>
+		
 	    <p:layoutUnit position="west" resizable="true" size="200" minSize="40" maxSize="350" style="background-color: rgba(255,255,255,0) !important;">
 	    	<ui:insert name="header" >
 				<ui:include src="menu.xhtml" />

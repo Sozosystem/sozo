@@ -1,24 +1,28 @@
 package controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
-
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-
+import javax.servlet.ServletContext;
 import json.Http;
-
 import org.primefaces.json.JSONArray;
 import org.primefaces.json.JSONException;
 import org.primefaces.json.JSONObject;
-
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Element;
+import com.lowagie.text.Font;
+import com.lowagie.text.Image;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.Paragraph;
 import util.Mensagem;
 import dao.EntityManagerHelper;
 import dao.OcorrenciaDAO;
@@ -28,6 +32,7 @@ import model.Endereco;
 import model.Ocorrencia;
 import model.SituacaoOcorrencia;
 import model.Viatura;
+
 
 @ManagedBean(name = "ocorrencia")
 @ViewScoped
@@ -51,7 +56,7 @@ public class OcorrenciaController extends BaseBeanController implements
 	private String placa;
 	private String tempo;
 	private Endereco endereco;
-
+ 
 	public OcorrenciaController() throws JSONException {
 		super();
 		
@@ -122,7 +127,7 @@ public class OcorrenciaController extends BaseBeanController implements
 		// System.out.println(v.getDisponivel());
 		if (!v.getDisponivel()) {
 			Mensagem.alerta(Mensagem.INFO,
-					"A viatura selecionada n�o est� mais dispon�vel", null);
+					"A viatura selecionada não está mais disponível", null);
 			return;
 		}
 		List<Viatura> viaturas = ocorrencia.getViaturas();
@@ -168,6 +173,7 @@ public class OcorrenciaController extends BaseBeanController implements
 		this.listaOcorrenciasAcomp = dao.consultaOcorrenciaAcom(ocorrencia,
 				dataFinal, dataFinal);
 		consultarAcomp();
+		
 	}
 
 	public String ocorrenciasPendentesJSON() throws JSONException {
@@ -528,8 +534,8 @@ public class OcorrenciaController extends BaseBeanController implements
 		this.tempo = tempo;
 	}
 	
- 
-    public void chamadaHttp() throws JSONException  {
+
+	public void chamadaHttp() throws JSONException  {
        
     	String url ="http://maps.googleapis.com/maps/api/geocode/json?latlng="
         		+ ocorrencia.getLatitude()+"," + ocorrencia.getLongitude() + "&sensor=false";
@@ -562,5 +568,39 @@ public class OcorrenciaController extends BaseBeanController implements
 			
 				
     }
+    
+   public void preProcessPDF(Object document) throws IOException, DocumentException {
+	   
+	   
+        Document pdf = (Document) document;
+        pdf.open();
+        pdf.setPageSize(PageSize.A4);
 
+        SimpleDateFormat formatador = new SimpleDateFormat(
+				"dd/MM/yyyy hh:mm:ss");
+		String date = formatador.format(new Date());
+		
+		
+		Font f = new Font(Font.BOLD, 20, Font.BOLD);
+		Font f1 = new Font(Font.BOLD, 10, Font.NORMAL);
+		
+        ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+        String logo = servletContext.getRealPath("") + File.separator + "resources" + File.separator + "images" + File.separator + "sozo-logo-tiny.png";
+        
+        Image img = Image.getInstance(logo);
+        img.setAlignment(Element.ALIGN_CENTER);       
+       
+        Paragraph p1 = new Paragraph("Relatórios de Ocorrências",f);
+        Paragraph p2 = new Paragraph("Realizado no dia: "+ date,f1);
+   
+        p1.setAlignment(Element.ALIGN_CENTER);
+        p2.setAlignment(Element.ALIGN_CENTER);
+        pdf.add(p1);
+        pdf.add(p2);
+        pdf.add(img);
+
+   }	
+     
 }
+    
+

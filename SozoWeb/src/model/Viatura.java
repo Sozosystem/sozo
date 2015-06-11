@@ -3,10 +3,16 @@ package model;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import org.apache.poi.util.StringUtil;
+
+import antlr.StringUtils;
+
 
 @Entity
 @Table(name = "viatura")
 public class Viatura extends ObjetoGeral {
+
+	
 
 	
 
@@ -71,15 +77,11 @@ public class Viatura extends ObjetoGeral {
 		this.disponivel = disponivel;
 	}
 
-	
+	@Override
 	public String toString() {
-		
 		return placa;
 	}
 
-	
-	
 
-	
 }
 	

@@ -98,11 +98,18 @@
 							</p:column>
 
 
-							<p:column style="width:80px;text-align: center">
+							<p:column style="width:80px;text-align: center" rendered="false">
 								<f:facet name="header">
 									<h:outputText value="Placa" />
 								</f:facet>
 								<h:outputText value="#{o.viaturas}" />
+							</p:column>
+							
+							<p:column style="width:80px;text-align: center" >
+							 <f:facet name="header">
+									<h:outputText value="Placas" />
+								</f:facet>
+							 <h:outputText value="#{o.viaturas}"/>
 							</p:column>
 							
 								<p:column style="width:60px;text-align: center">

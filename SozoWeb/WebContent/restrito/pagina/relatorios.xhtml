@@ -7,6 +7,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
+
 <h:head>
 	<title>Projeto Teste</title>
 </h:head>
@@ -63,14 +64,14 @@
 				</h:form>
 
 				<h:form id="form">
-					<p:panel header="Lista de Ocorrências" style="margin-bottom:20px" >
+					<p:panel header="Lista de Ocorrências" style="margin-top: 20px;">
 						<p:dataTable selectionMode="single" id="tbl" var="o"
 							value="#{ocorrencia.listaTodasOcorrencias}" rowKey="#{o.id}"
 							emptyMessage="Nenhum registro encontrado."
 							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
 							paginator="true" rows="10" style="margin-bottom:20px">
-							
-							<f:facet name="{Exporters}">
+
+								<f:facet name="{Exporters}">
 
 								<h:commandLink>
 									<p:graphicImage name="/images/csv.png" width="24" style="float:right"/>
@@ -88,13 +89,13 @@
 								</h:commandLink>
 								
 								
-								<h:commandLink>
+								<h:commandLink >
 									<p:graphicImage name="/images/pdf.png" width="24" style="float:right" />
-									<p:dataExporter type="pdf" target="tbl" fileName="ocorrencias" />
+									<p:dataExporter encoding="iso-8859-1" type="pdf" target="tbl" fileName="ocorrencias" preProcessor="#{ocorrencia.preProcessPDF}" />
 								</h:commandLink>
 								
 							</f:facet>
-							
+
 
 							<p:column style="width:32px;text-align: center">
 								<f:facet name="header">
@@ -125,7 +126,7 @@
 								<h:outputText value="#{o.solicitante.nome}" />
 							</p:column>
 
-							<p:column>
+							<p:column style="text-align: center" >
 								<f:facet name="header">
 									<h:outputText value="Situação" />
 								</f:facet>
@@ -133,14 +134,26 @@
 							</p:column>
 
 
-							<p:column style="width:80px;text-align: center">
+							<p:column style="width:120px;text-align: center" rendered="false" >
 								<f:facet name="header">
 									<h:outputText value="Placa" />
 								</f:facet>
-								<ui:repeat value="#{o.viaturas}" var="pl">
-									<h:outputText value="#{pl}" />
+								<ui:repeat  value="#{o.viaturas}" var="pl">
+									<h:outputText value="#{pl}" >
+									</h:outputText>
 								</ui:repeat>
 							</p:column>
+							
+							
+							<p:column  style="width:120px;text-align: center">
+								<f:facet name="header">
+									<h:outputText value="Placa" />
+								</f:facet>
+									<h:outputText value="${o.viaturas}" />
+							</p:column>
+							
+
+
 						</p:dataTable>
 
 					</p:panel>
