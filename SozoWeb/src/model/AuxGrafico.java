@@ -34,8 +34,6 @@ public class AuxGrafico {
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
 	}
-
-	
 	
 	public String getQtdCidade() {
 		return qtdCidade;
@@ -70,8 +68,5 @@ public class AuxGrafico {
 		this.codigo = codigo;
 		this.nome = nome;
 	}
-	
-	
-	
 	
 }
