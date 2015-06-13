@@ -97,9 +97,7 @@ public class OcorrenciaController extends BaseBeanController implements
 				ocorrencia.setSituacaoOcorrencia(SituacaoOcorrencia.EM_ANALISE);
 				chamadaHttp();
 			}
-			if (ocorrencia.getSituacaoOcorrencia() == SituacaoOcorrencia.EM_ANALISE) {
-				ocorrencia.setSituacaoOcorrencia(SituacaoOcorrencia.PENDENTE);
-			}
+			
 			DateTime dtToday = new DateTime();
 			List<String> observ = ocorrencia.getObservacao();
 			Collections.reverse(observ);
