@@ -1,8 +1,10 @@
 package model;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "tipofuncionario")
 public class TipoFuncionario extends ObjetoGeral {
 	
 	
