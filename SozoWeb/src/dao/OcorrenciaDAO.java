@@ -62,11 +62,11 @@ public class OcorrenciaDAO extends GenericDAO<Integer, Ocorrencia>{
 		
 			if(o.getFuncionario().getNome()==null){
 				  jpql= "Select o from Ocorrencia o where "
-							+ "o.situacaoOcorrencia IN ('AMBULANCIA_PROBLEMA ','ATENDIMENTO_ENCAMINHADO', 'AMBULANCIA_A_CAMINHO')";
+							+ "o.situacaoOcorrencia IN ('EM_ANALISE','AMBULANCIA_PROBLEMA ','ATENDIMENTO_ENCAMINHADO', 'AMBULANCIA_A_CAMINHO')";
 			}
 			else{
 				jpql= "Select o from Ocorrencia o where "
-						+ "o.situacaoOcorrencia IN ('AMBULANCIA_PROBLEMA ','ATENDIMENTO_ENCAMINHADO', 'AMBULANCIA_A_CAMINHO')";
+						+ "o.situacaoOcorrencia IN ('EM_ANALISE','AMBULANCIA_PROBLEMA ','ATENDIMENTO_ENCAMINHADO', 'AMBULANCIA_A_CAMINHO')";
 				
 				if(o.getFuncionario().getNome()!=""){
 					jpql+= " and o.funcionario.nome like :nome";
