@@ -57,9 +57,9 @@ public class FuncionarioController {
 			dao.save(f);
 			mostrarTodosFuncionarios();
 			funcionario = new Funcionario();
-			Mensagem.alerta(Mensagem.INFO, "Funcion�rio adicionado com sucesso", null);
+			Mensagem.alerta(Mensagem.INFO, "Funcionário adicionado com sucesso", null);
 		} else {
-			Mensagem.alerta(Mensagem.ERRO, "Usu�rio j� existente", "");
+			Mensagem.alerta(Mensagem.ERRO, "Usuário já existente", "");
 		}
 	}
 
@@ -69,7 +69,7 @@ public class FuncionarioController {
 
 	public void alterarFuncionario() {
 		if(funcionarioSelecionado == null) {
-			Mensagem.alerta(Mensagem.INFO, "Selecione um funcion�rio para alterar", null);
+			Mensagem.alerta(Mensagem.INFO, "Selecione um funcionário para alterar", null);
 			return;
 		}
 		System.out.println("TENTANDO ALTERAR");
@@ -77,12 +77,12 @@ public class FuncionarioController {
 		mostrarTodosFuncionarios();
 		funcionario = new Funcionario();
 		podeAlterar = false;
-		Mensagem.alerta(Mensagem.INFO, "Funcion�rio alterado com sucesso", null);
+		Mensagem.alerta(Mensagem.INFO, "Funcionário alterado com sucesso", null);
 	}
 
 	public void removerFuncionario() {
 		if(funcionarioSelecionado == null) {
-			Mensagem.alerta(Mensagem.INFO, "Selecione um funcion�rio para remover", null);
+			Mensagem.alerta(Mensagem.INFO, "Selecione um funcionário para remover", null);
 			return;
 		}
 		try {
@@ -91,7 +91,7 @@ public class FuncionarioController {
 			e.printStackTrace();
 		}
 		mostrarTodosFuncionarios();
-		Mensagem.alerta(Mensagem.INFO, "Funcion�rio removido com sucesso", null);
+		Mensagem.alerta(Mensagem.INFO, "Funcionário removido com sucesso", null);
 	}
 
 	public void consultarFuncionario() {
@@ -104,7 +104,7 @@ public class FuncionarioController {
 
 	public void funcionarioAlterarSelecionado() {
 		if(funcionarioSelecionado == null) {
-			Mensagem.alerta(Mensagem.INFO, "Selecione um funcion�rio para alterar", null);
+			Mensagem.alerta(Mensagem.INFO, "Selecione um funcionário para alterar", null);
 			return;
 		}
 		funcionario = funcionarioSelecionado;

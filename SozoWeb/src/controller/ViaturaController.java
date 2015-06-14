@@ -30,7 +30,6 @@ public class ViaturaController {
 	private List<Viatura> listaViaturas;
 	private boolean podeAlterar;
 
-	
 	public ViaturaController() {
 		EntityManagerHelper emh = new EntityManagerHelper();            
         dao = new ViaturaDAO(emh.getEntityManager());
@@ -40,7 +39,6 @@ public class ViaturaController {
         mostrarTodasViaturas();
 	}
 
-	
 	public void salvarViatura() {
 		Viatura vituraPlaca = new Viatura();
 		vituraPlaca.setPlaca(viatura.getPlaca());
