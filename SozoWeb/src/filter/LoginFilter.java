@@ -37,7 +37,8 @@ public class LoginFilter implements Filter {
 	        	}else {
 	        		System.out.println(pagina);
 	        		if(pagina.equals("ocorrencias.xhtml") || pagina.equals("index.xhtml") || pagina.equals("ocorrencia.xhtml") || pagina.equals("ocorrencias")
-	        			||	pagina.equals("acompanhamentoFunc.xhtml") ||pagina.equals("acompanhamento-detalhe.xhtml") ) {
+	        			||	pagina.equals("acompanhamentoFunc.xhtml") ||pagina.equals("acompanhamento-detalhe.xhtml")||pagina.equals("/ocorrencias-recentes-json.xhtml") 
+	        			|| pagina.equals("/viaturas-disponiveis-json.xhtml") || pagina.equals("viaturas") || pagina.equals("ocorrencias")  ) {
 	        			chain.doFilter(request, response);
 	        		}else {
 	        			((HttpServletResponse) response).sendRedirect(contextPath + "/restrito/pagina/index.xhtml");

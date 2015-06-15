@@ -96,18 +96,19 @@ public class GraficoController {
 	        ocorrencia.setLabel("Ocorrências");
 	        if(listaPorDiaFunc.size()<=0){
 	        	ocorrencia.set("Não existe ocorrêncas finalizadas até o momento.", 0);
-	        	
+	        	 
 	        	 model.addSeries(ocorrencia);
 	        }
 	        else{
 	        for(AuxGrafico func :listaPorDiaFunc){
 	        	qtd1 += Integer.parseInt(func.getQuantidade());
-	        	ocorrencia.set(func.getNome(),Double.parseDouble(func.getQuantidade()));
+	        	ocorrencia.set(func.getNome()+" - " + Double.parseDouble(func.getQuantidade()) ,Double.parseDouble(func.getQuantidade()));
 	        	System.out.println(qtd1);
-	        }
+	        	}
 	        
-	        model.addSeries(ocorrencia);
 	        }
+	        model.addSeries(ocorrencia);
+	       
 	           
 	        return model;
 	    }
